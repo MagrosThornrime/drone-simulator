@@ -3,4 +3,4 @@ build/
 cmake-build-debug/
 CMakeUserPresets.json
 .idea/
-cmake/
+cmake/conan_files/
