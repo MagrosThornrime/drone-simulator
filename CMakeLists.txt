@@ -16,5 +16,14 @@ include_directories(${CMAKE_INCLUDE_PATH})
 include("${PROJECT_SOURCE_DIR}/cmake/conan_files/${ARCHIMEDES_BUILD_TYPE}/conandeps_legacy.cmake")
 list(APPEND LIBRARIES ${CONANDEPS_LEGACY})
 
-add_executable(${PROJECT_NAME} main.cpp)
+set(SOURCES
+        src/Application.cpp
+)
+
+set(HEADERS
+        include/Application.h
+)
+
+add_executable(${PROJECT_NAME} main.cpp ${SOURCES} ${HEADERS})
+target_include_directories(${PROJECT_NAME} PRIVATE include)
 target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
