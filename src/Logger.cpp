@@ -1,6 +1,7 @@
 #include <Logger.h>
 #include <sstream>
-
+#include <fstream>
+#include <iostream>
 
 std::string Logger::_prepareMessage(const std::string &text) {
     auto now = std::chrono::system_clock::now();
