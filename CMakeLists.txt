@@ -19,11 +19,15 @@ list(APPEND LIBRARIES ${CONANDEPS_LEGACY})
 set(SOURCES
         src/Application.cpp
         src/Renderer.cpp
+        src/Logger.cpp
+        src/Shader.cpp
 )
 
 set(HEADERS
         include/Application.h
         include/Renderer.h
+        include/Logger.h
+        include/Shader.h
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${SOURCES} ${HEADERS})

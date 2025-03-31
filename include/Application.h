@@ -9,7 +9,7 @@ class Application{
   const int _startWindowWidth = 800;
   const int _startWindowHeight = 600;
   GLFWwindow* _window{};
-  std::array<int, 1> listenedKeys = {GLFW_KEY_ESCAPE};
+  std::array<int, 1> _listenedKeys = {GLFW_KEY_ESCAPE};
 
 public:
 

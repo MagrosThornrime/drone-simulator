@@ -1,9 +1,14 @@
 #include <Application.h>
-#include <iostream>
+#include <Logger.h>
+#include <sstream>
+
+Logger logger(info);
 
 void glfwError(int id, const char* description)
 {
-    std::cout << "GLFW error: " << description << std::endl;
+    std::stringstream stream;
+    stream << "GLFW Error: " << description;
+    logger.log(stream.str(), error);
 }
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -37,7 +42,7 @@ Application::Application(){
     // Load the addresses of OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
-        std::cout << "Failed to initialize GLAD" << std::endl;
+        logger.log("Failed to initialize GLAD", error);
         throw std::runtime_error("Failed to initialize GLAD");
     }
 
@@ -46,6 +51,7 @@ Application::Application(){
 
     // Set a callback for resizing the window
     glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
+    logger.log("Application started", info);
 }
 
 bool Application::isActive()
@@ -61,7 +67,7 @@ void Application::close()
 void Application::getKeys()
 {
     currentKeys.clear();
-    for (auto key : listenedKeys)
+    for (auto key : _listenedKeys)
     {
         if(glfwGetKey(_window, key) == GLFW_PRESS)
         {
@@ -79,4 +85,5 @@ void Application::update()
 
 Application::~Application(){
     glfwTerminate();
+    logger.log("Application terminated", info);
 }
