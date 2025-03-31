@@ -1,5 +1,7 @@
 #include <Application.h>
 #include <iostream>
+#include <ranges>
+#include <unordered_set>
 
 void glfwError(int id, const char* description)
 {
@@ -51,6 +53,23 @@ Application::Application(){
 bool Application::isActive()
 {
     return !glfwWindowShouldClose(_window);
+}
+
+void Application::close()
+{
+    glfwSetWindowShouldClose(_window, true);
+}
+
+void Application::getKeys()
+{
+    currentKeys.clear();
+    for (auto key : listenedKeys)
+    {
+        if(glfwGetKey(_window, key) == GLFW_PRESS)
+        {
+            currentKeys.insert(key);
+        }
+    }
 }
 
 void Application::update()
