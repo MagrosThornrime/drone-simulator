@@ -1,7 +1,5 @@
 #include <Application.h>
 #include <iostream>
-#include <ranges>
-#include <unordered_set>
 
 void glfwError(int id, const char* description)
 {
