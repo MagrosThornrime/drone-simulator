@@ -48,15 +48,18 @@ Application::Application(){
     glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
 }
 
-void Application::run(){
-    while(!glfwWindowShouldClose(_window))
-    {
-        glfwSwapBuffers(_window);
-        glfwPollEvents();
-    }
+bool Application::isActive()
+{
+    return !glfwWindowShouldClose(_window);
 }
+
+void Application::update()
+{
+    glfwSwapBuffers(_window);
+    glfwPollEvents();
+}
+
 
 Application::~Application(){
     glfwTerminate();
-
 }

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.29)
-project(terrain_simulation)
+project(drone_simulator)
 
 set(CMAKE_CXX_STANDARD 20)
 

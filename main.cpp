@@ -4,7 +4,10 @@ int main()
 {
     Application application;
 
-    application.run();
+    while (application.isActive())
+    {
+        application.update();
+    }
 
     return 0;
 }

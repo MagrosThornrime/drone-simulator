@@ -13,5 +13,9 @@ public:
 
   void run();
 
+  bool isActive();
+
+  void update();
+
   ~Application();
 };
