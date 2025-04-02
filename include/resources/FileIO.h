@@ -2,9 +2,7 @@
 #include <sstream>
 
 
-class FileIO{
-
-public:
+struct FileIO{
     static void loadTextFile(const std::string& path, std::string& text);
 
     static void loadImage(const std::string &path, bool bFlipped, int* width,

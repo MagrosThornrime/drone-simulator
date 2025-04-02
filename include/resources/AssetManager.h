@@ -10,11 +10,11 @@
 
 
 class AssetManager{
-    std::map<std::string, Texture> textures;
-    std::map<std::string, Shader> shaderPrograms;
+    std::map<std::string, Texture> _textures;
+    std::map<std::string, Shader> _shaderPrograms;
 
-    void loadProgramCode(const std::string& path, std::string& code);
-    Image loadImage(const std::string &path, ImageType imageType, bool bFlipped);
+    void _loadProgramCode(const std::string& path, std::string& code);
+    Image _loadImage(const std::string &path, ImageType imageType, bool bFlipped);
 
 public:
 

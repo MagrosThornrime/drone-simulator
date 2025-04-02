@@ -10,8 +10,7 @@ struct TextureParameters{
     GLint filterMag = GL_LINEAR;
 };
 
-class Texture{
-public:
+struct Texture{
     unsigned int ID{};
 
     explicit Texture();
