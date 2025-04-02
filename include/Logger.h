@@ -15,8 +15,8 @@ class Logger{
 public:
 
     inline static std::string path;
-    inline static bool consoleUsed;
-    inline static LogLevel level;
+    inline static bool consoleUsed = true;
+    inline static LogLevel level = info;
     static void log(const std::string& text, LogLevel level);
 
 };

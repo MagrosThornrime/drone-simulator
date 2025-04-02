@@ -25,5 +25,7 @@ public:
 
   void close();
 
+  bool isKeyPressed(int key);
+
   ~Application();
 };

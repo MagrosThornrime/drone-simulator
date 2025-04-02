@@ -86,3 +86,8 @@ Application::~Application(){
     glfwTerminate();
     Logger::log("Application closed", info);
 }
+
+bool Application::isKeyPressed(int key)
+{
+    return currentKeys.contains(key);
+}

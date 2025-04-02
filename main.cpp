@@ -10,7 +10,7 @@ int main()
     while (application.isActive())
     {
         application.getKeys();
-        if (application.currentKeys.contains(GLFW_KEY_ESCAPE))
+        if (application.isKeyPressed(GLFW_KEY_ESCAPE))
         {
             application.close();
         }
