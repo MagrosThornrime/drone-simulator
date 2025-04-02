@@ -84,5 +84,5 @@ void Application::update()
 
 Application::~Application(){
     glfwTerminate();
-    Logger::log("Application terminated", info);
+    Logger::log("Application closed", info);
 }
