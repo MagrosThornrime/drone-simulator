@@ -1,4 +1,6 @@
 #include <Shader.h>
+#include <Logger.h>
+
 
 GLint chooseShader(ShaderType type){
     GLint shader = 0;
@@ -42,7 +44,7 @@ void Shader::_compileShader(unsigned int &shader, ShaderType type, const std::st
     if(_success != GL_TRUE) {
         glGetShaderInfoLog(shader, 512, NULL, _infoLog);
         std::string message = shaderToString(type) + " shader compilation failed: " + std::string(_infoLog);
-        _logger->log(message, LogLevel::error);
+        Logger::log(message, LogLevel::error);
     }
 }
 
@@ -54,7 +56,7 @@ void Shader::_linkProgram() {
     if(_success != GL_TRUE){
         glGetProgramInfoLog(ID, 512, NULL, _infoLog);
         std::string message = "shader program linking failed: " + std::string(_infoLog);
-        _logger->log(message, LogLevel::error);
+        Logger::log(message, LogLevel::error);
     }
 }
 

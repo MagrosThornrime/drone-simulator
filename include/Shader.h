@@ -5,7 +5,6 @@
 #include <string>
 #include <utility>
 
-#include <Logger.h>
 
 enum ShaderType {vertex, fragment, geometry};
 
@@ -18,7 +17,6 @@ class Shader{
     std::string _vertexCode{}, _fragmentCode{}, _geometryCode{};
     int _success{};
     char _infoLog[512]{};
-    Logger* _logger;
 
     void _compileShader(unsigned int& shader, ShaderType type, const std::string& code);
     void _linkProgram();
@@ -29,12 +27,12 @@ public:
 
     void compileProgram();
 
-    Shader(Logger* logger, std::string  vertexCode, std::string  fragmentCode)
-    : _logger(logger), _vertexCode(std::move(vertexCode)), _fragmentCode(std::move(fragmentCode)) {}
+    Shader(std::string  vertexCode, std::string  fragmentCode)
+    : _vertexCode(std::move(vertexCode)), _fragmentCode(std::move(fragmentCode)) {}
 
-    Shader(Logger* logger, std::string  vertexCode, std::string  fragmentCode,
+    Shader(std::string  vertexCode, std::string  fragmentCode,
                   std::string  geometryCode)
-    : _logger(logger), _vertexCode(std::move(vertexCode)), _fragmentCode(std::move(fragmentCode)),
+    : _vertexCode(std::move(vertexCode)), _fragmentCode(std::move(fragmentCode)),
     _geometryCode(std::move(geometryCode)) {}
 
     Shader() = default;

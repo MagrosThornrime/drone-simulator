@@ -29,10 +29,10 @@ void Logger::_logToFile(const std::string &text) {
     }
 }
 
-void Logger::log(const std::string &text, LogLevel level) {
-    if(level == warning and this->level == error)
+void Logger::log(const std::string &text, LogLevel currentLevel) {
+    if(currentLevel == warning and level == info)
         return;
-    if(level == error and this->level != error)
+    if(currentLevel == error and level != error)
         return;
 
     std::string toLog = _prepareMessage(text);
