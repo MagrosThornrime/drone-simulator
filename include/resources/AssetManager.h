@@ -1,12 +1,10 @@
 #pragma once
 
-#include <iostream>
 #include <unordered_map>
 
 #include <rendering/Texture.h>
 #include <rendering/Shader.h>
 #include <Logger.h>
-#include <resources/FileIO.h>
 
 
 class AssetManager{

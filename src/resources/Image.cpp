@@ -6,14 +6,10 @@ Image::~Image(){
 }
 
 GLint Image::getFormat() const {
-    GLint format;
     switch(imageType){
-    case ImageType::eJPG:
-        format = GL_RGB;
-        break;
-    case ImageType::ePNG:
-        format = GL_RGBA;
-        break;
+        case eJPG:
+            return GL_RGB;
+        case ePNG:
+            return GL_RGBA;
     }
-    return format;
 }

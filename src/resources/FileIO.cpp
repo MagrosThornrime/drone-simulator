@@ -21,11 +21,11 @@ void FileIO::loadTextFile(const std::string &path, std::string &text) {
     }
 }
 
-void FileIO::loadImage(const std::string &path, bool bFlipped, int* width,
+void FileIO::loadImage(const std::string &path, bool flipped, int* width,
                        int* height, unsigned char*& data)  {
     int nrChannels;
 
-    stbi_set_flip_vertically_on_load(bFlipped);
+    stbi_set_flip_vertically_on_load(flipped);
 
     data = stbi_load(path.c_str(), width, height, &nrChannels, 0);
 

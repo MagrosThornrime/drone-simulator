@@ -1,7 +1,6 @@
 #pragma once
 #include <glad\glad.h>
 #include <resources/Image.h>
-#include <Logger.h>
 
 struct TextureParameters{
     GLint wrapS = GL_REPEAT;

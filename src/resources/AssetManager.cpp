@@ -1,4 +1,6 @@
+#include <ranges>
 #include <resources/AssetManager.h>
+#include <resources/FileIO.h>
 
 
 void AssetManager::_loadProgramCode(const std::string& path, std::string& code){
@@ -28,12 +30,11 @@ Shader* AssetManager::getShader(const std::string &name) {
     return &(_shaderPrograms[name]);
 }
 
-Image AssetManager::_loadImage(const std::string &path, ImageType imageType,
-                                 bool bFlipped) {
+Image AssetManager::_loadImage(const std::string &path, ImageType imageType, bool bFlipped) {
     int width, height;
     unsigned char* data;
     FileIO::loadImage(path, bFlipped, &width, &height, data);
-    return {(unsigned int)width, (unsigned int)height, imageType, data};
+    return {static_cast<unsigned int>(width), static_cast<unsigned int>(height), imageType, data};
 
 }
 
@@ -50,10 +51,10 @@ Texture* AssetManager::getTexture(const std::string &name) {
 }
 
 AssetManager::~AssetManager() {
-    for(auto [name, program] : _shaderPrograms){
+    for(const auto& program : _shaderPrograms | std::views::values){
         glDeleteProgram(program.ID);
     }
-    for(auto [name, texture] : _textures){
+    for(auto& texture : _textures | std::views::values){
         glDeleteTextures(1, &texture.ID);
     }
     Logger::log("Asset manager closed", info);

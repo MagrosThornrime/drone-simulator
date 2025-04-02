@@ -38,11 +38,11 @@ std::string shaderToString(ShaderType type){
 void Shader::_compileShader(unsigned int &shader, ShaderType type, const std::string& code) {
     const char* charCode = code.c_str();
     shader = glCreateShader(chooseShader(type));
-    glShaderSource(shader, 1, &charCode, NULL);
+    glShaderSource(shader, 1, &charCode, nullptr);
     glCompileShader(shader);
     glGetShaderiv(shader, GL_COMPILE_STATUS, &_success);
     if(_success != GL_TRUE) {
-        glGetShaderInfoLog(shader, 512, NULL, _infoLog);
+        glGetShaderInfoLog(shader, 512, nullptr, _infoLog);
         std::string message = shaderToString(type) + " shader compilation failed: " + std::string(_infoLog);
         Logger::log(message, LogLevel::error);
     }
@@ -54,7 +54,7 @@ void Shader::_linkProgram() {
     glLinkProgram(ID);
     glGetProgramiv(ID, GL_LINK_STATUS, &_success);
     if(_success != GL_TRUE){
-        glGetProgramInfoLog(ID, 512, NULL, _infoLog);
+        glGetProgramInfoLog(ID, 512, nullptr, _infoLog);
         std::string message = "shader program linking failed: " + std::string(_infoLog);
         Logger::log(message, LogLevel::error);
     }
@@ -89,7 +89,7 @@ void Shader::use() const {
 }
 
 void Shader::setBool(const std::string& name, bool value) const {
-    glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+    glUniform1i(glGetUniformLocation(ID, name.c_str()), static_cast<int>(value));
 }
 
 void Shader::setInt(const std::string& name, int value) const {
