@@ -1,7 +1,7 @@
 #pragma once
 
 #include <iostream>
-#include <map>
+#include <unordered_map>
 
 #include <rendering/Texture.h>
 #include <rendering/Shader.h>
@@ -10,8 +10,8 @@
 
 
 class AssetManager{
-    std::map<std::string, Texture> _textures;
-    std::map<std::string, Shader> _shaderPrograms;
+    std::unordered_map<std::string, Texture> _textures;
+    std::unordered_map<std::string, Shader> _shaderPrograms;
 
     void _loadProgramCode(const std::string& path, std::string& code);
     Image _loadImage(const std::string &path, ImageType imageType, bool bFlipped);
