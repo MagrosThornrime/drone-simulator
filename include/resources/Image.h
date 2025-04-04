@@ -1,7 +1,7 @@
 #pragma once
 #include <glad\glad.h>
 
-enum ImageType{eJPG, ePNG};
+enum ImageType{JPG, PNG};
 
 struct Image{
     unsigned int width{}, height{};

@@ -7,9 +7,9 @@ Image::~Image(){
 
 GLint Image::getFormat() const {
     switch(imageType){
-        case eJPG:
+        case JPG:
             return GL_RGB;
-        case ePNG:
+        case PNG:
             return GL_RGBA;
     }
 }
