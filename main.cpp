@@ -1,11 +1,19 @@
 #include <Application.h>
 #include <rendering/Renderer.h>
 
+#include "resources/AssetManager.h"
+
+
+const std::string vertexFile = "shaders/vertex.glsl";
+const std::string fragmentFile = "shaders/fragment.glsl";
+const std::string shaderName = "shader";
 
 int main()
 {
     Application application;
-    Renderer renderer;
+    AssetManager assetManager;
+    Shader* shader = assetManager.loadShader(vertexFile, fragmentFile, shaderName);
+    Renderer renderer(shader);
 
     while (application.isActive())
     {
@@ -14,7 +22,8 @@ int main()
         {
             application.close();
         }
-        renderer.draw();
+        renderer.drawBackground();
+        renderer.drawSprite();
         application.update();
     }
 

@@ -18,9 +18,9 @@ public:
 
     AssetManager();
 
-    void loadShader(const std::string& vertexPath, const std::string& fragmentPath,
+    Shader* loadShader(const std::string& vertexPath, const std::string& fragmentPath,
                            const std::string& name);
-    void loadShader(const std::string& vertexPath, const std::string& fragmentPath,
+    Shader* loadShader(const std::string& vertexPath, const std::string& fragmentPath,
                            const std::string& geometryPath, const std::string& name);
     Shader* getShader(const std::string& name);
 

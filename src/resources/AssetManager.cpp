@@ -7,16 +7,17 @@ void AssetManager::_loadProgramCode(const std::string& path, std::string& code){
     FileIO::loadTextFile(path, code);
 }
 
-void AssetManager::loadShader(const std::string& vertexPath, const std::string& fragmentPath,
+Shader* AssetManager::loadShader(const std::string& vertexPath, const std::string& fragmentPath,
                                         const std::string& name) {
     std::string vertexCode, fragmentCode;
     _loadProgramCode(vertexPath, vertexCode);
     _loadProgramCode(fragmentPath, fragmentCode);
     _shaderPrograms[name] = Shader(vertexCode, fragmentCode);
     _shaderPrograms[name].compileProgram();
+    return getShader(name);
 }
 
-void AssetManager::loadShader(const std::string &vertexPath, const std::string &fragmentPath,
+Shader* AssetManager::loadShader(const std::string &vertexPath, const std::string &fragmentPath,
                                         const std::string &geometryPath, const std::string &name) {
     std::string vertexCode, fragmentCode, geometryCode;
     _loadProgramCode(vertexPath, vertexCode);
@@ -24,6 +25,7 @@ void AssetManager::loadShader(const std::string &vertexPath, const std::string &
     _loadProgramCode(geometryPath, geometryCode);
     _shaderPrograms[name] = Shader(vertexCode, fragmentCode, geometryCode);
     _shaderPrograms[name].compileProgram();
+    return getShader(name);
 }
 
 Shader* AssetManager::getShader(const std::string &name) {

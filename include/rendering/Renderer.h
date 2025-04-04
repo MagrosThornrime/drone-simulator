@@ -1,17 +1,17 @@
 #pragma once
+#include "Shader.h"
 
 class Renderer{
 
-    float _vertices[9] = {
-        -0.5f, -0.5f, 0.0f,
-         0.5f, -0.5f, 0.0f,
-         0.0f,  0.5f, 0.0f
-    };
+    Shader* _shader;
+    unsigned int _vao{}, _vbo{};
 
-    unsigned int _vbo{};
+    void _initData();
+
 
 public:
-    Renderer();
-
-    void draw();
+    Renderer(Shader* shader);
+    ~Renderer();
+    void drawBackground();
+    void drawSprite();
 };
