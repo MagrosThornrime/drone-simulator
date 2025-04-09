@@ -18,5 +18,10 @@
       "type": "PNG",
       "flipped": true
     }
-  ]
+  ],
+  "shader":
+  {
+    "vertex": "assets/shaders/vertex.glsl",
+    "fragment": "assets/shaders/fragment.glsl"
+  }
 }

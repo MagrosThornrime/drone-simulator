@@ -67,12 +67,15 @@ AssetManager::AssetManager(const std::string& configFile) : _configFile(configFi
 
 void AssetManager::loadGameAssets(const std::string& shaderName)
 {
-    const std::string vertexFile = "assets/shaders/vertex.glsl";
-    const std::string fragmentFile = "assets/shaders/fragment.glsl";
-    loadShader(vertexFile, fragmentFile, shaderName);
 
     Json::Value config;
     FileIO::loadJsonFile(_configFile, config);
+
+    Json::Value shaders = config["shader"];
+    std::string vertexFile = shaders["vertex"].asString();
+    std::string fragmentFile = shaders["fragment"].asString();
+    loadShader(vertexFile, fragmentFile, shaderName);
+
     Json::Value textures = config["textures"];
     for (auto& texture : textures)
     {
