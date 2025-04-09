@@ -1,19 +1,17 @@
 #include <Application.h>
 #include <rendering/Renderer.h>
+#include <resources/AssetManager.h>
 
-#include "resources/AssetManager.h"
 
 
-const std::string vertexFile = "shaders/vertex.glsl";
-const std::string fragmentFile = "shaders/fragment.glsl";
 const std::string shaderName = "shader";
 
 int main()
 {
     Application application;
-    AssetManager assetManager;
-    Shader* shader = assetManager.loadShader(vertexFile, fragmentFile, shaderName);
-    Renderer renderer(shader);
+    AssetManager assetManager("config.json");
+    assetManager.loadGameAssets("shader");
+    Renderer renderer(assetManager.getShader(shaderName));
 
     while (application.isActive())
     {
@@ -23,7 +21,7 @@ int main()
             application.close();
         }
         renderer.drawBackground();
-        renderer.drawSprite();
+        renderer.drawSprite(assetManager.getTexture("wall"));
         application.update();
     }
 

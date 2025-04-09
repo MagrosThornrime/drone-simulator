@@ -32,18 +32,17 @@ Shader* AssetManager::getShader(const std::string &name) {
     return &(_shaderPrograms[name]);
 }
 
-Image AssetManager::_loadImage(const std::string &path, ImageType imageType, bool bFlipped) {
+Image AssetManager::_loadImage(const std::string &path, ImageType imageType, bool flipped) {
     int width, height;
     unsigned char* data;
-    FileIO::loadImage(path, bFlipped, &width, &height, data);
+    FileIO::loadImage(path, flipped, &width, &height, data);
     return {static_cast<unsigned int>(width), static_cast<unsigned int>(height), imageType, data};
-
 }
 
 
-void AssetManager::loadTexture(const std::string& path, ImageType imageType, bool bFlipped,
+void AssetManager::loadTexture(const std::string& path, ImageType imageType, bool flipped,
                                   TextureParameters textureParameters, const std::string& name) {
-    Image image = _loadImage(path, imageType, bFlipped);
+    Image image = _loadImage(path, imageType, flipped);
     _textures[name] = Texture();
     _textures[name].generate(image, textureParameters);
 }
@@ -62,6 +61,27 @@ AssetManager::~AssetManager() {
     Logger::log("Asset manager closed", info);
 }
 
-AssetManager::AssetManager() {
+AssetManager::AssetManager(const std::string& configFile) : _configFile(configFile) {
     Logger::log("Asset manager created", info);
+}
+
+void AssetManager::loadGameAssets(const std::string& shaderName)
+{
+    const std::string vertexFile = "assets/shaders/vertex.glsl";
+    const std::string fragmentFile = "assets/shaders/fragment.glsl";
+    loadShader(vertexFile, fragmentFile, shaderName);
+
+    TextureParameters textureParameters;
+    Json::Value config;
+    FileIO::loadJsonFile(_configFile, config);
+    Json::Value textures = config["textures"];
+    for (auto& texture : textures)
+    {
+        std::string name = texture["name"].asString();
+        std::string path = texture["path"].asString();
+        ImageType type = Image::typeFromString(texture["type"].asString());
+        bool flipped = texture["flipped"].asBool();
+        loadTexture(path, type, flipped, textureParameters, name);
+    }
+    Logger::log("Game assets loaded", info);
 }

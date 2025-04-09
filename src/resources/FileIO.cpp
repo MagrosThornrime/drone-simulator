@@ -35,3 +35,10 @@ void FileIO::loadImage(const std::string &path, bool flipped, int* width,
         Logger::log(text, error);
     }
 }
+
+void FileIO::loadJsonFile(const std::string &path, Json::Value& root) {
+    std::string text;
+    loadTextFile(path, text);
+    std::stringstream textStream(text);
+    textStream >> root;
+}

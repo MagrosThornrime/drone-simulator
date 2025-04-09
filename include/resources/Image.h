@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <glad\glad.h>
 
 enum ImageType{JPG, PNG};
@@ -14,4 +15,6 @@ struct Image{
     ~Image();
 
     GLint getFormat() const;
+
+    static ImageType typeFromString(const std::string& type);
 };

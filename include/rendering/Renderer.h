@@ -1,5 +1,6 @@
 #pragma once
 #include "Shader.h"
+#include <rendering/Texture.h>
 
 class Renderer{
 
@@ -13,5 +14,5 @@ public:
     Renderer(Shader* shader);
     ~Renderer();
     void drawBackground();
-    void drawSprite();
+    void drawSprite(Texture* texture);
 };
