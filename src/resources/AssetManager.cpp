@@ -72,8 +72,8 @@ void AssetManager::loadGameAssets()
     FileIO::loadJsonFile(_configFile, config);
 
     Json::Value window = config["window"];
-    _windowWidth = window["width"].asInt();
-    _windowHeight = window["height"].asInt();
+    _windowWidth = window["width"].asFloat();
+    _windowHeight = window["height"].asFloat();
     _windowTitle = window["name"].asString();
 
     Json::Value shaders = config["shader"];
