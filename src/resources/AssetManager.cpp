@@ -71,12 +71,12 @@ void AssetManager::loadGameAssets(const std::string& shaderName)
     const std::string fragmentFile = "assets/shaders/fragment.glsl";
     loadShader(vertexFile, fragmentFile, shaderName);
 
-    TextureParameters textureParameters;
     Json::Value config;
     FileIO::loadJsonFile(_configFile, config);
     Json::Value textures = config["textures"];
     for (auto& texture : textures)
     {
+        TextureParameters textureParameters;
         std::string name = texture["name"].asString();
         std::string path = texture["path"].asString();
         ImageType type = Image::typeFromString(texture["type"].asString());
