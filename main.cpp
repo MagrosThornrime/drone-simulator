@@ -21,7 +21,7 @@ int main()
             application.close();
         }
         renderer.drawBackground();
-        renderer.drawSprite(assetManager.getTexture("wall"));
+        renderer.drawSprite(assetManager.getTexture("face"));
         application.update();
     }
 

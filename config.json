@@ -11,6 +11,12 @@
       "path": "assets/images/container.jpg",
       "type": "JPG",
       "flipped": true
+    },
+    {
+      "name": "face",
+      "path": "assets/images/awesomeface.png",
+      "type": "PNG",
+      "flipped": true
     }
   ]
 }
