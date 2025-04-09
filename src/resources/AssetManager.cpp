@@ -12,7 +12,7 @@ Shader* AssetManager::loadShader(const std::string& vertexPath, const std::strin
     std::string vertexCode, fragmentCode;
     _loadProgramCode(vertexPath, vertexCode);
     _loadProgramCode(fragmentPath, fragmentCode);
-    _shaderPrograms[name] = Shader(vertexCode, fragmentCode);
+    _shaderPrograms.try_emplace(name, vertexCode, fragmentCode);
     _shaderPrograms[name].compileProgram();
     return getShader(name);
 }
@@ -23,7 +23,7 @@ Shader* AssetManager::loadShader(const std::string &vertexPath, const std::strin
     _loadProgramCode(vertexPath, vertexCode);
     _loadProgramCode(fragmentPath, fragmentCode);
     _loadProgramCode(geometryPath, geometryCode);
-    _shaderPrograms[name] = Shader(vertexCode, fragmentCode, geometryCode);
+    _shaderPrograms.try_emplace(name, vertexCode, fragmentCode, geometryCode);
     _shaderPrograms[name].compileProgram();
     return getShader(name);
 }
@@ -51,7 +51,8 @@ Texture* AssetManager::getTexture(const std::string &name) {
     return &(_textures[name]);
 }
 
-AssetManager::~AssetManager() {
+AssetManager::~AssetManager()
+{
     for(const auto& program : _shaderPrograms | std::views::values){
         glDeleteProgram(program.ID);
     }
@@ -65,16 +66,20 @@ AssetManager::AssetManager(const std::string& configFile) : _configFile(configFi
     Logger::log("Asset manager created", info);
 }
 
-void AssetManager::loadGameAssets(const std::string& shaderName)
+void AssetManager::loadGameAssets()
 {
-
     Json::Value config;
     FileIO::loadJsonFile(_configFile, config);
+
+    Json::Value window = config["window"];
+    _windowWidth = window["width"].asInt();
+    _windowHeight = window["height"].asInt();
+    _windowTitle = window["name"].asString();
 
     Json::Value shaders = config["shader"];
     std::string vertexFile = shaders["vertex"].asString();
     std::string fragmentFile = shaders["fragment"].asString();
-    loadShader(vertexFile, fragmentFile, shaderName);
+    loadShader(vertexFile, fragmentFile, "shader");
 
     Json::Value textures = config["textures"];
     for (auto& texture : textures)
@@ -87,4 +92,15 @@ void AssetManager::loadGameAssets(const std::string& shaderName)
         loadTexture(path, type, flipped, textureParameters, name);
     }
     Logger::log("Game assets loaded", info);
+}
+
+void AssetManager::loadWindowData()
+{
+    Json::Value config;
+    FileIO::loadJsonFile(_configFile, config);
+
+    Json::Value window = config["window"];
+    _windowWidth = window["width"].asFloat();
+    _windowHeight = window["height"].asFloat();
+    _windowTitle = window["title"].asString();
 }

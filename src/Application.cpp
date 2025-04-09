@@ -12,10 +12,22 @@ void glfwError(int id, const char* description)
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
+    Application::setWindowSize(width, height);
     glViewport(0, 0, width, height);
 }
 
-Application::Application(){
+void Application::setWindowSize(int width, int height)
+{
+    _windowWidth = width;
+    _windowHeight = height;
+}
+
+
+void Application::initialize(int width, int height, const std::string& windowName)
+{
+    setWindowSize(width, height);
+    _listenedKeys = {GLFW_KEY_ESCAPE};
+
     // Initialize GLFW
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -28,7 +40,7 @@ Application::Application(){
     glfwSetErrorCallback(&glfwError);
 
     // Create GLFW window
-    _window = glfwCreateWindow(_startWindowWidth, _startWindowHeight, "Drone simulator", nullptr, nullptr);
+    _window = glfwCreateWindow(_windowWidth, _windowHeight, windowName.c_str(), nullptr, nullptr);
     if (_window == nullptr)
     {
         glfwTerminate();
@@ -46,10 +58,14 @@ Application::Application(){
     }
 
     // Set size of the rendering window
-    glViewport(0, 0, _startWindowWidth, _startWindowHeight);
+    glViewport(0, 0, _windowWidth, _windowHeight);
 
     // Set a callback for resizing the window
     glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
+
+    // Without this enabled, you would see through 3D objects
+    glEnable(GL_DEPTH_TEST);
+
     Logger::log("Application started", info);
 }
 
@@ -82,7 +98,7 @@ void Application::update()
 }
 
 
-Application::~Application(){
+void Application::destroy(){
     glfwTerminate();
     Logger::log("Application closed", info);
 }

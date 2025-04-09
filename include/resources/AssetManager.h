@@ -11,6 +11,8 @@ class AssetManager{
     std::unordered_map<std::string, Texture> _textures;
     std::unordered_map<std::string, Shader> _shaderPrograms;
     std::string _configFile;
+    float _windowWidth, _windowHeight;
+    std::string _windowTitle;
 
     void _loadProgramCode(const std::string& path, std::string& code);
     Image _loadImage(const std::string &path, ImageType imageType, bool flipped);
@@ -29,7 +31,13 @@ public:
                      TextureParameters textureParameters, const std::string& name);
     Texture* getTexture(const std::string& name);
 
-    void loadGameAssets(const std::string& shaderName);
+    void loadGameAssets();
+
+    void loadWindowData();
+
+    float getWindowWidth() { return _windowWidth; }
+    float getWindowHeight() { return _windowHeight; }
+    std::string getWindowTitle() { return _windowTitle; }
 
     ~AssetManager();
 

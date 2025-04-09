@@ -22,5 +22,10 @@
   "shader": {
     "vertex": "assets/shaders/vertex.glsl",
     "fragment": "assets/shaders/fragment.glsl"
+  },
+  "window": {
+    "width": 800.0,
+    "height": 600.0,
+    "title": "Drone simulator"
   }
 }

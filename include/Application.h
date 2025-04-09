@@ -1,31 +1,35 @@
 #pragma once
-#include <array>
+#include <string>
 #include <unordered_set>
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
 
 class Application{
-  const int _startWindowWidth = 800;
-  const int _startWindowHeight = 600;
-  GLFWwindow* _window{};
-  std::array<int, 1> _listenedKeys = {GLFW_KEY_ESCAPE};
+  inline static float _windowWidth, _windowHeight;
+  inline static GLFWwindow* _window;
+  inline static std::vector<int> _listenedKeys;
 
 public:
 
-  std::unordered_set<int> currentKeys;
+  inline static std::unordered_set<int> currentKeys;
 
-  Application();
+  static void initialize(int windowWidth, int windowHeight, const std::string& windowName);
 
-  bool isActive();
+  static bool isActive();
 
-  void update();
+  static void update();
 
-  void getKeys();
+  static void getKeys();
 
-  void close();
+  static void close();
 
-  bool isKeyPressed(int key);
+  static bool isKeyPressed(int key);
 
-  ~Application();
+  static void destroy();
+
+  static void setWindowSize(int width, int height);
+
+  static float getWindowWidth() { return _windowWidth; }
+  static float getWindowHeight() { return _windowHeight; }
 };
