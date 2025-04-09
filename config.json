@@ -19,8 +19,7 @@
       "flipped": true
     }
   ],
-  "shader":
-  {
+  "shader": {
     "vertex": "assets/shaders/vertex.glsl",
     "fragment": "assets/shaders/fragment.glsl"
   }
