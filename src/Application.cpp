@@ -5,9 +5,8 @@
 
 void glfwError(int id, const char* description)
 {
-    std::stringstream stream;
-    stream << "GLFW Error: " << description;
-    Logger::log(stream.str(), error);
+    std::string text = "GLFW Error: " + std::string(description);
+    Logger::log(text, error);
 }
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
@@ -53,8 +52,9 @@ void Application::initialize(int width, int height, const std::string& windowNam
     // Load the addresses of OpenGL function pointers
     if (!gladLoadGLLoader(reinterpret_cast<GLADloadproc>(glfwGetProcAddress)))
     {
-        Logger::log("Failed to initialize GLAD", error);
-        throw std::runtime_error("Failed to initialize GLAD");
+        std::string text = "Failed to initialize GLAD";
+        Logger::log(text, error);
+        throw std::runtime_error(text);
     }
 
     // Set size of the rendering window

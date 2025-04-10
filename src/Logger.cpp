@@ -25,7 +25,8 @@ void Logger::_logToFile(const std::string &text) {
         logFile.close();
     }
     catch(std::ofstream::failure& e) {
-        _logToConsole(_prepareMessage("failed to log to file"));
+        std::string text = std::string(e.what());
+        _logToConsole(_prepareMessage(text));
     }
 }
 

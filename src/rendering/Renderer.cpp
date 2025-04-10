@@ -2,7 +2,7 @@
 #include <glad/glad.h>
 #include <Logger.h>
 
-#include "Application.h"
+#include <Application.h>
 
 void Renderer::drawBackground(){
     glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
@@ -47,7 +47,7 @@ glm::mat4 Renderer::_getProjectionMatrix()
 glm::mat4 Renderer::_getViewMatrix()
 {
     glm::mat4 view = glm::mat4(1.0f);
-    return glm::translate(view, glm::vec3(0.0f, 0.0f, -10.0f));
+    return glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
 }
 
 void Renderer::_initData()

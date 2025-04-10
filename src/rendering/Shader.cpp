@@ -45,6 +45,7 @@ void Shader::_compileShader(unsigned int &shader, ShaderType type, const std::st
         glGetShaderInfoLog(shader, 512, nullptr, _infoLog);
         std::string message = shaderToString(type) + " shader compilation failed: " + std::string(_infoLog);
         Logger::log(message, LogLevel::error);
+        throw std::runtime_error(message);
     }
 }
 
@@ -57,6 +58,7 @@ void Shader::_linkProgram() {
         glGetProgramInfoLog(ID, 512, nullptr, _infoLog);
         std::string message = "shader program linking failed: " + std::string(_infoLog);
         Logger::log(message, LogLevel::error);
+        throw std::runtime_error(message);
     }
 }
 

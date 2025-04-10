@@ -17,7 +17,9 @@ void FileIO::loadTextFile(const std::string &path, std::string &text) {
         text = stringStream.str();
     }
     catch(std::ifstream::failure& e) {
-        Logger::log("file not successfully read: " + path, LogLevel::error);
+        std::string text = e.what();
+        Logger::log(text, LogLevel::error);
+        throw std::runtime_error(text);
     }
 }
 
@@ -33,6 +35,7 @@ void FileIO::loadImage(const std::string &path, bool flipped, int* width,
     {
         const std::string text = "Failed to load image: " + path;
         Logger::log(text, error);
+        throw std::runtime_error(text);
     }
 }
 

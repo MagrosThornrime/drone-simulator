@@ -18,7 +18,9 @@ void Texture::generate(const Image& image, TextureParameters textureParameters) 
                      image.height, 0, image.getFormat(), GL_UNSIGNED_BYTE, image.data);
     }
     else{
-        Logger::log("Failed to load texture", error);
+        std::string text = "Failed to load texture";
+        Logger::log(text, error);
+        throw std::runtime_error(text);
     }
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, textureParameters.wrapS);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, textureParameters.wrapT);
