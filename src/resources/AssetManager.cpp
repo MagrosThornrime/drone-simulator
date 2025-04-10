@@ -43,7 +43,7 @@ Image AssetManager::_loadImage(const std::string &path, ImageType imageType, boo
 void AssetManager::loadTexture(const std::string& path, ImageType imageType, bool flipped,
                                   TextureParameters textureParameters, const std::string& name) {
     Image image = _loadImage(path, imageType, flipped);
-    _textures[name] = Texture();
+    _textures.try_emplace(name);
     _textures[name].generate(image, textureParameters);
 }
 
