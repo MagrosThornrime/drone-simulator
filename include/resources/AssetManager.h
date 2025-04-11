@@ -15,7 +15,7 @@ class AssetManager{
     std::string _windowTitle;
 
     void _loadProgramCode(const std::string& path, std::string& code);
-    Image _loadImage(const std::string &path, ImageType imageType, bool flipped);
+    Image _loadImage(const std::string &path, bool flipped);
 
 public:
 
@@ -27,9 +27,11 @@ public:
                            const std::string& geometryPath, const std::string& name);
     Shader* getShader(const std::string& name);
 
-    void loadTexture(const std::string& path, ImageType imageType, bool flipped,
+    void loadTexture(const std::string& path, bool flipped, const std::string& typeName,
                      TextureParameters textureParameters, const std::string& name);
     Texture* getTexture(const std::string& name);
+
+    bool hasTexture(const std::string& name);
 
     void loadGameAssets();
 

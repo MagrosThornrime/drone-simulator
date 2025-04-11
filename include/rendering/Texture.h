@@ -11,9 +11,10 @@ struct TextureParameters{
 
 struct Texture{
     unsigned int ID{};
+    std::string typeName{};
 
     explicit Texture();
-    void generate(const Image& image, TextureParameters textureParameters);
+    void generate(const Image& image, TextureParameters textureParameters, const std::string& typeName);
     void bind() const;
     void unbind() const;
 };

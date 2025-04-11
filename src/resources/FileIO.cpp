@@ -24,7 +24,7 @@ void FileIO::loadTextFile(const std::string &path, std::string &text) {
 }
 
 void FileIO::loadImage(const std::string &path, bool flipped, int* width,
-                       int* height, unsigned char*& data)  {
+                       int* height, unsigned char*& data, GLenum& format)  {
     int nrChannels;
 
     stbi_set_flip_vertically_on_load(flipped);
@@ -36,6 +36,23 @@ void FileIO::loadImage(const std::string &path, bool flipped, int* width,
         const std::string text = "Failed to load image: " + path;
         Logger::log(text, error);
         throw std::runtime_error(text);
+    }
+
+    if (nrChannels == 1)
+    {
+        format = GL_RED;
+    }
+    else if (nrChannels == 3)
+    {
+        format = GL_RGB;
+    }
+    else if (nrChannels == 4)
+    {
+        format = GL_RGBA;
+    }
+    else
+    {
+        throw std::runtime_error("Unsupported number of channels");
     }
 }
 

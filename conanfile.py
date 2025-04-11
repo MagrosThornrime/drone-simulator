@@ -9,10 +9,11 @@ class DroneSimulator(ConanFile):
     def requirements(self):
         self.requires("opengl/system")
         self.requires("glad/0.1.36")
-        self.requires("glfw/3.4")
         self.requires("glm/1.0.1")
-        self.requires("stb/cci.20240531")
+        self.requires("glfw/3.4")
+        self.requires("assimp/5.4.3")
+        self.requires("stb/cci.20230920")
         self.requires("jsoncpp/1.9.6")
 
-    def build_requirements(self):
+def build_requirements(self):
         self.tool_requires("cmake/[>=3.29]")

@@ -22,6 +22,8 @@ set(SOURCES
         src/rendering/Renderer.cpp
         src/rendering/Texture.cpp
         src/rendering/Shader.cpp
+        src/rendering/Mesh.cpp
+        src/rendering/Model.cpp
         src/resources/FileIO.cpp
         src/resources/AssetManager.cpp
         src/resources/Image.cpp
@@ -33,6 +35,8 @@ set(HEADERS
         include/rendering/Texture.h
         include/rendering/Renderer.h
         include/rendering/Shader.h
+        include/rendering/Mesh.h
+        include/rendering/Model.h
         include/resources/FileIO.h
         include/resources/AssetManager.h
         include/resources/Image.h

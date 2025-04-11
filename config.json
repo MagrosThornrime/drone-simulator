@@ -1,24 +1,4 @@
 {
-  "textures": [
-    {
-      "name": "wall",
-      "path": "assets/images/wall.jpg",
-      "type": "JPG",
-      "flipped": true
-    },
-    {
-      "name": "container",
-      "path": "assets/images/container.jpg",
-      "type": "JPG",
-      "flipped": true
-    },
-    {
-      "name": "face",
-      "path": "assets/images/awesomeface.png",
-      "type": "PNG",
-      "flipped": true
-    }
-  ],
   "shader": {
     "vertex": "assets/shaders/vertex.glsl",
     "fragment": "assets/shaders/fragment.glsl"

@@ -9,13 +9,13 @@ void Texture::unbind() const {
     glBindTexture(GL_TEXTURE_2D, 0);
 }
 
-void Texture::generate(const Image& image, TextureParameters textureParameters) {
+void Texture::generate(const Image& image, TextureParameters textureParameters, const std::string& typeName) {
+    this->typeName = typeName;
     bind();
     if(image.data)
     {
-        const GLint internalFormat = GL_RGBA;
-        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, image.width,
-                     image.height, 0, image.getFormat(), GL_UNSIGNED_BYTE, image.data);
+        glTexImage2D(GL_TEXTURE_2D, 0, image.format, image.width,
+                     image.height, 0, image.format, GL_UNSIGNED_BYTE, image.data);
     }
     else{
         std::string text = "Failed to load texture";
@@ -31,6 +31,6 @@ void Texture::generate(const Image& image, TextureParameters textureParameters) 
 }
 
 
-Texture::Texture() {
+Texture::Texture(){
     glGenTextures(1, &ID);
 }

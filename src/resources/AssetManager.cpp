@@ -32,24 +32,31 @@ Shader* AssetManager::getShader(const std::string &name) {
     return &(_shaderPrograms[name]);
 }
 
-Image AssetManager::_loadImage(const std::string &path, ImageType imageType, bool flipped) {
+Image AssetManager::_loadImage(const std::string &path, bool flipped) {
     int width, height;
     unsigned char* data;
-    FileIO::loadImage(path, flipped, &width, &height, data);
-    return {static_cast<unsigned int>(width), static_cast<unsigned int>(height), imageType, data};
+    GLenum format;
+    FileIO::loadImage(path, flipped, &width, &height, data, format);
+    return {static_cast<unsigned int>(width), static_cast<unsigned int>(height), format, data};
 }
 
 
-void AssetManager::loadTexture(const std::string& path, ImageType imageType, bool flipped,
+void AssetManager::loadTexture(const std::string& path, bool flipped, const std::string& typeName,
                                   TextureParameters textureParameters, const std::string& name) {
-    Image image = _loadImage(path, imageType, flipped);
+    Image image = _loadImage(path, flipped);
     _textures.try_emplace(name);
-    _textures[name].generate(image, textureParameters);
+    _textures[name].generate(image, textureParameters, typeName);
 }
 
 Texture* AssetManager::getTexture(const std::string &name) {
     return &(_textures[name]);
 }
+
+bool AssetManager::hasTexture(const std::string& name)
+{
+    return _textures.contains(name);
+}
+
 
 AssetManager::~AssetManager()
 {
@@ -81,16 +88,6 @@ void AssetManager::loadGameAssets()
     std::string fragmentFile = shaders["fragment"].asString();
     loadShader(vertexFile, fragmentFile, "shader");
 
-    Json::Value textures = config["textures"];
-    for (auto& texture : textures)
-    {
-        TextureParameters textureParameters;
-        std::string name = texture["name"].asString();
-        std::string path = texture["path"].asString();
-        ImageType type = Image::typeFromString(texture["type"].asString());
-        bool flipped = texture["flipped"].asBool();
-        loadTexture(path, type, flipped, textureParameters, name);
-    }
     Logger::log("Game assets loaded", info);
 }
 

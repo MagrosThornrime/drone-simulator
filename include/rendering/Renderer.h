@@ -2,6 +2,8 @@
 #include "Shader.h"
 #include <rendering/Texture.h>
 
+#include "Model.h"
+
 class Renderer
 {
     Shader* _shader;
@@ -17,5 +19,5 @@ public:
     Renderer(Shader* shader);
     ~Renderer();
     void drawBackground();
-    void drawSprite(Texture* texture, glm::vec3 position, glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle);
+    void drawModel(Model* model, glm::vec3 position, glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle);
 };
