@@ -21,7 +21,6 @@ unsigned int TextureFromFile(const char *path, const std::string &directory, boo
 class Model
 {
     std::vector<Mesh> _meshes;
-    std::string _directory;
     AssetManager& _assetManager;
 
     void _processNode(aiNode *node, const aiScene *scene);

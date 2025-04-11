@@ -15,8 +15,6 @@ Model::Model(const std::string& path, AssetManager& assetManager) : _assetManage
         Logger::log(text, error);
         throw std::runtime_error(text);
     }
-    // retrieve the directory path of the filepath
-    _directory = path.substr(0, path.find_last_of('/'));
 
     // process ASSIMP's root node recursively
     _processNode(scene->mRootNode, scene);
