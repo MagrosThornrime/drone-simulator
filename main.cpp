@@ -12,7 +12,7 @@ int main()
         assetManager.getWindowTitle());
     assetManager.loadGameAssets();
 
-    Model model("assets/models/backpack/backpack.obj", assetManager);
+    Model model("assets/models/drone/drone_low_poly.obj", assetManager);
 
     Renderer renderer(assetManager.getShader("shader"));
 
@@ -24,7 +24,7 @@ int main()
             Application::close();
         }
         renderer.drawBackground();
-        renderer.drawModel(&model, {0,0,0}, {1, 1, 1}, {1, 0, 0}, 0);
+        renderer.drawModel(&model, {0,0,0}, {0.01, 0.01, 0.01}, {1, 0, 0}, 0);
         Application::update();
     }
 

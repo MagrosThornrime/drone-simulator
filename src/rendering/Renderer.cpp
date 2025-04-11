@@ -43,8 +43,8 @@ glm::mat4 Renderer::_getProjectionMatrix()
 glm::mat4 Renderer::_getViewMatrix()
 {
     glm::mat4 view = glm::mat4(1.0f);
-    view = glm::translate(view, glm::vec3(2.0f, 0.0f, -10.0f));
-    view = glm::rotate(view, glm::radians(45.f), glm::vec3(2.0f, 0.0f, -10.0f));
+    view = glm::rotate(view, glm::radians(15.f), glm::vec3(1.0f, 0.0f, 0.0f));
+    view = glm::translate(view, glm::vec3(0.0f, -1.0f, -3.0f));
     return view;
 }
 
