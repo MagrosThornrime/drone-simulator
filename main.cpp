@@ -12,7 +12,7 @@ int main()
         assetManager.getWindowTitle());
     assetManager.loadGameAssets();
 
-    Model model("assets/models/drone/drone_low_poly.obj", assetManager);
+    Model model("assets/models/tree/low_poly_tree_1.obj", assetManager);
 
     Renderer renderer(assetManager.getShader("shader"));
 

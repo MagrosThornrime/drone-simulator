@@ -122,7 +122,7 @@ Mesh Model::_processMesh(aiMesh *mesh, const aiScene *scene)
         {
             aiString str;
             mat->GetTexture(type, i, &str);
-            std::string path = "assets/models/drone/" + std::string(str.C_Str());  //TODO: use std::filesystem
+            std::string path = "assets/models/tree/" + std::string(str.C_Str());  //TODO: use std::filesystem
             if(!_assetManager.hasTexture(path))
             {
                 TextureParameters texParameters;
