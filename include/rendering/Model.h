@@ -16,8 +16,6 @@
 
 #include <resources/AssetManager.h>
 
-unsigned int TextureFromFile(const char *path, const std::string &directory, bool gamma = false);
-
 class Model
 {
     std::vector<Mesh> _meshes;
