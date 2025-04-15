@@ -21,11 +21,11 @@ class Model
     std::vector<Mesh> _meshes;
     AssetManager& _assetManager;
 
-    void _processNode(aiNode *node, const aiScene *scene);
+    void _processNode(const aiNode& node, const aiScene& scene);
 
-    Mesh _processMesh(aiMesh *mesh, const aiScene *scene);
+    Mesh _processMesh(aiMesh& mesh, const aiScene& scene);
 
-    void _loadMaterialTextures(aiMaterial *mat, aiTextureType type, std::string typeName,
+    void _loadMaterialTextures(const aiMaterial& mat, aiTextureType type, const std::string& typeName,
         std::vector<std::string>& texturePaths);
 public:
 
