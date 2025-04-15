@@ -12,8 +12,8 @@ Shader* AssetManager::loadShader(const std::string& vertexPath, const std::strin
     std::string vertexCode, fragmentCode;
     _loadProgramCode(vertexPath, vertexCode);
     _loadProgramCode(fragmentPath, fragmentCode);
-    _shaderPrograms.try_emplace(name, vertexCode, fragmentCode);
-    _shaderPrograms[name].compileProgram();
+    _shaders.try_emplace(name, vertexCode, fragmentCode);
+    _shaders[name].compileProgram();
     return getShader(name);
 }
 
@@ -23,13 +23,13 @@ Shader* AssetManager::loadShader(const std::string &vertexPath, const std::strin
     _loadProgramCode(vertexPath, vertexCode);
     _loadProgramCode(fragmentPath, fragmentCode);
     _loadProgramCode(geometryPath, geometryCode);
-    _shaderPrograms.try_emplace(name, vertexCode, fragmentCode, geometryCode);
-    _shaderPrograms[name].compileProgram();
+    _shaders.try_emplace(name, vertexCode, fragmentCode, geometryCode);
+    _shaders[name].compileProgram();
     return getShader(name);
 }
 
 Shader* AssetManager::getShader(const std::string &name) {
-    return &(_shaderPrograms[name]);
+    return &(_shaders[name]);
 }
 
 Image AssetManager::_loadImage(const std::string &path, bool flipped) {
@@ -60,7 +60,7 @@ bool AssetManager::hasTexture(const std::string& name)
 
 AssetManager::~AssetManager()
 {
-    for(const auto& program : _shaderPrograms | std::views::values){
+    for(const auto& program : _shaders | std::views::values){
         glDeleteProgram(program.ID);
     }
     for(auto& texture : _textures | std::views::values){

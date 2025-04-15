@@ -9,7 +9,7 @@
 
 class AssetManager{
     std::unordered_map<std::string, Texture> _textures;
-    std::unordered_map<std::string, Shader> _shaderPrograms;
+    std::unordered_map<std::string, Shader> _shaders;
     std::string _configFile;
     float _windowWidth, _windowHeight;
     std::string _windowTitle;
