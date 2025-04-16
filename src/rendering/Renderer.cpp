@@ -111,13 +111,14 @@ void Renderer::_initData()
     glEnableVertexAttribArray(1);
 }
 
-Renderer::Renderer(Shader* shader) : _shader(shader)
+void Renderer::initialize(Shader* shader)
 {
+    _shader = shader;
     _initData();
     Logger::log("Renderer started", info);
 }
 
-Renderer::~Renderer()
+void Renderer::destroy()
 {
     glDeleteVertexArrays(1, &_vao);
     glDeleteBuffers(1, &_vbo);

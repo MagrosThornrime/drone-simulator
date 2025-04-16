@@ -1,9 +1,10 @@
 #include <rendering/Model.h>
 
-#include "resources/AssetManager.h"
 
-Model::Model(const std::string& path, AssetManager& assetManager) : _assetManager(assetManager)
+void Model::generate(const std::string& directory, const std::string& objFile)
 {
+    _directory = directory;
+    std::string path = directory + "/" + objFile;
     // read file via ASSIMP
     Assimp::Importer importer;
     const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_GenSmoothNormals |
@@ -22,22 +23,22 @@ Model::Model(const std::string& path, AssetManager& assetManager) : _assetManage
 
 void Model::draw(const Shader& shader)
 {
-    for(unsigned int i = 0; i < _meshes.size(); i++)
-        _meshes[i].draw(shader);
+    for(int i = 0; i < meshes.size(); i++)
+        meshes[i].draw(shader);
 }
 
 void Model::_processNode(const aiNode& node, const aiScene& scene)
 {
     // process each mesh located at the current node
-    for(unsigned int i = 0; i < node.mNumMeshes; i++)
+    for(int i = 0; i < node.mNumMeshes; i++)
     {
         // the node object only contains indices to index the actual objects in the scene.
         // the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
         aiMesh& mesh = *scene.mMeshes[node.mMeshes[i]];
-        _meshes.push_back(_processMesh(mesh, scene));
+        meshes.push_back(_processMesh(mesh, scene));
     }
     // after we've processed all the meshes (if any) we then recursively process each of the children nodes
-    for(unsigned int i = 0; i < node.mNumChildren; i++)
+    for(int i = 0; i < node.mNumChildren; i++)
     {
         _processNode(*node.mChildren[i], scene);
     }
@@ -49,9 +50,10 @@ Mesh Model::_processMesh(aiMesh& mesh, const aiScene& scene)
         std::vector<VertexData> vertices;
         std::vector<unsigned int> indices;
         std::vector<std::string> texturePaths;
+        std::vector<std::string> textureTypes;
 
         // walk through each of the mesh's vertices
-        for(unsigned int i = 0; i < mesh.mNumVertices; i++)
+        for(int i = 0; i < mesh.mNumVertices; i++)
         {
             VertexData vertex;
             glm::vec3 vector; // we declare a placeholder vector since assimp uses its own vector class that doesn't directly convert to glm's vec3 class so we transfer the data to this placeholder glm::vec3 first.
@@ -84,11 +86,11 @@ Mesh Model::_processMesh(aiMesh& mesh, const aiScene& scene)
             vertices.push_back(vertex);
         }
         // now walk through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
-        for(unsigned int i = 0; i < mesh.mNumFaces; i++)
+        for(int i = 0; i < mesh.mNumFaces; i++)
         {
             aiFace face = mesh.mFaces[i];
             // retrieve all indices of the face and store them in the indices vector
-            for(unsigned int j = 0; j < face.mNumIndices; j++)
+            for(int j = 0; j < face.mNumIndices; j++)
                 indices.push_back(face.mIndices[j]);
         }
         // process materials
@@ -101,33 +103,33 @@ Mesh Model::_processMesh(aiMesh& mesh, const aiScene& scene)
         // normal: texture_normalN
 
         // 1. diffuse maps
-        _loadMaterialTextures(*material, aiTextureType_DIFFUSE, "texture_diffuse", texturePaths);
+        _loadMaterialTextures(*material, aiTextureType_DIFFUSE, "texture_diffuse",
+            texturePaths, textureTypes);
         // 2. specular maps
-        _loadMaterialTextures(*material, aiTextureType_SPECULAR, "texture_specular", texturePaths);
+        _loadMaterialTextures(*material, aiTextureType_SPECULAR, "texture_specular",
+            texturePaths, textureTypes);
         // 3. normal maps
-        _loadMaterialTextures(*material, aiTextureType_HEIGHT, "texture_normal", texturePaths);
+        _loadMaterialTextures(*material, aiTextureType_HEIGHT, "texture_normal",
+            texturePaths, textureTypes);
         // 4. height maps
-        _loadMaterialTextures(*material, aiTextureType_AMBIENT, "texture_height", texturePaths);
+        _loadMaterialTextures(*material, aiTextureType_AMBIENT, "texture_height",
+            texturePaths, textureTypes);
 
         // return a mesh object created from the extracted mesh data
-        return Mesh(vertices, indices, texturePaths, _assetManager);
+        return Mesh(vertices, indices, texturePaths, textureTypes);
     }
 
     // checks all material textures of a given type and loads the textures if they're not loaded yet.
     // the required info is returned as a Texture struct.
     void Model::_loadMaterialTextures(const aiMaterial& mat, aiTextureType type, const std::string& typeName,
-        std::vector<std::string>& texturePaths)
+        std::vector<std::string>& texturePaths, std::vector<std::string>& textureTypes)
     {
-        for(unsigned int i = 0; i < mat.GetTextureCount(type); i++)
+        for(int i = 0; i < mat.GetTextureCount(type); i++)
         {
             aiString str;
             mat.GetTexture(type, i, &str);
-            std::string path = "assets/models/drone/" + std::string(str.C_Str());  //TODO: use std::filesystem
-            if(!_assetManager.hasTexture(path))
-            {
-                TextureParameters texParameters;
-                _assetManager.loadTexture(path, true, typeName, texParameters, path);
-                texturePaths.push_back(path);
-            }
+            std::string path = _directory + "/" + str.C_Str();
+            texturePaths.push_back(path);
+            textureTypes.push_back(typeName);
         }
 }

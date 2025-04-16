@@ -2,8 +2,8 @@
 #include <rendering/Mesh.h>
 
 Mesh::Mesh(const std::vector<VertexData>& vertices, const std::vector<unsigned int>& indices,
-         const std::vector<std::string>& texturePaths, AssetManager& assetManager) : _vertices(vertices),
-        _indices(indices), _texturePaths(texturePaths), _assetManager(assetManager)
+         const std::vector<std::string>& texturePaths, const std::vector<std::string>& textureTypes)
+        : _vertices(vertices), _indices(indices), texturePaths(texturePaths), textureTypes(textureTypes)
 {
     glGenVertexArrays(1, &_vao);
     glGenBuffers(1, &_vbo);
@@ -35,12 +35,12 @@ void Mesh::draw(const Shader& shader)
     unsigned int specularNr = 1;
     unsigned int normalNr   = 1;
     unsigned int heightNr   = 1;
-    for(unsigned int i = 0; i < _texturePaths.size(); i++)
+    for(int i = 0; i < textures.size(); i++)
     {
         glActiveTexture(GL_TEXTURE0 + i); // active proper texture unit before binding
         // retrieve texture number (the N in diffuse_textureN)
         std::string number;
-        Texture* texture = _assetManager.getTexture(_texturePaths[i]);
+        Texture* texture = textures[i];
         std::string name = texture->typeName;
         if(name == "texture_diffuse")
             number = std::to_string(diffuseNr++);

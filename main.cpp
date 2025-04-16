@@ -6,15 +6,13 @@
 
 int main()
 {
-    AssetManager assetManager("config.json");
-    assetManager.loadWindowData();
-    Application::initialize(assetManager.getWindowWidth(), assetManager.getWindowHeight(),
-        assetManager.getWindowTitle());
-    assetManager.loadGameAssets();
+    AssetManager::initialize("config.json");
+    AssetManager::loadWindowData();
+    Application::initialize(AssetManager::windowWidth, AssetManager::windowHeight,
+        AssetManager::windowTitle);
+    AssetManager::loadGameAssets();
 
-    Model model("assets/models/drone/drone_low_poly.obj", assetManager);
-
-    Renderer renderer(assetManager.getShader("shader"));
+    Renderer::initialize(AssetManager::getShader("shader"));
 
     while (Application::isActive())
     {
@@ -23,10 +21,18 @@ int main()
         {
             Application::close();
         }
-        renderer.drawBackground();
-        renderer.drawModel(&model, {0,0,0}, {0.01, 0.01, 0.01}, {1, 0, 0}, 0);
+        Renderer::drawBackground();
+        // Model* model = AssetManager::getModel("drone");
+        // Renderer::drawModel(model, {0,0,0}, {0.01, 0.01, 0.01}, {1, 0, 0}, 0);
+        Model* model = AssetManager::getModel("backpack");
+        Renderer::drawModel(model, {0,0,0}, {0.5, 0.5, 0.5}, {1, 0, 0}, 0);
+
         Application::update();
     }
+
+    Renderer::destroy();
+    Application::destroy();
+    AssetManager::destroy();
 
     return 0;
 }

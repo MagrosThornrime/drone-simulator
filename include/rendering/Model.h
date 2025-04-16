@@ -13,24 +13,25 @@
 #include <vector>
 
 #include <Logger.h>
-
-#include <resources/AssetManager.h>
+#include <unordered_map>
 
 class Model
 {
-    std::vector<Mesh> _meshes;
-    AssetManager& _assetManager;
+    std::string _directory;
 
     void _processNode(const aiNode& node, const aiScene& scene);
 
     Mesh _processMesh(aiMesh& mesh, const aiScene& scene);
 
     void _loadMaterialTextures(const aiMaterial& mat, aiTextureType type, const std::string& typeName,
-        std::vector<std::string>& texturePaths);
+        std::vector<std::string>& texturePaths, std::vector<std::string>& textureTypes);
 public:
+    std::vector<Mesh> meshes;
 
-    Model(const std::string& path, AssetManager& assetManager);
+    void generate(const std::string& directory, const std::string& objFile);
 
     void draw(const Shader& shader);
+
+    Model() = default;
 
 };

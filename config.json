@@ -1,4 +1,17 @@
 {
+  "models": [
+    {
+      "name": "drone",
+      "directory": "assets/models/drone",
+      "obj": "drone_low_poly.obj"
+    },
+    {
+      "name": "backpack",
+      "directory": "assets/models/backpack",
+      "obj": "backpack.obj"
+    }
+  ],
+
   "shader": {
     "vertex": "assets/shaders/vertex.glsl",
     "fragment": "assets/shaders/fragment.glsl"

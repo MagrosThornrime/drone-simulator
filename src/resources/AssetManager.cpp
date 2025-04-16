@@ -32,6 +32,12 @@ Shader* AssetManager::getShader(const std::string &name) {
     return &(_shaders[name]);
 }
 
+bool AssetManager::hasShader(const std::string& name)
+{
+    return _shaders.contains(name);
+}
+
+
 Image AssetManager::_loadImage(const std::string &path, bool flipped) {
     int width, height;
     unsigned char* data;
@@ -48,7 +54,17 @@ void AssetManager::loadTexture(const std::string& path, bool flipped, const std:
     _textures[name].generate(image, textureParameters, typeName);
 }
 
+void AssetManager::loadTexture(const std::string& path, bool flipped, const std::string& typeName,
+                                const std::string& name) {
+    TextureParameters textureParameters;
+    loadTexture(path, flipped, typeName, textureParameters, name);
+}
+
 Texture* AssetManager::getTexture(const std::string &name) {
+    if (!hasTexture(name))
+    {
+        throw std::runtime_error("Texture: " + name + " does not exist");
+    }
     return &(_textures[name]);
 }
 
@@ -57,8 +73,36 @@ bool AssetManager::hasTexture(const std::string& name)
     return _textures.contains(name);
 }
 
+void AssetManager::loadModel(const std::string& directory, const std::string& objFile,
+                            const std::string& name)
+{
+    _models.try_emplace(name);
+    _models[name].generate(directory, objFile);
+    for (auto& mesh : _models[name].meshes)
+    {
+        for (int i = 0; i < mesh.texturePaths.size(); i++)
+        {
+            std::string texturePath = mesh.texturePaths[i];
+            std::string textureType = mesh.textureTypes[i];
+            if (!hasTexture(texturePath))
+            {
+                loadTexture(texturePath, true, textureType, texturePath);
+                mesh.textures.push_back(getTexture(texturePath));
+            }
+        }
+    }
+}
 
-AssetManager::~AssetManager()
+Model* AssetManager::getModel(const std::string& name)
+{
+    if (!_models.contains(name))
+    {
+        throw std::runtime_error("Model: " + name + " does not exist");
+    }
+    return &(_models[name]);
+}
+
+void AssetManager::destroy()
 {
     for(const auto& program : _shaders | std::views::values){
         glDeleteProgram(program.ID);
@@ -69,8 +113,14 @@ AssetManager::~AssetManager()
     Logger::log("Asset manager closed", info);
 }
 
-AssetManager::AssetManager(const std::string& configFile) : _configFile(configFile) {
+void AssetManager::initialize(const std::string& configFile){
+    _configFile = configFile;
     Logger::log("Asset manager created", info);
+}
+
+bool AssetManager::hasModel(const std::string& name)
+{
+    return _models.contains(name);
 }
 
 void AssetManager::loadGameAssets()
@@ -78,15 +128,19 @@ void AssetManager::loadGameAssets()
     Json::Value config;
     FileIO::loadJsonFile(_configFile, config);
 
-    Json::Value window = config["window"];
-    _windowWidth = window["width"].asFloat();
-    _windowHeight = window["height"].asFloat();
-    _windowTitle = window["name"].asString();
-
     Json::Value shaders = config["shader"];
     std::string vertexFile = shaders["vertex"].asString();
     std::string fragmentFile = shaders["fragment"].asString();
     loadShader(vertexFile, fragmentFile, "shader");
+
+    Json::Value models = config["models"];
+    for (auto& model : models)
+    {
+        std::string name = model["name"].asString();
+        std::string directory = model["directory"].asString();
+        std::string objFile = model["obj"].asString();
+        loadModel(directory, objFile, name);
+    }
 
     Logger::log("Game assets loaded", info);
 }
@@ -97,7 +151,7 @@ void AssetManager::loadWindowData()
     FileIO::loadJsonFile(_configFile, config);
 
     Json::Value window = config["window"];
-    _windowWidth = window["width"].asFloat();
-    _windowHeight = window["height"].asFloat();
-    _windowTitle = window["title"].asString();
+    windowWidth = window["width"].asFloat();
+    windowHeight = window["height"].asFloat();
+    windowTitle = window["title"].asString();
 }

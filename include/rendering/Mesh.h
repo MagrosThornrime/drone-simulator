@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 
-#include <resources/AssetManager.h>
-
 struct VertexData {
     glm::vec3 position;
     glm::vec3 normal;
@@ -17,12 +15,14 @@ struct VertexData {
 class Mesh {
     std::vector<VertexData> _vertices;
     std::vector<unsigned int> _indices;
-    std::vector<std::string> _texturePaths;
-    AssetManager& _assetManager;
     unsigned int _vao{}, _vbo{}, _ebo{};
 public:
+    std::vector<std::string> texturePaths;
+    std::vector<std::string> textureTypes;
+    std::vector<Texture*> textures;
+
     Mesh(const std::vector<VertexData>& vertices, const std::vector<unsigned int>& indices,
-         const std::vector<std::string>& texturePaths, AssetManager& assetManager);
+         const std::vector<std::string>& texturePaths, const std::vector<std::string>& textureTypes);
 
     void draw(const Shader& shader);
 };
