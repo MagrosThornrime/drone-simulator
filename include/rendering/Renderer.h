@@ -10,7 +10,6 @@ class Renderer
     static inline unsigned int _vao{}, _vbo{};
     static inline int triangles = 36;
 
-    static void _initData();
     static glm::mat4 _getModelMatrix(glm::vec3 position, glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle);
     static glm::mat4 _getProjectionMatrix();
     static glm::mat4 _getViewMatrix();
