@@ -14,10 +14,9 @@ void Renderer::drawModel(Model* model, glm::vec3 position, glm::vec3 scale,
 {
     _shader->use();
     glm::mat4 modelMatrix = _getModelMatrix(position, scale, rotationAxis, rotationAngle);
-    glm::mat4 viewMatrix = _getViewMatrix();
     glm::mat4 projectionMatrix = _getProjectionMatrix();
     _shader->setMatrix4("model", modelMatrix);
-    _shader->setMatrix4("view", viewMatrix);
+    _shader->setMatrix4("view", _viewMatrix);
     _shader->setMatrix4("projection", projectionMatrix);
     model->draw(*_shader);
 }
@@ -33,17 +32,14 @@ glm::mat4 Renderer::_getModelMatrix(glm::vec3 position, glm::vec3 scale, glm::ve
 
 glm::mat4 Renderer::_getProjectionMatrix()
 {
-    float width = Application::getWindowWidth();
-    float height = Application::getWindowHeight();
-    return glm::perspective(glm::radians(45.0f), width / height, 0.1f, 100.0f);
+    float width = Application::windowWidth;
+    float height = Application::windowHeight;
+    return glm::perspective(glm::radians(zoom), width / height, 0.1f, 100.0f);
 }
 
-glm::mat4 Renderer::_getViewMatrix()
+void Renderer::setViewMatrix(glm::vec3 position, glm::vec3 front, glm::vec3 up)
 {
-    glm::mat4 view = glm::mat4(1.0f);
-    view = glm::rotate(view, glm::radians(15.f), glm::vec3(1.0f, 0.0f, 0.0f));
-    view = glm::translate(view, glm::vec3(0.0f, -1.0f, -3.0f));
-    return view;
+    _viewMatrix = glm::lookAt(position, position + front, up);
 }
 
 

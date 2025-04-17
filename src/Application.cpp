@@ -11,21 +11,43 @@ void glfwError(int id, const char* description)
 
 void framebufferSizeCallback(GLFWwindow* window, int width, int height)
 {
-    Application::setWindowSize(width, height);
+    Application::windowWidth = width;
+    Application::windowHeight = height;
     glViewport(0, 0, width, height);
 }
 
-void Application::setWindowSize(int width, int height)
+void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos)
 {
-    _windowWidth = width;
-    _windowHeight = height;
+    auto lock = std::lock_guard(Application::mutex);
+    if (Application::firstMouseMove)
+    {
+        Application::lastMouseX = xpos;
+        Application::lastMouseY = ypos;
+        Application::firstMouseMove = false;
+    }
+
+    Application::xMoveOffset = xpos - Application::lastMouseX;
+    Application::yMoveOffset = Application::lastMouseY - ypos; // reversed since y-coordinates go from bottom to top
+
+    Application::lastMouseX = xpos;
+    Application::lastMouseY = ypos;
+    Application::isMouseMoved = true;
+}
+
+void mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    auto lock = std::lock_guard(Application::mutex);
+    Application::scrollOffset = yoffset;
+    Application::isMouseScrolled = true;
 }
 
 
 void Application::initialize(int width, int height, const std::string& windowName)
 {
-    setWindowSize(width, height);
-    _listenedKeys = {GLFW_KEY_ESCAPE};
+    windowWidth = width;
+    windowHeight = height;
+    _listenedKeys = {GLFW_KEY_ESCAPE, GLFW_KEY_W, GLFW_KEY_A, GLFW_KEY_S, GLFW_KEY_D,
+        GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_RIGHT, GLFW_KEY_LEFT};
 
     // Initialize GLFW
     glfwInit();
@@ -39,7 +61,7 @@ void Application::initialize(int width, int height, const std::string& windowNam
     glfwSetErrorCallback(&glfwError);
 
     // Create GLFW window
-    _window = glfwCreateWindow(_windowWidth, _windowHeight, windowName.c_str(), nullptr, nullptr);
+    _window = glfwCreateWindow(windowWidth, windowHeight, windowName.c_str(), nullptr, nullptr);
     if (_window == nullptr)
     {
         glfwTerminate();
@@ -58,10 +80,17 @@ void Application::initialize(int width, int height, const std::string& windowNam
     }
 
     // Set size of the rendering window
-    glViewport(0, 0, _windowWidth, _windowHeight);
+    glViewport(0, 0, windowWidth, windowHeight);
 
     // Set a callback for resizing the window
     glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
+
+    // Set callbacks for capturing mouse events
+    glfwSetCursorPosCallback(_window, mouseMoveCallback);
+    glfwSetScrollCallback(_window, mouseScrollCallback);
+
+    // tell GLFW to capture our mouse
+    glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Without this enabled, you would see through 3D objects
     glEnable(GL_DEPTH_TEST);
