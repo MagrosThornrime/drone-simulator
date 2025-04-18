@@ -1,8 +1,8 @@
 build/
-.venv/
 cmake-build-debug/
 cmake-build-release/
 CMakeUserPresets.json
 .idea/
 cmake/conan_files/
 cmake/conanfile.hash
+venv/

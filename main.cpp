@@ -16,8 +16,8 @@ void setup()
 void close()
 {
     Renderer::destroy();
-    Application::destroy();
     AssetManager::destroy();
+    Application::destroy();
 }
 
 void drawModel()

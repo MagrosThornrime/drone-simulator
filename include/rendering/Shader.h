@@ -36,7 +36,6 @@ public:
     _geometryCode(std::move(geometryCode)) {}
 
     Shader() = default;
-    ~Shader();
 
     void use() const;
 

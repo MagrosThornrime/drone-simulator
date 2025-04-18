@@ -9,17 +9,17 @@ void FileIO::loadTextFile(const std::string &path, std::string &text) {
     std::ifstream file;
     std::stringstream stringStream;
 
-    file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
     try {
+        file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
         file.open(path.c_str());
         stringStream << file.rdbuf();
         file.close();
         text = stringStream.str();
     }
     catch(std::ifstream::failure& e) {
-        std::string text = e.what();
-        Logger::log(text, LogLevel::error);
-        throw std::runtime_error(text);
+        std::string errorText = e.what();
+        Logger::log(errorText, LogLevel::error);
+        throw std::runtime_error(errorText);
     }
 }
 

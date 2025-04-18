@@ -1,6 +1,6 @@
 #pragma once
 #include <string>
-#include <glad\glad.h>
+#include <glad/glad.h>
 
 struct Image{
     unsigned int width{}, height{};

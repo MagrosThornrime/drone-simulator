@@ -104,7 +104,7 @@ Model* AssetManager::getModel(const std::string& name)
 
 void AssetManager::destroy()
 {
-    for(const auto& program : _shaders | std::views::values){
+    for(auto& program : _shaders | std::views::values){
         glDeleteProgram(program.ID);
     }
     for(auto& texture : _textures | std::views::values){
