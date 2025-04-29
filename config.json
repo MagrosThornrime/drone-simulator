@@ -9,6 +9,11 @@
       "name": "backpack",
       "directory": "assets/models/backpack",
       "obj": "backpack.obj"
+    },
+    {
+      "name": "tree",
+      "directory": "assets/models/tree",
+      "obj": "10459_White_Ash_Tree_v1_L3.obj"
     }
   ],
 

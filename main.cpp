@@ -22,7 +22,7 @@ void close()
 
 void drawModel()
 {
-    Model* model = AssetManager::getModel("drone");
+    Model* model = AssetManager::getModel("tree");
     Renderer::drawModel(model, {0,0,0}, {0.01, 0.01, 0.01}, {1, 0, 0}, 0);
 }
 
