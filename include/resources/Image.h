@@ -1,5 +1,4 @@
 #pragma once
-#include <string>
 #include <glad/glad.h>
 
 struct Image{
@@ -11,7 +10,5 @@ struct Image{
     : width(width), height(height), format(format), data(data) {}
 
     ~Image();
-
-    GLint getFormat() const;
 
 };
