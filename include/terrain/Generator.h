@@ -1,8 +1,7 @@
 #pragma once
 #include <memory>
 #include <terrain/Noise.h>
-
-#include "rendering/Mesh.h"
+#include <rendering/Mesh.h>
 
 class Generator
 {

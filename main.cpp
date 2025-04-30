@@ -2,7 +2,6 @@
 #include <rendering/Renderer.h>
 #include <resources/AssetManager.h>
 #include <Camera.h>
-
 #include <terrain/Generator.h>
 
 void setup()

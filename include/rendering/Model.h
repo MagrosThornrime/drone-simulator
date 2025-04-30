@@ -3,17 +3,11 @@
 #include <glad/glad.h>
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
-#include <assimp/postprocess.h>
-
-#include <rendering/Mesh.h>
-#include <rendering/Shader.h>
-#include <rendering/Texture.h>
-
 #include <string>
 #include <vector>
-
 #include <Logger.h>
-#include <unordered_map>
+#include <rendering/Mesh.h>
+#include <rendering/Shader.h>
 
 class Model
 {

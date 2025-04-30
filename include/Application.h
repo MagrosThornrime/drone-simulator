@@ -1,8 +1,8 @@
 #pragma once
+#include <glad/glad.h>
 #include <mutex>
 #include <string>
 #include <unordered_set>
-#include <glad/glad.h>
 #include <GLFW/glfw3.h>
 #include <vector>
 

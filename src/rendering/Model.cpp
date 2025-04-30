@@ -1,4 +1,5 @@
 #include <rendering/Model.h>
+#include <assimp/postprocess.h>
 
 
 void Model::generate(const std::string& directory, const std::string& objFile)

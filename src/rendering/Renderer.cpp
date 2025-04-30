@@ -1,8 +1,8 @@
 #include <rendering/Renderer.h>
 #include <glad/glad.h>
 #include <Logger.h>
-
 #include <Application.h>
+
 
 void Renderer::drawBackground(){
     glClearColor(0.449f, 0.686f, 0.784f, 1.0f);

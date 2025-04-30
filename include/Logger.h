@@ -1,7 +1,6 @@
 #pragma once
 #include <string>
 #include <chrono>
-#include <utility>
 
 enum LogLevel{info, warning, error};
 
