@@ -6,8 +6,8 @@ Camera::Camera()
 }
 
 Camera::Camera(glm::vec3 position, glm::vec3 front, glm::vec3 up, float yaw, float pitch, float movementSpeed,
-        float mouseSensitivity, float zoom) : position(position), front(front), worldUp(up), yaw(yaw),
-        pitch(pitch), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity), zoom(zoom)
+        float mouseSensitivity) : position(position), front(front), worldUp(up), yaw(yaw),
+        pitch(pitch), movementSpeed(movementSpeed), mouseSensitivity(mouseSensitivity)
 {
     _updateCameraVectors();
 }
@@ -53,14 +53,6 @@ void Camera::processMouseMovement(float xoffset, float yoffset, GLboolean constr
     _updateCameraVectors();
 }
 
-void Camera::processMouseScroll(float yoffset)
-{
-    zoom -= yoffset;
-    if (zoom < 1.0f)
-        zoom = 1.0f;
-    if (zoom > 45.0f)
-        zoom = 45.0f;
-}
 
 void Camera::_updateCameraVectors()
 {

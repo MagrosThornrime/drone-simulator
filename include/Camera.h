@@ -29,16 +29,13 @@ public:
     Camera();
 
     Camera(glm::vec3 position, glm::vec3 front, glm::vec3 up, float yaw, float pitch, float movementSpeed,
-        float mouseSensitivity, float zoom);
+        float mouseSensitivity);
 
 
     void move(CameraMovement direction, float deltaTime);
 
     // processes input received from a mouse input system. Expects the offset value in both the x and y direction.
     void processMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
-
-    // processes input received from a mouse scroll-wheel event. Only requires input on the vertical wheel-axis
-    void processMouseScroll(float yoffset);
 
 private:
     // calculates the front vector from the Camera's (updated) Euler Angles

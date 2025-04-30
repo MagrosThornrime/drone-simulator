@@ -59,11 +59,6 @@ void processInput(Camera& camera, float deltaTime)
         camera.processMouseMovement(Application::xMoveOffset, Application::yMoveOffset);
         Application::isMouseMoved = false;
     }
-    if (Application::isMouseScrolled)
-    {
-        camera.processMouseScroll(Application::scrollOffset);
-        Application::isMouseScrolled = false;
-    }
 }
 
 float getDeltaTime(float& lastTime)
@@ -79,6 +74,8 @@ int main()
     setup();
 
     Camera camera;
+    Renderer::zoom = camera.zoom;
+
     float lastTime = 0.0f;
 
     while (Application::isActive())
@@ -88,7 +85,6 @@ int main()
         processInput(camera, deltaTime);
 
         Renderer::setViewMatrix(camera.position, camera.front, camera.up);
-        Renderer::zoom = camera.zoom;
         Renderer::drawBackground();
 
         drawModel();

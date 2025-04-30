@@ -34,13 +34,6 @@ void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos)
     Application::isMouseMoved = true;
 }
 
-void mouseScrollCallback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    auto lock = std::lock_guard(Application::mutex);
-    Application::scrollOffset = yoffset;
-    Application::isMouseScrolled = true;
-}
-
 
 void Application::initialize(int width, int height, const std::string& windowName)
 {
@@ -87,7 +80,6 @@ void Application::initialize(int width, int height, const std::string& windowNam
 
     // Set callbacks for capturing mouse events
     glfwSetCursorPosCallback(_window, mouseMoveCallback);
-    glfwSetScrollCallback(_window, mouseScrollCallback);
 
     // tell GLFW to capture our mouse
     glfwSetInputMode(_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
