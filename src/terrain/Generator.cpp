@@ -7,30 +7,30 @@ Generator::Generator(int permutationSize)
     _noise = std::make_shared<Noise>(permutationSize);
 }
 
-Mesh Generator::_generateMesh(int width, int height, const std::string& texturePath,
+Mesh Generator::_generateMesh(int size, const std::string& texturePath,
                             const std::string& textureType)
 {
     std::vector<VertexData> vertices;
     std::vector<unsigned int> indices;
 
-    for (int x = 0; x < width; x++)
+    for (int x = 0; x < size; x++)
     {
-        for (int y = 0; y < height; y++)
+        for (int y = 0; y < size; y++)
         {
-            _generateSquareChunk(x, y, vertices, indices);
+            _generateSquareChunk(x, y, size, vertices, indices);
         }
     }
     return Mesh(vertices, indices, {texturePath}, {textureType});
 }
 
-void Generator::_generateSquareChunk(int x, int z, std::vector<VertexData>& vertices,
+void Generator::_generateSquareChunk(float x, float z, float size, std::vector<VertexData>& vertices,
     std::vector<unsigned int>& indices)
 {
     int currentVertices = vertices.size();
-    glm::vec3 bottomLeft = _generateVertex(x, z);
-    glm::vec3 bottomRight = _generateVertex(x + 1, z);
-    glm::vec3 topLeft = _generateVertex(x, z + 1);
-    glm::vec3 topRight = _generateVertex(x + 1, z + 1);
+    glm::vec3 bottomLeft = _generateVertex(x, z, size);
+    glm::vec3 bottomRight = _generateVertex(x + 1, z, size);
+    glm::vec3 topLeft = _generateVertex(x, z + 1, size);
+    glm::vec3 topRight = _generateVertex(x + 1, z + 1, size);
 
     glm::vec3 leftEdge = topLeft - bottomLeft;
     glm::vec3 bottomEdge = bottomRight - bottomLeft;
@@ -59,14 +59,13 @@ void Generator::_generateSquareChunk(int x, int z, std::vector<VertexData>& vert
     }
 }
 
-glm::vec3 Generator::_generateVertex(int x, int z)
+glm::vec3 Generator::_generateVertex(float x, float z, float size)
 {
-    float xPos = static_cast<float>(x);
-    float zPos = static_cast<float>(z);
-    float yPos = _noise->generate(xPos, zPos, octaves, amplitude, frequency,
+    float y = _noise->generate(x, z, octaves, amplitude, frequency,
                                     amplitudeFactor, frequencyFactor);
-    yPos *= maxHeight;
-    return glm::vec3(xPos, yPos, zPos);
+    x = x * 2.0f / size - 1.0f;
+    z = z * 2.0f / size - 1.0f;
+    return glm::vec3(x, y, z);
 }
 
 glm::vec3 Generator::_generateNormal(glm::vec3 edge, glm::vec3 diagonal)
@@ -81,7 +80,7 @@ Generator::Generator(int permutationSize, int seed)
     _noise = std::make_shared<Noise>(permutationSize, seed);
 }
 
-void Generator::generateTerrain(const std::string& name, int width, int height)
+void Generator::generateTerrain(const std::string& name, int size)
 {
     Model* model = AssetManager::createEmptyModel(name);
     if (!AssetManager::hasTexture(name))
@@ -89,6 +88,6 @@ void Generator::generateTerrain(const std::string& name, int width, int height)
         AssetManager::loadTexture(texturePath, true, textureType, textureName);
     }
     Texture* texture = AssetManager::getTexture(textureName);
-    model->meshes.push_back(_generateMesh(width, height, texturePath, textureType));
+    model->meshes.push_back(_generateMesh(size, texturePath, textureType));
     model->meshes[0].textures.push_back(texture);
 }

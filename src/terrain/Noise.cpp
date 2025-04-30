@@ -69,7 +69,7 @@ float Noise::_generateOctave(float x, float y) const
 
     glm::vec2 topRight = glm::vec2(cellX - 1.0f, cellY - 1.0f);
     glm::vec2 topLeft = glm::vec2(cellX, cellY - 1.0f);
-    glm::vec2 bottomRight = glm::vec2(cellX + 1.0f, cellY);
+    glm::vec2 bottomRight = glm::vec2(cellX - 1.0f, cellY);
     glm::vec2 bottomLeft = glm::vec2(cellX, cellY);
 
     int hashTopRight = _getHash(gridX + 1, gridY + 1);
@@ -101,6 +101,14 @@ float Noise::generate(float x, float y, int octaves, float amplitude, float freq
         result += amplitude * _generateOctave(x * frequency, y * frequency);
         amplitude *= amplitudeFactor;
         frequency *= frequencyFactor;
+    }
+    if (result > 1.0f)
+    {
+        result = 1.0f;
+    }
+    if (result < -1.0f)
+    {
+        result = -1.0f;
     }
     return result;
 }
