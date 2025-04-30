@@ -9,12 +9,6 @@ void glfwError(int id, const char* description)
     Logger::log(text, error);
 }
 
-void framebufferSizeCallback(GLFWwindow* window, int width, int height)
-{
-    Application::windowWidth = width;
-    Application::windowHeight = height;
-    glViewport(0, 0, width, height);
-}
 
 void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos)
 {
@@ -74,9 +68,6 @@ void Application::initialize(int width, int height, const std::string& windowNam
 
     // Set size of the rendering window
     glViewport(0, 0, windowWidth, windowHeight);
-
-    // Set a callback for resizing the window
-    glfwSetFramebufferSizeCallback(_window, framebufferSizeCallback);
 
     // Set callbacks for capturing mouse events
     glfwSetCursorPosCallback(_window, mouseMoveCallback);
