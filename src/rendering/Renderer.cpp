@@ -5,7 +5,7 @@
 #include <Application.h>
 
 void Renderer::drawBackground(){
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.449f, 0.686f, 0.784f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -13,6 +13,8 @@ void Renderer::drawModel(Model* model, glm::vec3 position, glm::vec3 scale,
     glm::vec3 rotationAxis, float rotationAngle)
 {
     _shader->use();
+    _shader->setVector3f("lightDirection", _lightDirection);
+    _shader->setVector3f("lightColor", _lightColor);
     glm::mat4 modelMatrix = _getModelMatrix(position, scale, rotationAxis, rotationAngle);
     glm::mat4 projectionMatrix = _getProjectionMatrix();
     _shader->setMatrix4("model", modelMatrix);
@@ -45,6 +47,8 @@ void Renderer::setViewMatrix(glm::vec3 position, glm::vec3 front, glm::vec3 up)
 
 void Renderer::initialize(Shader* shader)
 {
+    _lightColor = glm::vec3(1.0f);
+    _lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
     _shader = shader;
     Logger::log("Renderer started", info);
 }

@@ -4,6 +4,8 @@
 
 class Renderer
 {
+    static inline glm::vec3 _lightColor;
+    static inline glm::vec3 _lightDirection;
     static inline Shader* _shader{};
     static inline glm::mat4 _viewMatrix{};
 

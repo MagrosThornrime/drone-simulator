@@ -13,8 +13,8 @@ void setup()
         AssetManager::windowTitle);
     AssetManager::loadGameAssets();
     Renderer::initialize(AssetManager::getShader("shader"));
-    Generator generator(256, 1312421);
-    generator.generateTerrain("terrain", 512, 512);
+    Generator generator(512, 1312421);
+    generator.generateTerrain("terrain", 256, 256);
 }
 
 void close()
