@@ -3,6 +3,8 @@
 #include <resources/AssetManager.h>
 #include <Camera.h>
 
+#include <terrain/Generator.h>
+
 void setup()
 {
     AssetManager::initialize("config.json");
@@ -11,6 +13,8 @@ void setup()
         AssetManager::windowTitle);
     AssetManager::loadGameAssets();
     Renderer::initialize(AssetManager::getShader("shader"));
+    Generator generator(256, 1312421);
+    generator.generateTerrain("terrain", 256, 256);
 }
 
 void close()
@@ -22,7 +26,7 @@ void close()
 
 void drawModel()
 {
-    Model* model = AssetManager::getModel("tree");
+    Model* model = AssetManager::getModel("terrain");
     Renderer::drawModel(model, {0,0,0}, {0.01, 0.01, 0.01}, {1, 0, 0}, 0);
 }
 

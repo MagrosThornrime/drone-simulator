@@ -93,6 +93,16 @@ void AssetManager::loadModel(const std::string& directory, const std::string& ob
     }
 }
 
+Model* AssetManager::createEmptyModel(const std::string& name)
+{
+    if (_models.contains(name))
+    {
+        throw std::runtime_error("Model: " + name + " already exists");
+    }
+    _models.try_emplace(name);
+    return getModel(name);
+}
+
 Model* AssetManager::getModel(const std::string& name)
 {
     if (!_models.contains(name))

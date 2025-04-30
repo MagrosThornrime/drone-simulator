@@ -28,6 +28,8 @@ set(SOURCES
         src/resources/FileIO.cpp
         src/resources/AssetManager.cpp
         src/resources/Image.cpp
+        src/terrain/Generator.cpp
+        src/terrain/Noise.cpp
 )
 
 set(HEADERS
@@ -42,6 +44,8 @@ set(HEADERS
         include/resources/FileIO.h
         include/resources/AssetManager.h
         include/resources/Image.h
+        include/terrain/Generator.h
+        include/terrain/Noise.h
 )
 
 add_executable(${PROJECT_NAME} main.cpp ${SOURCES} ${HEADERS})

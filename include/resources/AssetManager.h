@@ -37,6 +37,7 @@ public:
     static bool hasTexture(const std::string& name);
 
     static void loadModel(const std::string& directory, const std::string& objFile, const std::string& name);
+    static Model* createEmptyModel(const std::string& name);
     static Model* getModel(const std::string& name);
     static bool hasModel(const std::string& name);
 
