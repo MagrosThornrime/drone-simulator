@@ -14,7 +14,7 @@ void setup()
     AssetManager::loadGameAssets();
     Renderer::initialize(AssetManager::getShader("shader"));
     Generator generator(256, 1312421);
-    generator.generateTerrain("terrain", 256, 256);
+    generator.generateTerrain("terrain", 512, 512);
 }
 
 void close()
@@ -27,7 +27,7 @@ void close()
 void drawModel()
 {
     Model* model = AssetManager::getModel("terrain");
-    Renderer::drawModel(model, {0,0,0}, {0.01, 0.01, 0.01}, {1, 0, 0}, 0);
+    Renderer::drawModel(model, glm::vec3(0.0f), glm::vec3(0.05f), {1, 0, 0}, 0);
 }
 
 void processInput(Camera& camera, float deltaTime)
