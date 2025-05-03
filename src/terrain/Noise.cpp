@@ -4,24 +4,43 @@
 #include <iostream>
 #include <random>
 
-void Noise::_createPermutation(int size, int seed)
+
+void Noise::_createPermutation(int size)
 {
     _permutation.reserve(size);
     for (int i = 0; i < size; i++)
     {
         _permutation.push_back(i);
     }
-    std::mt19937 rng(seed);
-    std::shuffle(std::begin(_permutation), std::end(_permutation), rng);
+    std::shuffle(std::begin(_permutation), std::end(_permutation), *_rng);
+}
 
+void Noise::_createOffsets(int size)
+{
+    _offsets.resize(size);
+    for (int i = 0; i < size; i++)
+    {
+        _offsets[i].reserve(size);
+        for (int j = 0; j < size; j++)
+        {
+            _offsets[i].push_back((*_distribution)(*_rng));
+        }
+    }
+}
+
+float Noise::_getOffset(int X, int Y) const
+{
+    X %= _offsets.size();
+    Y %= _offsets.size();
+    return _offsets[X][Y];
 }
 
 int Noise::_getHash(int X, int Y) const
 {
     X %= _permutation.size();
     Y %= _permutation.size();
-
-    return _permutation[_permutation[X] + Y];
+    int index = (_permutation[X] + Y) % _permutation.size();
+    return _permutation[index];
 }
 
 float Noise::_linearInterpolation(float percentage, float value1, float value2)
@@ -38,15 +57,29 @@ float Noise::_fade(float interpolatedValue)
     return result;
 }
 
-Noise::Noise(int permutationSize)
+Noise::Noise(int permutationSize, float minOffset, float maxOffset)
 {
     int seed = std::chrono::system_clock::now().time_since_epoch().count();
-    _createPermutation(permutationSize, seed);
+    _rng = std::make_shared<std::mt19937>(seed);
+    if (minOffset > maxOffset)
+    {
+        throw std::invalid_argument("minOffset must be greater than maxOffset");
+    }
+    _distribution = std::make_shared<std::uniform_real_distribution<float>>(minOffset, maxOffset);
+    _createPermutation(permutationSize);
+    _createOffsets(permutationSize);
 }
 
-Noise::Noise(int permutationSize, int seed)
+Noise::Noise(int permutationSize, float minOffset, float maxOffset, int seed)
 {
-    _createPermutation(permutationSize, seed);
+    _rng = std::make_shared<std::mt19937>(seed);
+    if (minOffset > maxOffset)
+    {
+        throw std::invalid_argument("minOffset must be greater than maxOffset");
+    }
+    _distribution = std::make_shared<std::uniform_real_distribution<float>>(minOffset, maxOffset);
+    _createPermutation(permutationSize);
+    _createOffsets(permutationSize);
 }
 
 
@@ -82,6 +115,11 @@ float Noise::_generateOctave(float x, float y) const
     float dotBottomRight = glm::dot(bottomRight, _getConstantVector(hashBottomRight));
     float dotBottomLeft = glm::dot(bottomLeft, _getConstantVector(hashBottomLeft));
 
+    dotTopRight += _getOffset(gridX + 1, gridY + 1);
+    dotTopLeft += _getOffset(gridX, gridY + 1);
+    dotBottomRight += _getOffset(gridX + 1, gridY);
+    dotBottomLeft += _getOffset(gridX, gridY);
+
     float percentageX = _fade(cellX);
     float percentageY = _fade(cellY);
 
@@ -101,14 +139,6 @@ float Noise::generate(float x, float y, int octaves, float amplitude, float freq
         result += amplitude * _generateOctave(x * frequency, y * frequency);
         amplitude *= amplitudeFactor;
         frequency *= frequencyFactor;
-    }
-    if (result > 1.0f)
-    {
-        result = 1.0f;
-    }
-    if (result < -1.0f)
-    {
-        result = -1.0f;
     }
     return result;
 }

@@ -2,9 +2,17 @@
 #include <terrain/Generator.h>
 #include <resources/AssetManager.h>
 
-Generator::Generator(int permutationSize)
+Generator::Generator(int permutationSize, float offsetMin, float offsetMax)
 {
-    _noise = std::make_shared<Noise>(permutationSize);
+    _noise = std::make_shared<Noise>(permutationSize, offsetMin, offsetMax);
+    Logger::log("Terrain generator created", info);
+}
+
+
+Generator::Generator(int permutationSize, float offsetMin, float offsetMax, int seed)
+{
+    _noise = std::make_shared<Noise>(permutationSize, offsetMin, offsetMax, seed);
+    Logger::log("Terrain generator created", info);
 }
 
 Mesh Generator::_generateMesh(int size, const std::string& texturePath,
@@ -75,10 +83,6 @@ glm::vec3 Generator::_generateNormal(glm::vec3 edge, glm::vec3 diagonal)
     return candidate1.y > 0 ? glm::normalize(candidate1) : glm::normalize(candidate2);
 }
 
-Generator::Generator(int permutationSize, int seed)
-{
-    _noise = std::make_shared<Noise>(permutationSize, seed);
-}
 
 void Generator::generateTerrain(const std::string& name, int size)
 {

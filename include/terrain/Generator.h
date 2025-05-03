@@ -22,8 +22,8 @@ public:
     std::string textureType = "texture_diffuse";
     std::string textureName = "grass";
 
-    Generator(int permutationSize, int seed);
-    explicit Generator(int permutationSize);
+    Generator(int permutationSize, float offsetMin, float offsetMax, int seed);
+    Generator(int permutationSize, float offsetMin, float offsetMax);
 
     void generateTerrain(const std::string& name, int size);
 };
