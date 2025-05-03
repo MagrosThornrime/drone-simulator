@@ -133,6 +133,10 @@ float Noise::_generateOctave(float x, float y) const
 float Noise::generate(float x, float y, int octaves, float amplitude, float frequency,
                         float amplitudeFactor, float frequencyFactor)
 {
+    if (octaves <= 0)
+    {
+        throw std::invalid_argument("octaves must be greater than 0");
+    }
     float result = 0.0f;
     for (int octave = 0; octave < octaves; octave++)
     {
