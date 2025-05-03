@@ -14,6 +14,7 @@ Shader* AssetManager::loadShader(const std::string& vertexPath, const std::strin
     _loadProgramCode(fragmentPath, fragmentCode);
     _shaders.try_emplace(name, vertexCode, fragmentCode);
     _shaders[name].compileProgram();
+    Logger::log("Shader loaded: " + name, info);
     return getShader(name);
 }
 
@@ -25,6 +26,7 @@ Shader* AssetManager::loadShader(const std::string &vertexPath, const std::strin
     _loadProgramCode(geometryPath, geometryCode);
     _shaders.try_emplace(name, vertexCode, fragmentCode, geometryCode);
     _shaders[name].compileProgram();
+    Logger::log("Shader loaded: " + name, info);
     return getShader(name);
 }
 
@@ -58,6 +60,7 @@ void AssetManager::loadTexture(const std::string& path, bool flipped, const std:
                                 const std::string& name) {
     TextureParameters textureParameters;
     loadTexture(path, flipped, typeName, textureParameters, name);
+    Logger::log("Texture loaded: " + name, info);
 }
 
 Texture* AssetManager::getTexture(const std::string &name) {
@@ -91,6 +94,7 @@ void AssetManager::loadModel(const std::string& directory, const std::string& ob
             }
         }
     }
+    Logger::log("Model loaded: " + directory + "/" + objFile, info);
 }
 
 Model* AssetManager::createEmptyModel(const std::string& name)

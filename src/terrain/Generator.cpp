@@ -94,4 +94,5 @@ void Generator::generateTerrain(const std::string& name, int size)
     Texture* texture = AssetManager::getTexture(textureName);
     model->meshes.push_back(_generateMesh(size, texturePath, textureType));
     model->meshes[0].textures.push_back(texture);
+    Logger::log("Terrain generated", info);
 }
