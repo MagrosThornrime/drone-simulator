@@ -2,6 +2,7 @@
 #include <memory>
 #include <terrain/Noise.h>
 #include <rendering/Mesh.h>
+#include <resources/AssetManager.h>
 
 class Generator
 {
@@ -25,5 +26,5 @@ public:
     Generator(int permutationSize, float offsetMin, float offsetMax, int seed);
     Generator(int permutationSize, float offsetMin, float offsetMax);
 
-    void generateTerrain(const std::string& name, int size);
+    void generateTerrain(AssetManager& assetManager, const std::string& name, int size);
 };

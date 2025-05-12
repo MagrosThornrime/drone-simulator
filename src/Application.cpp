@@ -1,6 +1,5 @@
 #include <Application.h>
 #include <Logger.h>
-#include <sstream>
 
 
 void glfwError(int id, const char* description)
@@ -12,29 +11,31 @@ void glfwError(int id, const char* description)
 
 void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos)
 {
-    auto lock = std::lock_guard(Application::mutex);
-    if (Application::firstMouseMove)
+    auto* application = static_cast<Application*>(glfwGetWindowUserPointer(window));
+    if (!application)
     {
-        Application::lastMouseX = xpos;
-        Application::lastMouseY = ypos;
-        Application::firstMouseMove = false;
+        throw std::runtime_error("GLFW callback can't see Application");
+    }
+    auto lock = std::lock_guard(application->mutex);
+    if (application->firstMouseMove)
+    {
+        application->lastMouseX = xpos;
+        application->lastMouseY = ypos;
+        application->firstMouseMove = false;
     }
 
-    Application::xMoveOffset = xpos - Application::lastMouseX;
-    Application::yMoveOffset = Application::lastMouseY - ypos; // reversed since y-coordinates go from bottom to top
+    application->xMoveOffset = xpos - application->lastMouseX;
+    application->yMoveOffset = application->lastMouseY - ypos; // reversed since y-coordinates go from bottom to top
 
-    Application::lastMouseX = xpos;
-    Application::lastMouseY = ypos;
-    Application::isMouseMoved = true;
+    application->lastMouseX = xpos;
+    application->lastMouseY = ypos;
+    application->isMouseMoved = true;
 }
 
 
-void Application::initialize(int width, int height, const std::string& windowName)
+Application::Application(int width, int height, const std::string& windowName)
+    : windowWidth(width), windowHeight(height)
 {
-    windowWidth = width;
-    windowHeight = height;
-    _listenedKeys = {GLFW_KEY_ESCAPE, GLFW_KEY_W, GLFW_KEY_A, GLFW_KEY_S, GLFW_KEY_D,
-        GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_RIGHT, GLFW_KEY_LEFT};
 
     // Initialize GLFW
     glfwInit();
@@ -45,6 +46,7 @@ void Application::initialize(int width, int height, const std::string& windowNam
     // Uncomment if you use Mac OS X
     //glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
 
+    // Register error callback funtion
     glfwSetErrorCallback(&glfwError);
 
     // Create GLFW window
@@ -68,6 +70,9 @@ void Application::initialize(int width, int height, const std::string& windowNam
 
     // Set size of the rendering window
     glViewport(0, 0, windowWidth, windowHeight);
+
+    // Pass Application to glfw callbacks
+    glfwSetWindowUserPointer(_window, this);
 
     // Set callbacks for capturing mouse events
     glfwSetCursorPosCallback(_window, mouseMoveCallback);
@@ -93,6 +98,7 @@ void Application::close()
 
 void Application::getKeys()
 {
+    auto lock = std::lock_guard(mutex);
     currentKeys.clear();
     for (auto key : _listenedKeys)
     {
@@ -110,7 +116,7 @@ void Application::update()
 }
 
 
-void Application::destroy(){
+Application::~Application(){
     glfwTerminate();
     Logger::log("Application closed", info);
 }

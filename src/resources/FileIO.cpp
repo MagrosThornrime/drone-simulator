@@ -1,15 +1,15 @@
 #define STB_IMAGE_IMPLEMENTATION
 #include <resources/FileIO.h>
+#include <sstream>
 #include <fstream>
 #include <Logger.h>
 #include <stb_image.h>
 
 
-void FileIO::loadTextFile(const std::string &path, std::string &text) {
-    std::ifstream file;
-    std::stringstream stringStream;
-
+void loadTextFile(const std::string &path, std::string &text) {
     try {
+        std::stringstream stringStream;
+        std::ifstream file;
         file.exceptions(std::ifstream::failbit | std::ifstream::badbit);
         file.open(path.c_str());
         stringStream << file.rdbuf();
@@ -23,7 +23,7 @@ void FileIO::loadTextFile(const std::string &path, std::string &text) {
     }
 }
 
-void FileIO::loadImage(const std::string &path, bool flipped, int* width,
+void loadImage(const std::string &path, bool flipped, int* width,
                        int* height, unsigned char*& data, GLenum& format)  {
     int nrChannels;
 
@@ -56,7 +56,7 @@ void FileIO::loadImage(const std::string &path, bool flipped, int* width,
     }
 }
 
-void FileIO::loadJsonFile(const std::string &path, Json::Value& root) {
+void loadJsonFile(const std::string &path, Json::Value& root) {
     std::string text;
     loadTextFile(path, text);
     std::stringstream textStream(text);

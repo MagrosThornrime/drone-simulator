@@ -27,7 +27,6 @@ set(SOURCES
         src/rendering/Model.cpp
         src/resources/FileIO.cpp
         src/resources/AssetManager.cpp
-        src/resources/Image.cpp
         src/terrain/Generator.cpp
         src/terrain/Noise.cpp
 )

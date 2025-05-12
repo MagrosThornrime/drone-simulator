@@ -5,7 +5,7 @@
 
 
 void Renderer::drawBackground(){
-    glClearColor(0.449f, 0.686f, 0.784f, 1.0f);
+    glClearColor(_backgroundColor.r, _backgroundColor.g, _backgroundColor.b, _backgroundColor.a);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
@@ -34,9 +34,7 @@ glm::mat4 Renderer::_getModelMatrix(glm::vec3 position, glm::vec3 scale, glm::ve
 
 glm::mat4 Renderer::_getProjectionMatrix()
 {
-    float width = Application::windowWidth;
-    float height = Application::windowHeight;
-    return glm::perspective(glm::radians(zoom), width / height, 0.1f, 100.0f);
+    return glm::perspective(glm::radians(zoom), _windowWidth / _windowHeight, 0.1f, 100.0f);
 }
 
 void Renderer::setViewMatrix(glm::vec3 position, glm::vec3 front, glm::vec3 up)
@@ -45,15 +43,14 @@ void Renderer::setViewMatrix(glm::vec3 position, glm::vec3 front, glm::vec3 up)
 }
 
 
-void Renderer::initialize(Shader* shader)
+Renderer::Renderer(Shader* shader, float windowWidth, float windowHeight)
+    : _windowWidth(windowWidth), _windowHeight(windowHeight)
 {
-    _lightColor = glm::vec3(1.0f);
-    _lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
     _shader = shader;
     Logger::log("Renderer started", info);
 }
 
-void Renderer::destroy()
+Renderer::~Renderer()
 {
     Logger::log("Renderer stopped", info);
 }

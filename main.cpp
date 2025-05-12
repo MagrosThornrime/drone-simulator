@@ -4,59 +4,40 @@
 #include <Camera.h>
 #include <terrain/Generator.h>
 
-void setup()
+
+void drawModel(AssetManager& assetManager, Renderer& renderer)
 {
-    AssetManager::initialize("config.json");
-    AssetManager::loadWindowData();
-    Application::initialize(AssetManager::windowWidth, AssetManager::windowHeight,
-        AssetManager::windowTitle);
-    AssetManager::loadGameAssets();
-    Renderer::initialize(AssetManager::getShader("shader"));
-    Generator generator(500, 0.0f, 0.1f);
-    generator.generateTerrain("terrain", 500);
+    Model* model = assetManager.getModel("terrain");
+    renderer.drawModel(model, glm::vec3(0.0f), glm::vec3(1.0f), {1, 0, 0}, 0);
 }
 
-void close()
+void processInput(Application& application, Camera& camera, float deltaTime)
 {
-    Renderer::destroy();
-    AssetManager::destroy();
-    Application::destroy();
-}
-
-void drawModel()
-{
-    Model* model = AssetManager::getModel("terrain");
-    Renderer::drawModel(model, glm::vec3(0.0f), glm::vec3(1.0f), {1, 0, 0}, 0);
-}
-
-void processInput(Camera& camera, float deltaTime)
-{
-    auto lock = std::lock_guard(Application::mutex);
-    Application::getKeys();
-    if (Application::isKeyPressed(GLFW_KEY_ESCAPE))
+    application.getKeys();
+    if (application.isKeyPressed(GLFW_KEY_ESCAPE))
     {
-        Application::close();
+        application.close();
     }
-    if (Application::isKeyPressed(GLFW_KEY_W) || Application::isKeyPressed(GLFW_KEY_UP))
+    if (application.isKeyPressed(GLFW_KEY_W) || application.isKeyPressed(GLFW_KEY_UP))
     {
         camera.move(FORWARD, deltaTime);
     }
-    if (Application::isKeyPressed(GLFW_KEY_S) || Application::isKeyPressed(GLFW_KEY_DOWN))
+    if (application.isKeyPressed(GLFW_KEY_S) || application.isKeyPressed(GLFW_KEY_DOWN))
     {
         camera.move(BACKWARD, deltaTime);
     }
-    if (Application::isKeyPressed(GLFW_KEY_A) || Application::isKeyPressed(GLFW_KEY_LEFT))
+    if (application.isKeyPressed(GLFW_KEY_A) || application.isKeyPressed(GLFW_KEY_LEFT))
     {
         camera.move(LEFT, deltaTime);
     }
-    if (Application::isKeyPressed(GLFW_KEY_D) || Application::isKeyPressed(GLFW_KEY_RIGHT))
+    if (application.isKeyPressed(GLFW_KEY_D) || application.isKeyPressed(GLFW_KEY_RIGHT))
     {
         camera.move(RIGHT, deltaTime);
     }
-    if (Application::isMouseMoved)
+    if (application.isMouseMoved)
     {
-        camera.processMouseMovement(Application::xMoveOffset, Application::yMoveOffset);
-        Application::isMouseMoved = false;
+        camera.processMouseMovement(application.xMoveOffset, application.yMoveOffset);
+        application.isMouseMoved = false;
     }
 }
 
@@ -70,27 +51,32 @@ float getDeltaTime(float& lastTime)
 
 int main()
 {
-    setup();
+    AssetManager assetManager("config.json");
+    assetManager.loadWindowData();
+    Application application(assetManager.windowWidth, assetManager.windowHeight,
+        assetManager.windowTitle);
+    assetManager.loadGameAssets();
+    Renderer renderer(assetManager.getShader("shader"), application.windowWidth, application.windowHeight);
+    Generator generator(500, 0.0f, 0.1f);
+    generator.generateTerrain(assetManager, "terrain", 500);
 
     Camera camera;
-    Renderer::zoom = camera.zoom;
+    renderer.zoom = camera.zoom;
 
     float lastTime = 0.0f;
 
-    while (Application::isActive())
+    while (application.isActive())
     {
         float deltaTime = getDeltaTime(lastTime);
 
-        processInput(camera, deltaTime);
+        processInput(application, camera, deltaTime);
 
-        Renderer::setViewMatrix(camera.position, camera.front, camera.up);
-        Renderer::drawBackground();
+        renderer.setViewMatrix(camera.position, camera.front, camera.up);
+        renderer.drawBackground();
 
-        drawModel();
-        Application::update();
+        drawModel(assetManager, renderer);
+        application.update();
     }
-
-    close();
-
+    
     return 0;
 }

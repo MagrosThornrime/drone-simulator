@@ -4,7 +4,7 @@
 
 
 void AssetManager::_loadProgramCode(const std::string& path, std::string& code){
-    FileIO::loadTextFile(path, code);
+    loadTextFile(path, code);
 }
 
 Shader* AssetManager::loadShader(const std::string& vertexPath, const std::string& fragmentPath,
@@ -44,7 +44,7 @@ Image AssetManager::_loadImage(const std::string &path, bool flipped) {
     int width, height;
     unsigned char* data;
     GLenum format;
-    FileIO::loadImage(path, flipped, &width, &height, data, format);
+    loadImage(path, flipped, &width, &height, data, format);
     return {static_cast<unsigned int>(width), static_cast<unsigned int>(height), format, data};
 }
 
@@ -116,7 +116,7 @@ Model* AssetManager::getModel(const std::string& name)
     return &(_models[name]);
 }
 
-void AssetManager::destroy()
+AssetManager::~AssetManager()
 {
     for(auto& program : _shaders | std::views::values){
         glDeleteProgram(program.ID);
@@ -127,8 +127,7 @@ void AssetManager::destroy()
     Logger::log("Asset manager closed", info);
 }
 
-void AssetManager::initialize(const std::string& configFile){
-    _configFile = configFile;
+AssetManager::AssetManager(const std::string& configFile) : _configFile(configFile){
     Logger::log("Asset manager created", info);
 }
 
@@ -140,7 +139,7 @@ bool AssetManager::hasModel(const std::string& name)
 void AssetManager::loadGameAssets()
 {
     Json::Value config;
-    FileIO::loadJsonFile(_configFile, config);
+    loadJsonFile(_configFile, config);
 
     Json::Value shaders = config["shader"];
     std::string vertexFile = shaders["vertex"].asString();
@@ -162,7 +161,7 @@ void AssetManager::loadGameAssets()
 void AssetManager::loadWindowData()
 {
     Json::Value config;
-    FileIO::loadJsonFile(_configFile, config);
+    loadJsonFile(_configFile, config);
 
     Json::Value window = config["window"];
     windowWidth = window["width"].asFloat();

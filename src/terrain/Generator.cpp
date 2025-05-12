@@ -84,14 +84,14 @@ glm::vec3 Generator::_generateNormal(glm::vec3 edge, glm::vec3 diagonal)
 }
 
 
-void Generator::generateTerrain(const std::string& name, int size)
+void Generator::generateTerrain(AssetManager& assetManager, const std::string& name, int size)
 {
-    Model* model = AssetManager::createEmptyModel(name);
-    if (!AssetManager::hasTexture(name))
+    Model* model = assetManager.createEmptyModel(name);
+    if (!assetManager.hasTexture(name))
     {
-        AssetManager::loadTexture(texturePath, true, textureType, textureName);
+        assetManager.loadTexture(texturePath, true, textureType, textureName);
     }
-    Texture* texture = AssetManager::getTexture(textureName);
+    Texture* texture = assetManager.getTexture(textureName);
     model->meshes.push_back(_generateMesh(size, texturePath, textureType));
     model->meshes[0].textures.push_back(texture);
     Logger::log("Terrain generated", info);

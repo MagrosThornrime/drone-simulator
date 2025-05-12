@@ -7,43 +7,44 @@
 
 
 class AssetManager{
-    inline static std::unordered_map<std::string, Texture> _textures;
-    inline static std::unordered_map<std::string, Shader> _shaders;
-    inline static std::unordered_map<std::string, Model> _models;
-    inline static std::string _configFile;
+    std::unordered_map<std::string, Texture> _textures;
+    std::unordered_map<std::string, Shader> _shaders;
+    std::unordered_map<std::string, Model> _models;
+    std::string _configFile;
 
-    static void _loadProgramCode(const std::string& path, std::string& code);
-    static Image _loadImage(const std::string &path, bool flipped);
+    void _loadProgramCode(const std::string& path, std::string& code);
+    Image _loadImage(const std::string &path, bool flipped);
 
 public:
-    inline static float windowWidth, windowHeight;
-    inline static std::string windowTitle;
+    float windowWidth{}, windowHeight{};
+    std::string windowTitle;
 
-    static void initialize(const std::string& configFile);
+    explicit AssetManager(const std::string& configFile);
+    AssetManager(const AssetManager&) = delete;
 
-    static Shader* loadShader(const std::string& vertexPath, const std::string& fragmentPath,
+    Shader* loadShader(const std::string& vertexPath, const std::string& fragmentPath,
                        const std::string& name);
-    static Shader* loadShader(const std::string& vertexPath, const std::string& fragmentPath,
+    Shader* loadShader(const std::string& vertexPath, const std::string& fragmentPath,
                            const std::string& geometryPath, const std::string& name);
-    static Shader* getShader(const std::string& name);
-    static bool hasShader(const std::string& name);
+    Shader* getShader(const std::string& name);
+    bool hasShader(const std::string& name);
 
-    static void loadTexture(const std::string& path, bool flipped, const std::string& typeName,
+    void loadTexture(const std::string& path, bool flipped, const std::string& typeName,
                             TextureParameters textureParameters, const std::string& name);
-    static void loadTexture(const std::string& path, bool flipped, const std::string& typeName,
+    void loadTexture(const std::string& path, bool flipped, const std::string& typeName,
                             const std::string& name);
 
-    static Texture* getTexture(const std::string& name);
-    static bool hasTexture(const std::string& name);
+    Texture* getTexture(const std::string& name);
+    bool hasTexture(const std::string& name);
 
-    static void loadModel(const std::string& directory, const std::string& objFile, const std::string& name);
-    static Model* createEmptyModel(const std::string& name);
-    static Model* getModel(const std::string& name);
-    static bool hasModel(const std::string& name);
+    void loadModel(const std::string& directory, const std::string& objFile, const std::string& name);
+    Model* createEmptyModel(const std::string& name);
+    Model* getModel(const std::string& name);
+    bool hasModel(const std::string& name);
 
-    static void loadGameAssets();
-    static void loadWindowData();
+    void loadGameAssets();
+    void loadWindowData();
 
-    static void destroy();
+    ~AssetManager();
 
 };
