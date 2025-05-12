@@ -12,9 +12,9 @@ struct TextureParameters{
 
 struct Texture{
     unsigned int ID{};
-    std::string typeName{};
+    std::string typeName;
 
-    explicit Texture();
+    Texture();
     void generate(const Image& image, TextureParameters textureParameters, const std::string& typeName);
     void bind() const;
     void unbind() const;

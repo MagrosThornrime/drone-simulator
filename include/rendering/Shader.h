@@ -14,7 +14,7 @@ std::string shaderToString(ShaderType type);
 
 class Shader{
     unsigned int _vertex{}, _fragment{}, _geometry{};
-    std::string _vertexCode{}, _fragmentCode{}, _geometryCode{};
+    std::string _vertexCode, _fragmentCode, _geometryCode;
     int _success{};
     char _infoLog[512]{};
 

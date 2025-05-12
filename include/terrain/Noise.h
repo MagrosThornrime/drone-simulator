@@ -6,8 +6,8 @@
 
 class Noise
 {
-    std::shared_ptr<std::mt19937> _rng;
-    std::shared_ptr<std::uniform_real_distribution<float>> _distribution;
+    std::mt19937 _rng;
+    std::uniform_real_distribution<float> _distribution;
     std::vector<int> _permutation;
     std::vector<std::vector<float>> _offsets;
 

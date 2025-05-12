@@ -7,7 +7,7 @@ class Renderer
     static inline glm::vec3 _lightColor;
     static inline glm::vec3 _lightDirection;
     static inline Shader* _shader{};
-    static inline glm::mat4 _viewMatrix{};
+    static inline glm::mat4 _viewMatrix;
 
     static glm::mat4 _getModelMatrix(glm::vec3 position, glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle);
     static glm::mat4 _getProjectionMatrix();

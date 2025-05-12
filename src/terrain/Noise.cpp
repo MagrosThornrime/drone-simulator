@@ -12,7 +12,7 @@ void Noise::_createPermutation(int size)
     {
         _permutation.push_back(i);
     }
-    std::shuffle(std::begin(_permutation), std::end(_permutation), *_rng);
+    std::ranges::shuffle(_permutation, _rng);
 }
 
 void Noise::_createOffsets(int size)
@@ -23,7 +23,7 @@ void Noise::_createOffsets(int size)
         _offsets[i].reserve(size);
         for (int j = 0; j < size; j++)
         {
-            _offsets[i].push_back((*_distribution)(*_rng));
+            _offsets[i].push_back(_distribution(_rng));
         }
     }
 }
@@ -60,24 +60,24 @@ float Noise::_fade(float interpolatedValue)
 Noise::Noise(int permutationSize, float minOffset, float maxOffset)
 {
     int seed = std::chrono::system_clock::now().time_since_epoch().count();
-    _rng = std::make_shared<std::mt19937>(seed);
+    _rng.seed(seed);
     if (minOffset > maxOffset)
     {
         throw std::invalid_argument("minOffset must be greater than maxOffset");
     }
-    _distribution = std::make_shared<std::uniform_real_distribution<float>>(minOffset, maxOffset);
+    _distribution = std::uniform_real_distribution(minOffset, maxOffset);
     _createPermutation(permutationSize);
     _createOffsets(permutationSize);
 }
 
 Noise::Noise(int permutationSize, float minOffset, float maxOffset, int seed)
 {
-    _rng = std::make_shared<std::mt19937>(seed);
+    _rng.seed(seed);
     if (minOffset > maxOffset)
     {
         throw std::invalid_argument("minOffset must be greater than maxOffset");
     }
-    _distribution = std::make_shared<std::uniform_real_distribution<float>>(minOffset, maxOffset);
+    _distribution = std::uniform_real_distribution(minOffset, maxOffset);
     _createPermutation(permutationSize);
     _createOffsets(permutationSize);
 }
