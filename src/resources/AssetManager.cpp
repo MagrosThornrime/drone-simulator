@@ -71,7 +71,7 @@ Texture* AssetManager::getTexture(const std::string &name) {
     return &(_textures[name]);
 }
 
-bool AssetManager::hasTexture(const std::string& name)
+bool AssetManager::hasTexture(const std::string& name) const
 {
     return _textures.contains(name);
 }
@@ -131,7 +131,7 @@ AssetManager::AssetManager(const std::string& configFile) : _configFile(configFi
     Logger::log("Asset manager created", info);
 }
 
-bool AssetManager::hasModel(const std::string& name)
+bool AssetManager::hasModel(const std::string& name) const
 {
     return _models.contains(name);
 }
@@ -158,7 +158,7 @@ void AssetManager::loadGameAssets()
     Logger::log("Game assets loaded", info);
 }
 
-void AssetManager::loadWindowData()
+void AssetManager::loadConfiguration()
 {
     Json::Value config;
     loadJsonFile(_configFile, config);
@@ -167,4 +167,8 @@ void AssetManager::loadWindowData()
     windowWidth = window["width"].asFloat();
     windowHeight = window["height"].asFloat();
     windowTitle = window["title"].asString();
+
+    Json::Value renderer = config["renderer"];
+    renderRangeMin = renderer["range-min"].asFloat();
+    renderRangeMax = renderer["range-max"].asFloat();
 }

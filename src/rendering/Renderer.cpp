@@ -34,7 +34,8 @@ glm::mat4 Renderer::_getModelMatrix(glm::vec3 position, glm::vec3 scale, glm::ve
 
 glm::mat4 Renderer::_getProjectionMatrix()
 {
-    return glm::perspective(glm::radians(zoom), _windowWidth / _windowHeight, 0.1f, 100.0f);
+    return glm::perspective(glm::radians(zoom), _windowWidth / _windowHeight,
+        _renderRangeMin, _renderRangeMax);
 }
 
 void Renderer::setViewMatrix(glm::vec3 position, glm::vec3 front, glm::vec3 up)
@@ -43,8 +44,9 @@ void Renderer::setViewMatrix(glm::vec3 position, glm::vec3 front, glm::vec3 up)
 }
 
 
-Renderer::Renderer(Shader* shader, float windowWidth, float windowHeight)
-    : _windowWidth(windowWidth), _windowHeight(windowHeight)
+Renderer::Renderer(Shader* shader, float windowWidth, float windowHeight, float renderRangeMin, float renderRangeMax)
+    : _windowWidth(windowWidth), _windowHeight(windowHeight), _renderRangeMin(renderRangeMin),
+    _renderRangeMax(renderRangeMax)
 {
     _shader = shader;
     Logger::log("Renderer started", info);

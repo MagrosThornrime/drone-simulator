@@ -19,7 +19,7 @@ list(APPEND LIBRARIES ${CONANDEPS_LEGACY})
 set(SOURCES
         src/Application.cpp
         src/Logger.cpp
-        src/Camera.cpp
+        src/Player.cpp
         src/rendering/Renderer.cpp
         src/rendering/Texture.cpp
         src/rendering/Shader.cpp
@@ -34,7 +34,8 @@ set(SOURCES
 set(HEADERS
         include/Application.h
         include/Logger.h
-        include/Camera.h
+        include/Player.h
+        include/GameObject.h
         include/rendering/Texture.h
         include/rendering/Renderer.h
         include/rendering/Shader.h

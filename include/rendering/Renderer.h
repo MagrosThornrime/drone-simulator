@@ -6,6 +6,7 @@ class Renderer
 {
     float _windowWidth, _windowHeight;
 
+    float _renderRangeMin, _renderRangeMax;
     glm::vec3 _lightColor = glm::vec3(1.0f);
     glm::vec4 _backgroundColor = glm::vec4(0.449f, 0.686f, 0.784f, 1.0f);
     glm::vec3 _lightDirection = glm::vec3(-0.2f, -1.0f, -0.3f);
@@ -18,7 +19,7 @@ class Renderer
 public:
     float zoom{};
 
-    Renderer(Shader* shader, float windowWidth, float windowHeight);
+    Renderer(Shader* shader, float windowWidth, float windowHeight, float renderRangeMin, float renderRangeMax);
     Renderer(const Renderer&) = delete;
     ~Renderer();
     void drawBackground();

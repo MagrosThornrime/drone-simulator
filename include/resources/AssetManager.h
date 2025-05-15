@@ -18,6 +18,7 @@ class AssetManager{
 public:
     float windowWidth{}, windowHeight{};
     std::string windowTitle;
+    float renderRangeMin{}, renderRangeMax{};
 
     explicit AssetManager(const std::string& configFile);
     AssetManager(const AssetManager&) = delete;
@@ -35,15 +36,15 @@ public:
                             const std::string& name);
 
     Texture* getTexture(const std::string& name);
-    bool hasTexture(const std::string& name);
+    bool hasTexture(const std::string& name) const;
 
     void loadModel(const std::string& directory, const std::string& objFile, const std::string& name);
     Model* createEmptyModel(const std::string& name);
     Model* getModel(const std::string& name);
-    bool hasModel(const std::string& name);
+    bool hasModel(const std::string& name) const;
 
     void loadGameAssets();
-    void loadWindowData();
+    void loadConfiguration();
 
     ~AssetManager();
 
