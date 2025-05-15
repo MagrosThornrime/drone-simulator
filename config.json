@@ -28,6 +28,6 @@
   },
   "renderer": {
     "range-min": 1.0,
-    "range-max": 2000.0
+    "range-max": 5000.0
   }
 }

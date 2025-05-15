@@ -1,9 +1,7 @@
 #include <Player.h>
-#include <glad/glad.h>
-#include <glm/gtc/matrix_transform.hpp>
 
-Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle)
-    : GameObject(modelName, position, scale, rotationAxis, rotationAngle)
+Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale)
+    : GameObject(modelName, position, scale)
 {
     _updateVectors();
 }
@@ -15,7 +13,7 @@ Player::Player() : GameObject()
 
 glm::vec3 Player::_getCameraPosition()
 {
-    return _position + glm::vec3(0.0f, 75.0f, 150.0f);
+    return _position - _front * 200.0f;
 }
 
 void Player::updateViewZone(Renderer& renderer)

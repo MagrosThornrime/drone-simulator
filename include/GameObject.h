@@ -6,23 +6,23 @@
 
 class GameObject
 {
-    std::string _modelName;
-
 protected:
+    std::string _modelName;
     glm::vec3 _position;
-    glm::vec3 _rotationAxis;
     glm::vec3 _scale;
-    float _rotationAngle;
+    float _yaw = -90.0f;
+    float _pitch = 0.0f;
 
 public:
+    virtual ~GameObject() = default;
     GameObject() = default;
-    GameObject(const std::string& modelName, glm::vec3 position, glm::vec3 scale,
-        glm::vec3 rotationAxis, float rotationAngle) : _modelName(modelName), _position(position),
-        _rotationAxis(rotationAxis), _scale(scale), _rotationAngle(rotationAngle) {}
+    GameObject(const GameObject& other) = default;
+    GameObject(const std::string& modelName, glm::vec3 position, glm::vec3 scale)
+    : _modelName(modelName), _position(position),_scale(scale) {}
 
-    void draw(Renderer& renderer, AssetManager& assetManager)
+    virtual void draw(Renderer& renderer, AssetManager& assetManager)
     {
         Model* model = assetManager.getModel(_modelName);
-        renderer.drawModel(model, _position, _scale, _rotationAxis, _rotationAngle);
+        renderer.drawModel(model, _position, _scale);
     }
 };

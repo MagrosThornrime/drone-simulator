@@ -13,7 +13,7 @@ class Renderer
     Shader* _shader{};
     glm::mat4 _viewMatrix;
 
-    glm::mat4 _getModelMatrix(glm::vec3 position, glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle);
+    glm::mat4 _getModelMatrix(glm::vec3 position, glm::vec3 scale);
     glm::mat4 _getProjectionMatrix();
 
 public:
@@ -23,7 +23,7 @@ public:
     Renderer(const Renderer&) = delete;
     ~Renderer();
     void drawBackground();
-    void drawModel(Model* model, glm::vec3 position, glm::vec3 scale, glm::vec3 rotationAxis, float rotationAngle);
+    void drawModel(Model* model, glm::vec3 position, glm::vec3 scale);
     void setViewMatrix(glm::vec3 position, glm::vec3 front, glm::vec3 up);
 
 };

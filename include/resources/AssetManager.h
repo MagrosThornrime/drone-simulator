@@ -46,6 +46,7 @@ public:
     void loadGameAssets();
     void loadConfiguration();
 
-    ~AssetManager();
+    void close();
+    ~AssetManager() = default;
 
 };

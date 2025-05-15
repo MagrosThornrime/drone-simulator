@@ -116,7 +116,7 @@ Model* AssetManager::getModel(const std::string& name)
     return &(_models[name]);
 }
 
-AssetManager::~AssetManager()
+void AssetManager::close()
 {
     for(auto& program : _shaders | std::views::values){
         glDeleteProgram(program.ID);

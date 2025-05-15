@@ -63,8 +63,8 @@ int main()
         assetManager.renderRangeMin, assetManager.renderRangeMax);
     Generator generator(500, 0.0f, 0.1f);
     generator.generateTerrain(assetManager, "terrain", 500);
-    GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(1000.0f), glm::vec3(1.0f), 0.0f);
-    Player drone("drone", {0.0f, 1000.0f, 0.0f}, glm::vec3(1.0f), glm::vec3(1.0f), 0.0f);
+    GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(5000.0f));
+    Player drone("drone", {0.0f, 3000.0f, 0.0f}, glm::vec3(1.0f));
 
     renderer.zoom = drone.getZoom();
 
@@ -83,6 +83,8 @@ int main()
         drone.draw(renderer, assetManager);
         application.update();
     }
+
+    assetManager.close();
     
     return 0;
 }
