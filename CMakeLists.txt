@@ -20,6 +20,8 @@ set(SOURCES
         src/Application.cpp
         src/Logger.cpp
         src/Player.cpp
+        src/collisions/Collider.cpp
+        src/collisions/ConvexPart.cpp
         src/rendering/Renderer.cpp
         src/rendering/Texture.cpp
         src/rendering/Shader.cpp
@@ -36,6 +38,8 @@ set(HEADERS
         include/Logger.h
         include/Player.h
         include/GameObject.h
+        include/collisions/Collider.h
+        include/collisions/ConvexPart.h
         include/rendering/Texture.h
         include/rendering/Renderer.h
         include/rendering/Shader.h
