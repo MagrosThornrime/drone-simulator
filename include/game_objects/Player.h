@@ -1,5 +1,5 @@
 #pragma once
-#include <GameObject.h>
+#include <game_objects/GameObject.h>
 
 enum MovementDirection {
     FORWARD,
@@ -25,7 +25,7 @@ class Player : public GameObject
     glm::vec3 _getCameraPosition();
 
 public:
-    Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale);
+    Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager);
 
     Player();
 

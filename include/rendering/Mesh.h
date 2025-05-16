@@ -35,4 +35,8 @@ public:
     void findBoundaries(Boundaries& boundaries) const;
 
     void normalize(const Boundaries& boundaries);
+
+    void getVertices(std::vector<glm::vec3>& vertices) const;
+
+    void getIndices(std::vector<unsigned int>& indices) const;
 };

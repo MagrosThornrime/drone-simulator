@@ -2,8 +2,8 @@
 #include <rendering/Renderer.h>
 #include <resources/AssetManager.h>
 #include <terrain/Generator.h>
-#include <Player.h>
-#include <GameObject.h>
+#include <game_objects/Player.h>
+#include <game_objects/Terrain.h>
 
 
 void processInput(Application& application, Player& player, float deltaTime)
@@ -63,8 +63,8 @@ int main()
         assetManager.renderRangeMin, assetManager.renderRangeMax);
     Generator generator(500, 0.0f, 0.1f);
     generator.generateTerrain(assetManager, "terrain", 500);
-    GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(5000.0f));
-    Player drone("drone", {0.0f, 3000.0f, 0.0f}, glm::vec3(1.0f));
+    Terrain terrain("terrain", glm::vec3(0.0f), glm::vec3(5000.0f), assetManager);
+    Player drone("drone", {0.0f, 3000.0f, 0.0f}, glm::vec3(1.0f), assetManager);
 
     renderer.zoom = drone.getZoom();
 

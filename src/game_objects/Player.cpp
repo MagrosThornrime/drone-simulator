@@ -1,7 +1,9 @@
-#include <Player.h>
+#include <game_objects/Player.h>
 
-Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale)
-    : GameObject(modelName, position, scale)
+#include "game_objects/Terrain.h"
+
+Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager)
+    : GameObject(modelName, position, scale, assetManager)
 {
     _updateVectors();
 }

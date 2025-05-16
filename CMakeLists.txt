@@ -19,7 +19,9 @@ list(APPEND LIBRARIES ${CONANDEPS_LEGACY})
 set(SOURCES
         src/Application.cpp
         src/Logger.cpp
-        src/Player.cpp
+        src/game_objects/Player.cpp
+        src/game_objects/GameObject.cpp
+        src/game_objects/Terrain.cpp
         src/collisions/Collider.cpp
         src/collisions/ConvexPart.cpp
         src/rendering/Renderer.cpp
@@ -36,8 +38,9 @@ set(SOURCES
 set(HEADERS
         include/Application.h
         include/Logger.h
-        include/Player.h
-        include/GameObject.h
+        include/game_objects/Player.h
+        include/game_objects/GameObject.h
+        include/game_objects/Terrain.h
         include/collisions/Collider.h
         include/collisions/ConvexPart.h
         include/rendering/Texture.h

@@ -91,3 +91,21 @@ void Mesh::normalize(const Boundaries& boundaries)
         vertex.position.z /= distances.z;
     }
 }
+
+void Mesh::getVertices(std::vector<glm::vec3>& vertices) const
+{
+    vertices.reserve(_vertices.size());
+    for (auto& vertex : _vertices)
+    {
+        vertices.push_back(vertex.position);
+    }
+}
+
+void Mesh::getIndices(std::vector<unsigned int>& indices) const
+{
+    indices.reserve(_indices.size());
+    for (auto& index : _indices)
+    {
+        indices.push_back(index);
+    }
+}
