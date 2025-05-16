@@ -67,3 +67,27 @@ void Mesh::draw(const Shader& shader)
     // always good practice to set everything back to defaults once configured.
     glActiveTexture(GL_TEXTURE0);
 }
+
+void Mesh::findBoundaries(Boundaries& boundaries) const
+{
+    for (auto vertex : _vertices)
+    {
+        boundaries.min.x = std::min(boundaries.min.x, vertex.position.x);
+        boundaries.max.x = std::max(boundaries.max.x, vertex.position.x);
+        boundaries.min.y = std::min(boundaries.min.y, vertex.position.y);
+        boundaries.max.y = std::max(boundaries.max.y, vertex.position.y);
+        boundaries.min.z = std::min(boundaries.min.z, vertex.position.z);
+        boundaries.max.z = std::max(boundaries.max.z, vertex.position.z);
+    }
+}
+
+void Mesh::normalize(const Boundaries& boundaries)
+{
+    const glm::vec3 distances = boundaries.max - boundaries.min;
+    for (auto& vertex : _vertices)
+    {
+        vertex.position.x /= distances.x;
+        vertex.position.y /= distances.y;
+        vertex.position.z /= distances.z;
+    }
+}

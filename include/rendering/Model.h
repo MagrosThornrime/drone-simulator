@@ -19,6 +19,9 @@ class Model
 
     void _loadMaterialTextures(const aiMaterial& mat, aiTextureType type, const std::string& typeName,
         std::vector<std::string>& texturePaths, std::vector<std::string>& textureTypes);
+
+    void _normalize();
+
 public:
     std::vector<Mesh> meshes;
 

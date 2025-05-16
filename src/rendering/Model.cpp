@@ -20,6 +20,8 @@ void Model::generate(const std::string& directory, const std::string& objFile)
 
     // process ASSIMP's root node recursively
     _processNode(*scene->mRootNode, *scene);
+
+    _normalize();
 }
 
 void Model::draw(const Shader& shader)
@@ -133,4 +135,17 @@ Mesh Model::_processMesh(aiMesh& mesh, const aiScene& scene)
             texturePaths.push_back(path);
             textureTypes.push_back(typeName);
         }
+}
+
+void Model::_normalize()
+{
+    Boundaries bounds;
+    for (auto& mesh : meshes)
+    {
+        mesh.findBoundaries(bounds);
+    }
+    for (auto& mesh : meshes)
+    {
+        mesh.normalize(bounds);
+    }
 }

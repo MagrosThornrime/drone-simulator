@@ -5,6 +5,12 @@
 #include <rendering/Texture.h>
 #include <string>
 #include <vector>
+#include <Logger.h>
+
+struct Boundaries {
+    glm::vec3 min = glm::vec3(std::numeric_limits<float>::infinity());
+    glm::vec3 max = glm::vec3(std::numeric_limits<float>::lowest());
+};
 
 struct VertexData {
     glm::vec3 position;
@@ -25,4 +31,8 @@ public:
          const std::vector<std::string>& texturePaths, const std::vector<std::string>& textureTypes);
 
     void draw(const Shader& shader);
+
+    void findBoundaries(Boundaries& boundaries) const;
+
+    void normalize(const Boundaries& boundaries);
 };
