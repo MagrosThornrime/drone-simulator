@@ -6,7 +6,7 @@
 #include <game_objects/Terrain.h>
 
 
-void processInput(Application& application, Player& player, float deltaTime)
+void processInput(Application& application, Player& player, float deltaTime, Terrain& terrain)
 {
     application.getKeys();
     if (application.isKeyPressed(GLFW_KEY_ESCAPE))
@@ -15,27 +15,27 @@ void processInput(Application& application, Player& player, float deltaTime)
     }
     if (application.isKeyPressed(GLFW_KEY_W) || application.isKeyPressed(GLFW_KEY_UP))
     {
-        player.move(FORWARD, deltaTime);
+        player.move(FORWARD, deltaTime, terrain);
     }
     if (application.isKeyPressed(GLFW_KEY_S) || application.isKeyPressed(GLFW_KEY_DOWN))
     {
-        player.move(BACKWARD, deltaTime);
+        player.move(BACKWARD, deltaTime, terrain);
     }
     if (application.isKeyPressed(GLFW_KEY_A) || application.isKeyPressed(GLFW_KEY_LEFT))
     {
-        player.move(LEFT, deltaTime);
+        player.move(LEFT, deltaTime, terrain);
     }
     if (application.isKeyPressed(GLFW_KEY_D) || application.isKeyPressed(GLFW_KEY_RIGHT))
     {
-        player.move(RIGHT, deltaTime);
+        player.move(RIGHT, deltaTime, terrain);
     }
     if (application.isKeyPressed(GLFW_KEY_Q) || application.isKeyPressed(GLFW_KEY_SPACE))
     {
-        player.move(UP, deltaTime);
+        player.move(UP, deltaTime, terrain);
     }
     if (application.isKeyPressed(GLFW_KEY_E) || application.isKeyPressed(GLFW_KEY_LEFT_SHIFT))
     {
-        player.move(DOWN, deltaTime);
+        player.move(DOWN, deltaTime, terrain);
     }
     if (application.isMouseMoved)
     {
@@ -74,7 +74,7 @@ int main()
     {
         float deltaTime = getDeltaTime(lastTime);
 
-        processInput(application, drone, deltaTime);
+        processInput(application, drone, deltaTime, terrain);
 
         drone.updateViewZone(renderer);
         renderer.drawBackground();

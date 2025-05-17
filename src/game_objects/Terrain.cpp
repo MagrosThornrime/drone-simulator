@@ -16,7 +16,7 @@ void Terrain::_fillCollider(AssetManager& assetManager)
     {
         minY = std::min(minY, vertex.y);
     }
-    minY -= 1.0f;
+    minY -= 0.000001f;
 
     // construct a pillar using the face and a triangle parallel to x and z axis.
     for (int i = 0; i < indices.size(); i += 3)
@@ -40,4 +40,5 @@ Terrain::Terrain(const std::string& modelName, glm::vec3 position, glm::vec3 sca
     _position = position;
     _scale = scale;
     Terrain::_fillCollider(assetManager);
+    _collider.setDynamicVertices(position, scale);
 }

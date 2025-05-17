@@ -21,7 +21,7 @@ void Model::generate(const std::string& directory, const std::string& objFile)
     // process ASSIMP's root node recursively
     _processNode(*scene->mRootNode, *scene);
 
-    _normalize();
+    normalize();
 }
 
 void Model::draw(const Shader& shader)
@@ -137,7 +137,7 @@ Mesh Model::_processMesh(aiMesh& mesh, const aiScene& scene)
         }
 }
 
-void Model::_normalize()
+void Model::normalize()
 {
     Boundaries bounds;
     for (auto& mesh : meshes)

@@ -15,6 +15,7 @@ protected:
     float _pitch = 0.0f;
     Collider _collider;
 
+
     virtual void _fillCollider(AssetManager& assetManager);
 
 public:
@@ -24,4 +25,5 @@ public:
     GameObject(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager);
 
     virtual void draw(Renderer& renderer, AssetManager& assetManager);
+    bool collidesWith(const GameObject& other) const;
 };

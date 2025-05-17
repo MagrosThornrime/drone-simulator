@@ -1,6 +1,8 @@
 #pragma once
 #include <game_objects/GameObject.h>
 
+#include "Terrain.h"
+
 enum MovementDirection {
     FORWARD,
     BACKWARD,
@@ -31,7 +33,7 @@ public:
 
     void updateViewZone(Renderer& renderer);
 
-    void move(MovementDirection direction, float deltaTime);
+    void move(MovementDirection direction, float deltaTime, Terrain& terrain);
     void processMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
 
     float getZoom() const;

@@ -5,6 +5,14 @@ void Collider::addPart(const std::vector<glm::vec3>& vertices)
     _parts.emplace_back(vertices);
 }
 
+void Collider::setDynamicVertices(glm::vec3 position, glm::vec3 scale)
+{
+    for (auto& part : _parts)
+    {
+        part.setDynamicVertices(position, scale);
+    }
+}
+
 bool Collider::areColliding(const Collider& collider1, const Collider& collider2)
 {
     for (auto& part1 : collider1._parts)

@@ -17,8 +17,14 @@ void GameObject::draw(Renderer& renderer, AssetManager& assetManager)
     renderer.drawModel(model, _position, _scale);
 }
 
+bool GameObject::collidesWith(const GameObject& other) const
+{
+    return Collider::areColliding(_collider, other._collider);
+}
+
 GameObject::GameObject(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager)
-: _modelName(modelName), _position(position),_scale(scale)
+: _modelName(modelName), _position(position), _scale(scale)
 {
     GameObject::_fillCollider(assetManager);
+    _collider.setDynamicVertices(_position, _scale);
 }

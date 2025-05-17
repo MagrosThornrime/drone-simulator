@@ -1,6 +1,5 @@
 #include <game_objects/Player.h>
-
-#include "game_objects/Terrain.h"
+#include <game_objects/Terrain.h>
 
 Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager)
     : GameObject(modelName, position, scale, assetManager)
@@ -23,29 +22,37 @@ void Player::updateViewZone(Renderer& renderer)
     renderer.setViewMatrix(_getCameraPosition(), _front, _up);
 }
 
-void Player::move(MovementDirection direction, float deltaTime)
+void Player::move(MovementDirection direction, float deltaTime, Terrain& terrain)
 {
     float velocity = _movementSpeed * deltaTime;
+
+    glm::vec3 lastPosition = _position;
 
     switch (direction)
     {
     case FORWARD:
         _position += _front * velocity;
-        return;
+        break;
     case BACKWARD:
         _position -= _front * velocity;
-        return;
+        break;
     case LEFT:
         _position -= _right * velocity;
-        return;
+        break;
     case RIGHT:
         _position += _right * velocity;
-        return;
+        break;
     case UP:
         _position += _up * velocity;
-        return;
+        break;
     case DOWN:
         _position -= _up * velocity;
+    }
+    _collider.setDynamicVertices(_position, _scale);
+    if (collidesWith(terrain))
+    {
+        _position = lastPosition;
+        _collider.setDynamicVertices(_position, _scale);
     }
 }
 

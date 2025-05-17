@@ -86,9 +86,7 @@ void Mesh::normalize(const Boundaries& boundaries)
     const glm::vec3 distances = boundaries.max - boundaries.min;
     for (auto& vertex : _vertices)
     {
-        vertex.position.x /= distances.x;
-        vertex.position.y /= distances.y;
-        vertex.position.z /= distances.z;
+        vertex.position = 2.0f * (vertex.position - boundaries.min) / distances - 1.0f;
     }
 }
 
