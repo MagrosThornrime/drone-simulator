@@ -21,4 +21,4 @@ bool createTetrahedron(std::vector<glm::vec3>& simplex, const std::vector<glm::v
 
 bool containsOrigin(std::vector<glm::vec3>& simplex);
 
-bool isCollidingGJK(const std::vector<glm::vec3>& shape1, const std::vector<glm::vec3>& shape2, int maxIterations=10000);
+bool isCollidingGJK(const std::vector<glm::vec3>& shape1, const std::vector<glm::vec3>& shape2, int maxIterations=1000);

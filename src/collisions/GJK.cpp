@@ -107,6 +107,7 @@ bool isCollidingGJK(const std::vector<glm::vec3>& shape1, const std::vector<glm:
 		if (!createTetrahedron(simplex, shape1, shape2)){
 			return false;
 		}
+		iterations++;
 	}
 	return true;
 }
