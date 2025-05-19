@@ -24,6 +24,7 @@ set(SOURCES
         src/game_objects/Terrain.cpp
         src/collisions/Collider.cpp
         src/collisions/ConvexPart.cpp
+        src/collisions/GJK.cpp
         src/rendering/Renderer.cpp
         src/rendering/Texture.cpp
         src/rendering/Shader.cpp
@@ -43,6 +44,7 @@ set(HEADERS
         include/game_objects/Terrain.h
         include/collisions/Collider.h
         include/collisions/ConvexPart.h
+        include/collisions/GJK.h
         include/rendering/Texture.h
         include/rendering/Renderer.h
         include/rendering/Shader.h

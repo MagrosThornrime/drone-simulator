@@ -1,6 +1,7 @@
 #include <collisions/ConvexPart.h>
 #include <glm/geometric.hpp>
 #include <glm/ext/matrix_transform.hpp>
+#include <collisions/GJK.h>
 
 
 std::pair<glm::vec3, float> ConvexPart::_farthestPoint(glm::vec3 referencePoint) const
@@ -72,5 +73,9 @@ void ConvexPart::setDynamicVertices(glm::vec3 position, glm::vec3 scale)
 
 bool ConvexPart::isColliding(const ConvexPart& part1, const ConvexPart& part2)
 {
-    return _isSphereColliding(part1, part2);
+    if (!_isSphereColliding(part1, part2))
+    {
+        return false;
+    }
+    return isCollidingGJK(part1._dynamicVertices, part2._dynamicVertices);
 }
