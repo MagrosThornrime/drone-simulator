@@ -103,8 +103,8 @@ bool isCollidingGJK(const std::vector<glm::vec3>& shape1, const std::vector<glm:
 		return false;
 	}
 	int iterations = 0;
-	while (!containsOrigin(simplex) && iterations < maxIterations){
-		if (!createTetrahedron(simplex, shape1, shape2)){
+	while (!containsOrigin(simplex)){
+		if (!createTetrahedron(simplex, shape1, shape2) || iterations > maxIterations){
 			return false;
 		}
 		iterations++;
