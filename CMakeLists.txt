@@ -57,6 +57,15 @@ set(HEADERS
         include/terrain/Noise.h
 )
 
-add_executable(${PROJECT_NAME} main.cpp ${SOURCES} ${HEADERS})
-target_include_directories(${PROJECT_NAME} PRIVATE include)
-target_link_libraries(${PROJECT_NAME} ${LIBRARIES})
+add_executable(game main.cpp ${SOURCES} ${HEADERS})
+target_include_directories(game PRIVATE include)
+target_link_libraries(game ${LIBRARIES})
+
+enable_testing()
+
+add_executable(tests tests.cpp ${SOURCES} ${HEADERS})
+target_link_directories(tests PRIVATE include)
+target_link_libraries(tests ${LIBRARIES})
+
+include(GoogleTest)
+gtest_discover_tests(tests)

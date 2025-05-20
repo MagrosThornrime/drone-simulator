@@ -14,6 +14,8 @@ class DroneSimulator(ConanFile):
         self.requires("assimp/5.4.3")
         self.requires("stb/cci.20230920")
         self.requires("jsoncpp/1.9.6")
+        self.requires("gtest/1.16.0")
+
 
 def build_requirements(self):
         self.tool_requires("cmake/[>=3.29]")

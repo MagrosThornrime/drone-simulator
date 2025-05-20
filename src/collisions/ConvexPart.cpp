@@ -60,8 +60,9 @@ bool ConvexPart::_isSphereColliding(const ConvexPart& part1, const ConvexPart& p
 void ConvexPart::setDynamicVertices(glm::vec3 position, glm::vec3 scale)
 {
     glm::mat4 model = glm::mat4(1.0f);
-    model = glm::scale(model, scale);
     model = glm::translate(model, position);
+    model = glm::scale(model, scale);
+
     for (int i = 0; i < _staticVertices.size(); i++)
     {
         _dynamicVertices[i] = glm::vec3(model * glm::vec4(_staticVertices[i], 1.0f));

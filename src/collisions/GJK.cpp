@@ -2,6 +2,8 @@
 #include <limits>
 #include <bits/stdc++.h>
 
+#include "Logger.h"
+
 
 glm::vec3 supportFunction(const std::vector<glm::vec3>& shape, glm::vec3 direction) {
 
@@ -69,17 +71,17 @@ bool containsOrigin(std::vector<glm::vec3>& simplex){
 
 	glm::vec3 perpendicular1 = cross(lineVector1, lineVector2);
 	if (dot(perpendicular1, towardsOrigin) > 0.0f){
-		simplex.erase(std::ranges::remove(simplex, simplex[2]).begin(), simplex.end());
+		simplex.erase(simplex.begin() + 2);
 		return false;
 	}
 	glm::vec3 perpendicular2 = cross(lineVector2, lineVector3);
 	if (dot(perpendicular2, towardsOrigin) > 0.0f){
-		simplex.erase(std::ranges::remove(simplex, simplex[0]).begin(), simplex.end());
+		simplex.erase(simplex.begin());
 		return false;
 	}
 	glm::vec3 perpendicular3 = cross(lineVector3, lineVector1);
 	if (dot(perpendicular3, towardsOrigin) > 0.0f){
-		simplex.erase(std::ranges::remove(simplex, simplex[1]).begin(), simplex.end());
+		simplex.erase(simplex.begin() + 1);
 		return false;
 	}
 	return true;
