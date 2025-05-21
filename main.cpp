@@ -5,8 +5,10 @@
 #include <game_objects/Player.h>
 #include <game_objects/Terrain.h>
 
+#include "collisions/GJK.h"
 
-void processInput(Application& application, Player& player, float deltaTime, Terrain& terrain)
+
+void processInput(Application& application, Player& player, float deltaTime, const std::vector<GameObject*>& collidables)
 {
     application.getKeys();
     if (application.isKeyPressed(GLFW_KEY_ESCAPE))
@@ -15,27 +17,27 @@ void processInput(Application& application, Player& player, float deltaTime, Ter
     }
     if (application.isKeyPressed(GLFW_KEY_W) || application.isKeyPressed(GLFW_KEY_UP))
     {
-        player.move(FORWARD, deltaTime, terrain);
+        player.move(FORWARD, deltaTime, collidables);
     }
     if (application.isKeyPressed(GLFW_KEY_S) || application.isKeyPressed(GLFW_KEY_DOWN))
     {
-        player.move(BACKWARD, deltaTime, terrain);
+        player.move(BACKWARD, deltaTime, collidables);
     }
     if (application.isKeyPressed(GLFW_KEY_A) || application.isKeyPressed(GLFW_KEY_LEFT))
     {
-        player.move(LEFT, deltaTime, terrain);
+        player.move(LEFT, deltaTime, collidables);
     }
     if (application.isKeyPressed(GLFW_KEY_D) || application.isKeyPressed(GLFW_KEY_RIGHT))
     {
-        player.move(RIGHT, deltaTime, terrain);
+        player.move(RIGHT, deltaTime, collidables);
     }
     if (application.isKeyPressed(GLFW_KEY_Q) || application.isKeyPressed(GLFW_KEY_SPACE))
     {
-        player.move(UP, deltaTime, terrain);
+        player.move(UP, deltaTime, collidables);
     }
     if (application.isKeyPressed(GLFW_KEY_E) || application.isKeyPressed(GLFW_KEY_LEFT_SHIFT))
     {
-        player.move(DOWN, deltaTime, terrain);
+        player.move(DOWN, deltaTime, collidables);
     }
     if (application.isMouseMoved)
     {
@@ -64,7 +66,11 @@ int main()
     Generator generator(500, 0.0f, 0.1f);
     generator.generateTerrain(assetManager, "terrain", 500);
     Terrain terrain("terrain", glm::vec3(0.0f), glm::vec3(5000.0f), assetManager);
-    Player drone("drone", {0.0f, 3000.0f, 0.0f}, glm::vec3(1.0f), assetManager);
+    Player drone("cube", {0.0f, 3000.0f, 0.0f}, glm::vec3(120.0f), assetManager);
+    GameObject crate("bred", {400.0f, 3000.0f, 0.0f}, glm::vec3(100.0f), assetManager);
+
+    std::vector<GameObject*> collidables = {&crate, &terrain};
+    std::vector<GameObject*> drawables = {&terrain, &drone, &crate};
 
     renderer.zoom = drone.getZoom();
 
@@ -74,13 +80,16 @@ int main()
     {
         float deltaTime = getDeltaTime(lastTime);
 
-        processInput(application, drone, deltaTime, terrain);
+        processInput(application, drone, deltaTime, collidables);
 
         drone.updateViewZone(renderer);
         renderer.drawBackground();
 
-        terrain.draw(renderer, assetManager);
-        drone.draw(renderer, assetManager);
+        for (GameObject* drawable : drawables)
+        {
+            drawable->draw(renderer, assetManager);
+        }
+
         application.update();
     }
 

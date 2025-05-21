@@ -4,7 +4,7 @@ void Terrain::_fillCollider(AssetManager& assetManager)
 {
     Model* model = assetManager.getModel(_modelName);
     Mesh& mesh = model->meshes[0];
-    std::vector<glm::vec3> vertices;
+    std::vector<glm::dvec3> vertices;
     std::vector<unsigned int> indices;
 
     mesh.getVertices(vertices);
@@ -13,18 +13,27 @@ void Terrain::_fillCollider(AssetManager& assetManager)
     // construct a pillar using the face and a triangle parallel to x and z axis.
     for (int i = 0; i < indices.size(); i += 3)
     {
-        std::vector<glm::vec3> part;
-        float minY = std::numeric_limits<float>::infinity();
+        std::vector<glm::dvec3> part;
+        double minY = std::numeric_limits<double>::infinity();
+        int minVertex = -1;
         for (int j = 0; j < 3; j++)
         {
-            glm::vec3 faceVertex = vertices[indices[i] + j];
-            minY = std::min(minY, faceVertex.y);
+            glm::dvec3 faceVertex = vertices[indices[i] + j];
+            if (faceVertex.y < minY)
+            {
+                minY = faceVertex.y;
+                minVertex = j;
+            }
             part.push_back(faceVertex);
         }
         for (int j = 0; j < 3; j++)
         {
-            glm::vec3 faceVertex = vertices[indices[i] + j];
-            glm::vec3 lowerVertex = {faceVertex.x, minY, faceVertex.z};
+            if (j == minVertex)
+            {
+                continue;
+            }
+            glm::dvec3 faceVertex = vertices[indices[i] + j];
+            glm::dvec3 lowerVertex = {faceVertex.x, minY, faceVertex.z};
             part.push_back(lowerVertex);
         }
         _collider.addPart(part);

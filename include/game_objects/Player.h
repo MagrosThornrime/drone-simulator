@@ -33,7 +33,7 @@ public:
 
     void updateViewZone(Renderer& renderer);
 
-    void move(MovementDirection direction, float deltaTime, Terrain& terrain);
+    void move(MovementDirection direction, float deltaTime, const std::vector<GameObject*>& collidables);
     void processMouseMovement(float xoffset, float yoffset, bool constrainPitch = true);
 
     float getZoom() const;

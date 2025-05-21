@@ -25,20 +25,20 @@ Mesh Generator::_generateMesh(int size, const std::string& texturePath,
     {
         for (int y = 0; y < size; y++)
         {
-            _generateSquareChunk(x, y, size, vertices, indices);
+            _generateUpside(x, y, size, vertices, indices);
         }
     }
     return Mesh(vertices, indices, {texturePath}, {textureType});
 }
 
-void Generator::_generateSquareChunk(float x, float z, float size, std::vector<VertexData>& vertices,
+void Generator::_generateUpside(float x, float z, float size, std::vector<VertexData>& vertices,
     std::vector<unsigned int>& indices)
 {
     int currentVertices = vertices.size();
     glm::vec3 bottomLeft = _generateVertex(x, z, size);
-    glm::vec3 bottomRight = _generateVertex(x + 1, z, size);
-    glm::vec3 topLeft = _generateVertex(x, z + 1, size);
-    glm::vec3 topRight = _generateVertex(x + 1, z + 1, size);
+    glm::vec3 bottomRight = _generateVertex(x + 1.0f, z, size);
+    glm::vec3 topLeft = _generateVertex(x, z + 1.0f, size);
+    glm::vec3 topRight = _generateVertex(x + 1.0f, z + 1.0f, size);
 
     glm::vec3 leftEdge = topLeft - bottomLeft;
     glm::vec3 bottomEdge = bottomRight - bottomLeft;
@@ -65,6 +65,18 @@ void Generator::_generateSquareChunk(float x, float z, float size, std::vector<V
     {
         indices.push_back(currentVertices + i);
     }
+}
+
+void Generator::_generateRest(float x, float z, float size, std::vector<VertexData>& vertices,
+    std::vector<unsigned int>& indices)
+{
+    // int currentVertices = vertices.size();
+    // glm::vec3 bottomLeft = _generateVertex(x, z, size);
+    // glm::vec3 bottomRight = _generateVertex(x + 1.0f, z, size);
+    // glm::vec3 topLeft = _generateVertex(x, z + 1.0f, size);
+    // glm::vec3 topRight = _generateVertex(x + 1.0f, z + 1.0f, size);
+    //
+    // glm::vec3
 }
 
 glm::vec3 Generator::_generateVertex(float x, float z, float size)

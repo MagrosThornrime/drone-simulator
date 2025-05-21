@@ -14,7 +14,7 @@ Player::Player() : GameObject()
 
 glm::vec3 Player::_getCameraPosition()
 {
-    return _position - _front * 200.0f;
+    return _position - _front * 500.0f;
 }
 
 void Player::updateViewZone(Renderer& renderer)
@@ -22,7 +22,7 @@ void Player::updateViewZone(Renderer& renderer)
     renderer.setViewMatrix(_getCameraPosition(), _front, _up);
 }
 
-void Player::move(MovementDirection direction, float deltaTime, Terrain& terrain)
+void Player::move(MovementDirection direction, float deltaTime, const std::vector<GameObject*>& collidables)
 {
     float velocity = _movementSpeed * deltaTime;
 
@@ -43,16 +43,20 @@ void Player::move(MovementDirection direction, float deltaTime, Terrain& terrain
         _position += _right * velocity;
         break;
     case UP:
-        _position += _up * velocity;
+        _position += _worldUp * velocity;
         break;
     case DOWN:
-        _position -= _up * velocity;
+        _position -= _worldUp * velocity;
     }
     _collider.setDynamicVertices(_position, _scale);
-    if (collidesWith(terrain))
+    for (auto& collidable : collidables)
     {
-        _position = lastPosition;
-        _collider.setDynamicVertices(_position, _scale);
+        if (collidesWith(*collidable))
+        {
+            _position = lastPosition;
+            _collider.setDynamicVertices(_position, _scale);
+            return;
+        }
     }
 }
 

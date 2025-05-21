@@ -6,9 +6,14 @@
       "obj": "drone_low_poly.obj"
     },
     {
-      "name": "tree",
-      "directory": "assets/models/tree",
-      "obj": "10459_White_Ash_Tree_v1_L3.obj"
+      "name": "bred",
+      "directory": "assets/models/bred",
+      "obj": "Tetrahedron.obj"
+    },
+    {
+      "name": "cube",
+      "directory": "assets/models/cube",
+      "obj": "untitled.obj"
     }
   ],
 
@@ -17,8 +22,8 @@
     "fragment": "assets/shaders/fragment.glsl"
   },
   "window": {
-    "width": 1920.0,
-    "height": 1080.0,
+    "width": 800.0,
+    "height": 600.0,
     "title": "Drone simulator"
   },
   "renderer": {

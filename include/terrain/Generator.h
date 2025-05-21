@@ -8,7 +8,9 @@ class Generator
 {
     std::shared_ptr<Noise> _noise;
     Mesh _generateMesh(int size, const std::string& texturePath, const std::string& textureType);
-    void _generateSquareChunk(float x, float z, float size, std::vector<VertexData>& vertices,
+    void _generateUpside(float x, float z, float size, std::vector<VertexData>& vertices,
+        std::vector<unsigned int>& indices);
+    void _generateRest(float x, float z, float size, std::vector<VertexData>& vertices,
         std::vector<unsigned int>& indices);
     glm::vec3 _generateVertex(float x, float z, float size);
     glm::vec3 _generateNormal(glm::vec3 edge, glm::vec3 diagonal);

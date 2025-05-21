@@ -55,6 +55,7 @@ Mesh Model::_processMesh(aiMesh& mesh, const aiScene& scene)
         std::vector<std::string> texturePaths;
         std::vector<std::string> textureTypes;
 
+        Logger::log(std::to_string(mesh.mNumVertices), info);
         // walk through each of the mesh's vertices
         for(int i = 0; i < mesh.mNumVertices; i++)
         {

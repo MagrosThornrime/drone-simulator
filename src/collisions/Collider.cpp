@@ -1,11 +1,11 @@
 #include <collisions/Collider.h>
 
-void Collider::addPart(const std::vector<glm::vec3>& vertices)
+void Collider::addPart(const std::vector<glm::dvec3>& vertices)
 {
     _parts.emplace_back(vertices);
 }
 
-void Collider::setDynamicVertices(glm::vec3 position, glm::vec3 scale)
+void Collider::setDynamicVertices(glm::dvec3 position, glm::dvec3 scale)
 {
     for (auto& part : _parts)
     {

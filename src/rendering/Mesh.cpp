@@ -1,8 +1,11 @@
 #include <stdexcept>
 #include <rendering/Mesh.h>
 
+#include "resources/AssetManager.h"
+#include "resources/AssetManager.h"
+
 Mesh::Mesh(const std::vector<VertexData>& vertices, const std::vector<unsigned int>& indices,
-         const std::vector<std::string>& texturePaths, const std::vector<std::string>& textureTypes)
+           const std::vector<std::string>& texturePaths, const std::vector<std::string>& textureTypes)
         : _vertices(vertices), _indices(indices), texturePaths(texturePaths), textureTypes(textureTypes)
 {
     glGenVertexArrays(1, &_vao);
@@ -90,7 +93,7 @@ void Mesh::normalize(const Boundaries& boundaries)
     }
 }
 
-void Mesh::getVertices(std::vector<glm::vec3>& vertices) const
+void Mesh::getVertices(std::vector<glm::dvec3>& vertices) const
 {
     vertices.reserve(_vertices.size());
     for (auto& vertex : _vertices)

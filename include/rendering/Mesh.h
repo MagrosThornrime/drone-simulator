@@ -36,7 +36,7 @@ public:
 
     void normalize(const Boundaries& boundaries);
 
-    void getVertices(std::vector<glm::vec3>& vertices) const;
+    void getVertices(std::vector<glm::dvec3>& vertices) const;
 
     void getIndices(std::vector<unsigned int>& indices) const;
 };

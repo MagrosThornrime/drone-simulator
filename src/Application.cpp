@@ -71,6 +71,8 @@ Application::Application(int width, int height, const std::string& windowName)
     // Set size of the rendering window
     glViewport(0, 0, windowWidth, windowHeight);
 
+    // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
     // Pass Application to glfw callbacks
     glfwSetWindowUserPointer(_window, this);
 

@@ -5,9 +5,10 @@ void GameObject::_fillCollider(AssetManager& assetManager)
     Model* model = assetManager.getModel(_modelName);
     for (auto& mesh : model->meshes)
     {
-        std::vector<glm::vec3> vertices;
+        std::vector<glm::dvec3> vertices;
         mesh.getVertices(vertices);
         _collider.addPart(vertices);
+        // Logger::log(std::to_string(vertices.size()), info);
     }
 }
 

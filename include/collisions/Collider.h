@@ -9,6 +9,6 @@ class Collider
 
 public:
     static bool areColliding(const Collider& collider1, const Collider& collider2);
-    void addPart(const std::vector<glm::vec3>& vertices);
-    void setDynamicVertices(glm::vec3 position, glm::vec3 scale);
+    void addPart(const std::vector<glm::dvec3>& vertices);
+    void setDynamicVertices(glm::dvec3 position, glm::dvec3 scale);
 };
