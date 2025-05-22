@@ -30,7 +30,7 @@ After building, go back to the main directory. Then run:
 ```
 
 ## How to run tests
-I've did some unit tests (currently only for the collision system)
+I've done some unit tests (currently only for the collision system)
 If you want to run them, run in the main directory.
 ```bash
 ./build/tests
