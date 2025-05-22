@@ -6,3 +6,4 @@ CMakeUserPresets.json
 cmake/conan_files/
 cmake/conanfile.hash
 venv/
+CmakeFiles/
