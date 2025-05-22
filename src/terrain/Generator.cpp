@@ -15,74 +15,33 @@ Generator::Generator(int permutationSize, float offsetMin, float offsetMax, int 
     Logger::log("Terrain generator created", info);
 }
 
-Mesh Generator::_generateMesh(int size, const std::string& texturePath,
+Mesh Generator::_generateMesh(float x, float y, int size, const std::string& texturePath,
                             const std::string& textureType)
 {
     std::vector<VertexData> vertices;
     std::vector<unsigned int> indices;
 
-    for (int x = 0; x < size; x++)
-    {
-        for (int y = 0; y < size; y++)
-        {
-            _generateUpside(x, y, size, vertices, indices);
-        }
-    }
+    _createAndAddChunk(x, y, size, vertices, indices);
     return Mesh(vertices, indices, {texturePath}, {textureType});
 }
 
-void Generator::_generateUpside(float x, float z, float size, std::vector<VertexData>& vertices,
+void Generator::_createAndAddChunk(float x, float z, float size, std::vector<VertexData>& vertices,
     std::vector<unsigned int>& indices)
 {
-    int currentVertices = vertices.size();
-    glm::vec3 bottomLeft = _generateVertex(x, z, size);
-    glm::vec3 bottomRight = _generateVertex(x + 1.0f, z, size);
-    glm::vec3 topLeft = _generateVertex(x, z + 1.0f, size);
-    glm::vec3 topRight = _generateVertex(x + 1.0f, z + 1.0f, size);
+    glm::vec3 backwardLeft = _generateVertex(x, z, size);
+    glm::vec3 backwardRight = _generateVertex(x + 1.0f, z, size);
+    glm::vec3 forwardLeft = _generateVertex(x, z + 1.0f, size);
+    glm::vec3 forwardRight = _generateVertex(x + 1.0f, z + 1.0f, size);
 
-    glm::vec3 leftEdge = topLeft - bottomLeft;
-    glm::vec3 bottomEdge = bottomRight - bottomLeft;
-    glm::vec3 diagonal = topRight - bottomLeft;
-
-    glm::vec3 normal1 = _generateNormal(leftEdge, diagonal);
-    glm::vec3 normal2 = _generateNormal(bottomEdge, diagonal);
-
-    glm::vec2 texBottomLeft = glm::vec2(0.0f, 0.0f);
-    glm::vec2 texBottomRight = glm::vec2(1.0f, 0.0f);
-    glm::vec2 texTopLeft = glm::vec2(0.0f, 1.0f);
-    glm::vec2 texTopRight = glm::vec2(1.0f, 1.0f);
-
-    vertices.emplace_back(bottomLeft, normal1, texBottomLeft);
-    vertices.emplace_back(topLeft, normal1, texTopLeft);
-    vertices.emplace_back(topRight, normal1, texTopRight);
-    vertices.emplace_back(bottomRight, normal2, texBottomRight);
-
-    for (int i : {0, 1, 2})
-    {
-        indices.push_back(currentVertices + i);
-    }
-    for (int i : {2, 3, 0})
-    {
-        indices.push_back(currentVertices + i);
-    }
-}
-
-void Generator::_generateRest(float x, float z, float size, std::vector<VertexData>& vertices,
-    std::vector<unsigned int>& indices)
-{
-    // int currentVertices = vertices.size();
-    // glm::vec3 bottomLeft = _generateVertex(x, z, size);
-    // glm::vec3 bottomRight = _generateVertex(x + 1.0f, z, size);
-    // glm::vec3 topLeft = _generateVertex(x, z + 1.0f, size);
-    // glm::vec3 topRight = _generateVertex(x + 1.0f, z + 1.0f, size);
-    //
-    // glm::vec3
+    Chunk chunk(backwardLeft, backwardRight, forwardLeft,
+        forwardRight, minY, maxY);
+    chunk.append(vertices, indices);
 }
 
 glm::vec3 Generator::_generateVertex(float x, float z, float size)
 {
     float y = _noise->generate(x, z, octaves, amplitude, frequency,
-                                    amplitudeFactor, frequencyFactor);
+                               amplitudeFactor, frequencyFactor, minY, maxY);
     x = x * 2.0f / size - 1.0f;
     z = z * 2.0f / size - 1.0f;
     return glm::vec3(x, y, z);
@@ -104,8 +63,14 @@ void Generator::generateTerrain(AssetManager& assetManager, const std::string& n
         assetManager.loadTexture(texturePath, true, textureType, textureName);
     }
     Texture* texture = assetManager.getTexture(textureName);
-    model->meshes.push_back(_generateMesh(size, texturePath, textureType));
-    model->meshes[0].textures.push_back(texture);
+    for (int x = 0; x < size; x++)
+    {
+        for (int y = 0; y < size; y++)
+        {
+            model->meshes.push_back(_generateMesh(x, y, size, texturePath, textureType));
+            model->meshes.back().textures.push_back(texture);
+        }
+    }
     model->normalize();
     Logger::log("Terrain generated", info);
 }

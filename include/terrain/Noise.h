@@ -31,5 +31,5 @@ public:
     explicit Noise(int permutationSize, float minOffset, float maxOffset);
     Noise(int permutationSize, float minOffset, float maxOffset, int seed);
     float generate(float x, float y, int octaves, float amplitude, float frequency,
-                    float amplitudeFactor, float frequencyFactor);
+                   float amplitudeFactor, float frequencyFactor, float minY, float maxY);
 };

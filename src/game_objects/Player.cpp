@@ -1,8 +1,8 @@
 #include <game_objects/Player.h>
 #include <game_objects/Terrain.h>
 
-Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager)
-    : GameObject(modelName, position, scale, assetManager)
+Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager,
+    float cameraDistance) : GameObject(modelName, position, scale, assetManager), _cameraDistance(cameraDistance)
 {
     _updateVectors();
 }
@@ -14,7 +14,7 @@ Player::Player() : GameObject()
 
 glm::vec3 Player::_getCameraPosition()
 {
-    return _position - _front * 200.0f;
+    return _position - _front * _cameraDistance;
 }
 
 void Player::updateViewZone(Renderer& renderer)

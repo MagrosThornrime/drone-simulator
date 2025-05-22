@@ -162,16 +162,5 @@ bool isCollidingGJK(const std::vector<glm::dvec3>& shape1, const std::vector<glm
 		iterations++;
 	}
 
-	Logger::log("1", info);
-	for (auto vertex : shape1)
-	{
-		std::cout << "[" + std::to_string(vertex.x) + ", " + std::to_string(vertex.y) + ", " + std::to_string(vertex.z) + "]," << std::endl;
-	}
-	Logger::log("2", info);
-	for (auto vertex : shape2)
-	{
-		std::cout << "[" + std::to_string(vertex.x) + ", " + std::to_string(vertex.y) + ", " + std::to_string(vertex.z) + "]," << std::endl;
-	}
-
 	return true;
 }

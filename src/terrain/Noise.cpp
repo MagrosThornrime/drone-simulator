@@ -131,7 +131,7 @@ float Noise::_generateOctave(float x, float y) const
 }
 
 float Noise::generate(float x, float y, int octaves, float amplitude, float frequency,
-                        float amplitudeFactor, float frequencyFactor)
+                      float amplitudeFactor, float frequencyFactor, float minY, float maxY)
 {
     if (octaves <= 0)
     {
@@ -144,5 +144,6 @@ float Noise::generate(float x, float y, int octaves, float amplitude, float freq
         amplitude *= amplitudeFactor;
         frequency *= frequencyFactor;
     }
+    result = std::clamp(result, minY, maxY);
     return result;
 }
