@@ -180,26 +180,3 @@ TEST(CollisionTests, Prisms)
 
     ASSERT_TRUE(isCollidingGJK(hexPrism, triPrism));
 }
-
-TEST(CollisionTests, Sus)
-{
-    std::vector<glm::dvec3> boxVertices = {
-        glm::dvec3(-58.210522f, 2880.000000f, -120.029091f),
-        glm::dvec3(181.789474f, 2880.000000f, -120.029091f),
-        glm::dvec3(181.789474f, 3120.000000f, -120.029091f),
-        glm::dvec3(-58.210522f, 3120.000000f, -120.029091f),
-        glm::dvec3(-58.210522f, 2880.000000f, 119.970909f),
-        glm::dvec3(181.789474f, 2880.000000f, 119.970909f),
-        glm::dvec3(181.789474f, 3120.000000f, 119.970909f),
-        glm::dvec3(-58.210522f, 3120.000000f, 119.970909f)
-    };
-
-    std::vector<glm::dvec3> tetrahedronVertices = {
-        glm::dvec3(500.000000f, 3100.000000f, 100.000000f),
-        glm::dvec3(300.000000f, 2900.000000f, 100.000000f),
-        glm::dvec3(300.000000f, 3100.000000f, -100.000000f),
-        glm::dvec3(500.000000f, 2900.000000f, -100.000000f)
-    };
-
-    ASSERT_TRUE(isCollidingGJK(boxVertices, tetrahedronVertices));
-}
