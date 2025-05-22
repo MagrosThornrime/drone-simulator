@@ -8,7 +8,6 @@ void GameObject::_fillCollider(AssetManager& assetManager)
         std::vector<glm::dvec3> vertices;
         mesh.getVertices(vertices);
         _collider.addPart(vertices);
-        // Logger::log(std::to_string(vertices.size()), info);
     }
 }
 
