@@ -1,8 +1,6 @@
 #pragma once
 #include <game_objects/GameObject.h>
 
-#include "Terrain.h"
-
 enum MovementDirection {
     FORWARD,
     BACKWARD,

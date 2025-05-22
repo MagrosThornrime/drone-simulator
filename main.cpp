@@ -3,7 +3,6 @@
 #include <resources/AssetManager.h>
 #include <terrain/Generator.h>
 #include <game_objects/Player.h>
-#include <game_objects/Terrain.h>
 #include <collisions/GJK.h>
 
 
