@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.29)
+cmake_minimum_required(VERSION 3.28)
 project(drone_simulator)
 
 set(CMAKE_CXX_STANDARD 20)
@@ -21,7 +21,6 @@ set(SOURCES
         src/Logger.cpp
         src/game_objects/Player.cpp
         src/game_objects/GameObject.cpp
-        src/game_objects/Terrain.cpp
         src/collisions/Collider.cpp
         src/collisions/ConvexPart.cpp
         src/collisions/GJK.cpp
@@ -42,7 +41,6 @@ set(HEADERS
         include/Logger.h
         include/game_objects/Player.h
         include/game_objects/GameObject.h
-        include/game_objects/Terrain.h
         include/collisions/Collider.h
         include/collisions/ConvexPart.h
         include/collisions/GJK.h

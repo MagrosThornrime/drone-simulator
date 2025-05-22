@@ -1,0 +1,5 @@
+/home/rose/dev/drone-simulator/CMakeFiles/game.dir
+/home/rose/dev/drone-simulator/CMakeFiles/tests.dir
+/home/rose/dev/drone-simulator/CMakeFiles/test.dir
+/home/rose/dev/drone-simulator/CMakeFiles/edit_cache.dir
+/home/rose/dev/drone-simulator/CMakeFiles/rebuild_cache.dir

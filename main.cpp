@@ -4,8 +4,7 @@
 #include <terrain/Generator.h>
 #include <game_objects/Player.h>
 #include <game_objects/Terrain.h>
-
-#include "collisions/GJK.h"
+#include <collisions/GJK.h>
 
 
 void processInput(Application& application, Player& player, float deltaTime, const std::vector<GameObject*>& collidables)
