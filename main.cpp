@@ -66,10 +66,10 @@ int main()
     Generator generator(500, 0.0f, 0.1f);
     generator.generateTerrain(assetManager, "terrain", 500);
     Terrain terrain("terrain", glm::vec3(0.0f), glm::vec3(5000.0f), assetManager);
-    Player drone("cube", {0.0f, 3000.0f, 0.0f}, glm::vec3(120.0f), assetManager);
-    GameObject crate("bred", {400.0f, 3000.0f, 0.0f}, glm::vec3(100.0f), assetManager);
+    Player drone("cube", {0.0f, 3000.0f, 0.0f}, glm::vec3(20.0f), assetManager);
+    GameObject crate("bred", {500.0f, 3000.0f, 0.0f}, glm::vec3(30.0f), assetManager);
 
-    std::vector<GameObject*> collidables = {&crate, &terrain};
+    std::vector<GameObject*> collidables = {&crate};
     std::vector<GameObject*> drawables = {&terrain, &drone, &crate};
 
     renderer.zoom = drone.getZoom();

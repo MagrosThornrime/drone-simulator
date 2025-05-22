@@ -2,7 +2,7 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-const double EPSILON = 0.000001;
+const double EPSILON = 0.0;
 
 glm::dvec3 supportFunction(const std::vector<glm::dvec3>& shape, glm::dvec3 direction);
 

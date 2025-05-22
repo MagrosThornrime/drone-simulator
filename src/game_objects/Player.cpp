@@ -14,7 +14,7 @@ Player::Player() : GameObject()
 
 glm::vec3 Player::_getCameraPosition()
 {
-    return _position - _front * 500.0f;
+    return _position - _front * 200.0f;
 }
 
 void Player::updateViewZone(Renderer& renderer)
