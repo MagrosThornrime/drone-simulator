@@ -33,7 +33,7 @@ set(SOURCES
         src/resources/AssetManager.cpp
         src/terrain/Generator.cpp
         src/terrain/Noise.cpp
-        src/terrain/Chunk.cpp
+        src/terrain/ChunkPart.cpp
 )
 
 set(HEADERS
@@ -54,7 +54,7 @@ set(HEADERS
         include/resources/Image.h
         include/terrain/Generator.h
         include/terrain/Noise.h
-        include/terrain/Chunk.h
+        include/terrain/ChunkPart.h
 )
 
 add_executable(game main.cpp ${SOURCES} ${HEADERS})

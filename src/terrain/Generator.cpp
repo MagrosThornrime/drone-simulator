@@ -1,6 +1,7 @@
 #include <iostream>
 #include <terrain/Generator.h>
 #include <resources/AssetManager.h>
+#include <terrain/ChunkPart.h>
 
 Generator::Generator(int permutationSize, float offsetMin, float offsetMax)
 {
@@ -15,27 +16,24 @@ Generator::Generator(int permutationSize, float offsetMin, float offsetMax, int 
     Logger::log("Terrain generator created", info);
 }
 
-Mesh Generator::_generateMesh(float x, float y, int size, const std::string& texturePath,
-                            const std::string& textureType)
+void Generator::_generateChunk(float x, float z, int size, const std::string& texturePath,
+                            const std::string& textureType, Texture* texture, Model* model)
 {
-    std::vector<VertexData> vertices;
-    std::vector<unsigned int> indices;
+    glm::vec3 bottomLeft = _generateVertex(x, z, size);
+    glm::vec3 bottomRight = _generateVertex(x + 1.0f, z, size);
+    glm::vec3 topLeft = _generateVertex(x, z + 1.0f, size);
+    glm::vec3 topRight = _generateVertex(x + 1.0f, z + 1.0f, size);
 
-    _createAndAddChunk(x, y, size, vertices, indices);
-    return Mesh(vertices, indices, {texturePath}, {textureType});
-}
-
-void Generator::_createAndAddChunk(float x, float z, float size, std::vector<VertexData>& vertices,
-    std::vector<unsigned int>& indices)
-{
-    glm::vec3 backwardLeft = _generateVertex(x, z, size);
-    glm::vec3 backwardRight = _generateVertex(x + 1.0f, z, size);
-    glm::vec3 forwardLeft = _generateVertex(x, z + 1.0f, size);
-    glm::vec3 forwardRight = _generateVertex(x + 1.0f, z + 1.0f, size);
-
-    Chunk chunk(backwardLeft, backwardRight, forwardLeft,
-        forwardRight, minY, maxY);
-    chunk.append(vertices, indices);
+    std::vector<VertexData> vertices1, vertices2;
+    std::vector<unsigned int> indices1, indices2;
+    ChunkPart part1(bottomLeft, topLeft, topRight, chunkHeight, true);
+    ChunkPart part2(topRight, bottomRight, bottomLeft, chunkHeight, false);
+    part1.append(vertices1, indices1);
+    part2.append(vertices2, indices2);
+    model->meshes.emplace_back(Mesh(vertices1, indices1, {texturePath}, {textureType}));
+    model->meshes.back().textures.push_back(texture);
+    model->meshes.emplace_back(Mesh(vertices2, indices2, {texturePath}, {textureType}));
+    model->meshes.back().textures.push_back(texture);
 }
 
 glm::vec3 Generator::_generateVertex(float x, float z, float size)
@@ -67,8 +65,7 @@ void Generator::generateTerrain(AssetManager& assetManager, const std::string& n
     {
         for (int y = 0; y < size; y++)
         {
-            model->meshes.push_back(_generateMesh(x, y, size, texturePath, textureType));
-            model->meshes.back().textures.push_back(texture);
+            _generateChunk(x, y, size, texturePath, textureType, texture, model);
         }
     }
     model->normalize();
