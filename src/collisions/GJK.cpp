@@ -42,9 +42,11 @@ bool createLine(std::vector<glm::dvec3>& simplex, const std::vector<glm::dvec3>&
 
 bool createTriangle(std::vector<glm::dvec3>& simplex, const std::vector<glm::dvec3>& shape1,
 					const std::vector<glm::dvec3>& shape2){
-	glm::dvec3 lineVector = simplex[1] - simplex[0];
-	glm::dvec3 towardsOrigin = -simplex[0];
-	glm::dvec3 direction = normalize(cross(cross(lineVector, towardsOrigin), lineVector));
+	glm::dvec3 A = simplex[0];
+	glm::dvec3 B = simplex[1];
+	glm::dvec3 AB = B - A;
+	glm::dvec3 A0 = -A;
+	glm::dvec3 direction = normalize(cross(cross(AB, A0), AB));
 	simplex.push_back(minkowskiPoint(shape1, shape2, direction));
 	return pointPassedOrigin(direction, simplex.back());
 }
@@ -52,11 +54,14 @@ bool createTriangle(std::vector<glm::dvec3>& simplex, const std::vector<glm::dve
 bool createTetrahedron(std::vector<glm::dvec3>& simplex, const std::vector<glm::dvec3>& shape1,
 						const std::vector<glm::dvec3>& shape2)
 {
-	glm::dvec3 lineVector1 = simplex[1] - simplex[0];
-	glm::dvec3 lineVector2 = simplex[2] - simplex[0];
-	glm::dvec3 towardsOrigin = -simplex[0];
-	glm::dvec3 direction = normalize(cross(lineVector1, lineVector2));
-	if (dot(direction, towardsOrigin) < 0.0f)
+	glm::dvec3 A = simplex[0];
+	glm::dvec3 B = simplex[1];
+	glm::dvec3 C = simplex[2];
+	glm::dvec3 BA = B - A;
+	glm::dvec3 CA = C - A;
+	glm::dvec3 A0 = -A;
+	glm::dvec3 direction = normalize(cross(BA, CA));
+	if (dot(direction, A0) < 0.0f)
 	{
 		direction *= -1.0f;
 	}
@@ -104,29 +109,6 @@ bool containsOriginTetrahedron(std::vector<glm::dvec3>& simplex){
 	return true;
 }
 
-bool containsOriginTriangle(std::vector<glm::dvec3>& simplex){
-	glm::dvec3 A = simplex[0];
-	glm::dvec3 B = simplex[1];
-	glm::dvec3 C = simplex[2];
-	glm::dvec3 CA = A - C;
-	glm::dvec3 CB = B - C;
-	glm::dvec3 CO = -C;
-
-	glm::dvec3 normalCA = normalize(cross(cross(CA, CB), CB));
-
-	if(dot(normalCA, CO) > -EPSILON){
-		simplex.erase(simplex.begin());
-		return false;
-	}
-	glm::dvec3 normalCB = normalize(cross(cross(CB, CA), CA));
-	if(dot(normalCB, CO) > -EPSILON){
-		simplex.erase(simplex.begin() + 1);
-		return false;
-	}
-
-	return true;
-}
-
 bool isCollidingGJK(const std::vector<glm::dvec3>& shape1, const std::vector<glm::dvec3>& shape2,
 	int maxIterations) {
 
@@ -145,7 +127,6 @@ bool isCollidingGJK(const std::vector<glm::dvec3>& shape1, const std::vector<glm
 		return false;
 	}
 	int iterations = 0;
-	// while (!containsOriginTetrahedron(simplex) && !containsOriginTriangle(simplex)){
 	while (!containsOriginTetrahedron(simplex)){
 		if (iterations > maxIterations)
 		{
@@ -155,10 +136,6 @@ bool isCollidingGJK(const std::vector<glm::dvec3>& shape1, const std::vector<glm
 		{
 			return false;
 		}
-		// if (!createTriangle(simplex, shape1, shape2))
-		// {
-		// 	return false;
-		// }
 		iterations++;
 	}
 
