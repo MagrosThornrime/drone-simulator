@@ -22,6 +22,5 @@ bool createTetrahedron(std::vector<glm::dvec3>& simplex, const std::vector<glm::
 
 bool containsOriginTetrahedron(std::vector<glm::dvec3>& simplex);
 
-bool containsOriginTriangle(std::vector<glm::dvec3>& simplex);
 
 bool isCollidingGJK(const std::vector<glm::dvec3>& shape1, const std::vector<glm::dvec3>& shape2, int maxIterations=10000);
