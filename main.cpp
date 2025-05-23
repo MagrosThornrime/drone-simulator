@@ -62,10 +62,12 @@ int main()
     Renderer renderer(assetManager.getShader("shader"), application.windowWidth, application.windowHeight,
         assetManager.renderRangeMin, assetManager.renderRangeMax);
     Generator generator(500, 0.0f, 0.1f);
-    generator.generateTerrain(assetManager, "terrain", 50);
+    generator.generateTerrain(assetManager, "terrain", 200);
     GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(1000.0f), assetManager);
-    Player drone("drone", {0.0f, 1000.0f, 0.0f}, glm::vec3(0.1f), assetManager, 20.0f);
-    GameObject crate("bred", {100.0f, 1000.0f, 0.0f}, glm::vec3(30.0f), assetManager);
+    // Player drone("drone", {0.0f, 500.0f, 0.0f}, glm::vec3(0.003f), assetManager, 0.5f);
+    Player drone("cube", {0.0f, 700.0f, 0.0f}, glm::vec3(5.0f), assetManager, 50.0f);
+
+    GameObject crate("bred", {100.0f, 500.0f, 0.0f}, glm::vec3(10.0f), assetManager);
 
     std::vector<GameObject*> collidables = {&crate, &terrain};
     std::vector<GameObject*> drawables = {&terrain, &drone, &crate};

@@ -18,7 +18,7 @@ class Player : public GameObject
     glm::vec3 _right;
     glm::vec3 _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     // camera options
-    float _movementSpeed = 50.0f;
+    float _movementSpeed = 100.0f;
     float _mouseSensitivity = 0.1f;
     float _zoom = 90.0f;
     float _cameraDistance;

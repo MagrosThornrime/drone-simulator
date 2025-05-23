@@ -65,9 +65,9 @@ void ConvexPart::setDynamicVertices(glm::dvec3 position, glm::dvec3 scale)
 
     for (int i = 0; i < _staticVertices.size(); i++)
     {
-        _dynamicVertices[i] = glm::dvec3(model * glm::vec4(_staticVertices[i], 1.0));
+        _dynamicVertices[i] = glm::dvec3(model * glm::dvec4(_staticVertices[i], 1.0));
     }
-    _dynamicSphereCenter = glm::dvec3(model * glm::vec4(_staticSphereCenter, 1.0));
+    _dynamicSphereCenter = glm::dvec3(model * glm::dvec4(_staticSphereCenter, 1.0));
     _dynamicSphereRadius = _staticSphereRadius * glm::length(scale);
 }
 

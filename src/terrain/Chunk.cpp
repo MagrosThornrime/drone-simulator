@@ -45,10 +45,13 @@ Chunk::Chunk(glm::vec3 upBackwardLeft, glm::vec3 upBackwardRight, glm::vec3 upFo
     float minY, float maxY) : _upBackwardLeft(upBackwardLeft), _upBackwardRight(upBackwardRight),
     _upForwardLeft(upForwardLeft), _upForwardRight(upForwardRight)
 {
-    _downBackwardLeft = {_upBackwardLeft.x, minY, _upBackwardLeft.z};
-    _downForwardLeft = {_upForwardLeft.x, minY, _upForwardLeft.z};
-    _downBackwardRight = {_upBackwardRight.x, minY, _upBackwardRight.z};
-    _downForwardRight = {_upForwardRight.x, minY, _upForwardRight.z};
+    std::vector<float> allY = {upBackwardLeft.y, upBackwardRight.y, upForwardLeft.y, upForwardRight.y};
+    minY = *std::min_element(allY.begin(), allY.end());
+
+    _downBackwardLeft = {_upBackwardLeft.x, minY - 0.1f, _upBackwardLeft.z};
+    _downForwardLeft = {_upForwardLeft.x, minY - 0.1f, _upForwardLeft.z};
+    _downBackwardRight = {_upBackwardRight.x, minY - 0.1f, _upBackwardRight.z};
+    _downForwardRight = {_upForwardRight.x, minY - 0.1f, _upForwardRight.z};
     _generateNormalsUp();
 }
 
@@ -60,7 +63,7 @@ void Chunk::append(std::vector<VertexData>& vertices, std::vector<unsigned int>&
         vertices, indices);
 
     // left face
-    _appendFace(_downBackwardLeft, _downForwardLeft, _upBackwardLeft, _upForwardRight,
+    _appendFace(_downBackwardLeft, _downForwardLeft, _upBackwardLeft, _upForwardLeft,
         _normalLeft, _normalLeft,
         vertices, indices);
 
@@ -80,7 +83,7 @@ void Chunk::append(std::vector<VertexData>& vertices, std::vector<unsigned int>&
         vertices, indices);
 
     // down face
-    _appendFace(_downBackwardLeft, _downBackwardRight, _upBackwardLeft, _upBackwardRight,
+    _appendFace(_downBackwardLeft, _downBackwardRight, _downForwardLeft, _downForwardRight,
         _normalDown, _normalDown,
         vertices, indices);
 }
