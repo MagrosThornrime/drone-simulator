@@ -71,7 +71,7 @@ void Mesh::draw(const Shader& shader)
     glActiveTexture(GL_TEXTURE0);
 }
 
-void Mesh::getVertices(std::vector<glm::dvec3>& vertices) const
+void Mesh::getVertices(std::vector<glm::vec3>& vertices) const
 {
     vertices.reserve(_vertices.size());
     for (auto& vertex : _vertices)

@@ -5,15 +5,15 @@ void GameObject::_fillCollider(AssetManager& assetManager)
     Model* model = assetManager.getModel(_modelName);
     for (auto& mesh : model->meshes)
     {
-        std::vector<glm::dvec3> vertices;
+        std::vector<glm::vec3> vertices;
         mesh.getVertices(vertices);
         _collider.addPart(vertices);
     }
 }
 
-glm::dmat4 GameObject::_getModelMatrix()
+glm::mat4 GameObject::_getModelMatrix()
 {
-    glm::mat4 modelMatrix = glm::dmat4(1.0);
+    glm::mat4 modelMatrix = glm::mat4(1.0);
     modelMatrix = glm::translate(modelMatrix, _position);
     modelMatrix = glm::scale(modelMatrix, _scale);
     return modelMatrix;

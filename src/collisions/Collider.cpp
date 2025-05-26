@@ -1,13 +1,13 @@
 #include <collisions/Collider.h>
 
-void Collider::addPart(const std::vector<glm::dvec3>& vertices)
+void Collider::addPart(const std::vector<glm::vec3>& vertices)
 {
-    std::vector<glm::dvec3> newVertices;
+    std::vector<glm::vec3> newVertices;
     _removeAdjacent(vertices, newVertices);
     _parts.emplace_back(newVertices);
 }
 
-void Collider::setDynamicVertices(const glm::dmat4& modelMatrix, glm::dvec3 scale)
+void Collider::setDynamicVertices(const glm::mat4& modelMatrix, glm::vec3 scale)
 {
     for (auto& part : _parts)
     {
@@ -15,7 +15,7 @@ void Collider::setDynamicVertices(const glm::dmat4& modelMatrix, glm::dvec3 scal
     }
 }
 
-void Collider::_removeAdjacent(const std::vector<glm::dvec3>& vertices, std::vector<glm::dvec3>& result)
+void Collider::_removeAdjacent(const std::vector<glm::vec3>& vertices, std::vector<glm::vec3>& result)
 {
     result.reserve(vertices.size());
     for (auto& vertex : vertices)

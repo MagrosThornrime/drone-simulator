@@ -4,22 +4,22 @@
 
 class ConvexPart
 {
-    std::vector<glm::dvec3> _staticVertices;
-    glm::dvec3 _staticSphereCenter;
-    double _staticSphereRadius;
+    std::vector<glm::vec3> _staticVertices;
+    glm::vec3 _staticSphereCenter;
+    float _staticSphereRadius;
 
-    std::vector<glm::dvec3> _dynamicVertices;
-    glm::dvec3 _dynamicSphereCenter;
-    double _dynamicSphereRadius;
+    std::vector<glm::vec3> _dynamicVertices;
+    glm::vec3 _dynamicSphereCenter;
+    float _dynamicSphereRadius;
 
-    std::pair<glm::dvec3, double> _farthestPoint(glm::dvec3 point) const;
+    std::pair<glm::vec3, float> _farthestPoint(glm::vec3 point) const;
     void _findSphere();
     static bool _isSphereColliding(const ConvexPart& part1, const ConvexPart& part2);
 
 public:
 
-    void setDynamicVertices(const glm::dmat4& modelMatrix, glm::dvec3 scale);
+    void setDynamicVertices(const glm::mat4& modelMatrix, glm::vec3 scale);
 
-    explicit ConvexPart(const std::vector<glm::dvec3>& vertices);
+    explicit ConvexPart(const std::vector<glm::vec3>& vertices);
     static bool isColliding(const ConvexPart& part1, const ConvexPart& part2);
 };

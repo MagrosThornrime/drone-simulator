@@ -4,13 +4,13 @@
 #include <collisions/GJK.h>
 
 
-std::pair<glm::dvec3, double> ConvexPart::_farthestPoint(glm::dvec3 referencePoint) const
+std::pair<glm::vec3, float> ConvexPart::_farthestPoint(glm::vec3 referencePoint) const
 {
-    double maxDistance = 0.0;
-    glm::dvec3 maxPoint = referencePoint;
+    float maxDistance = 0.0f;
+    glm::vec3 maxPoint = referencePoint;
     for (auto point : _staticVertices)
     {
-        double distance = glm::distance(point, referencePoint);
+        float distance = glm::distance(point, referencePoint);
         if (distance > maxDistance)
         {
             maxDistance = distance;
@@ -23,29 +23,29 @@ std::pair<glm::dvec3, double> ConvexPart::_farthestPoint(glm::dvec3 referencePoi
 
 void ConvexPart::_findSphere()
 {
-    glm::dvec3 initialPoint = _staticVertices[0];
-    glm::dvec3 constructingPoint1 = _farthestPoint(initialPoint).first;
+    glm::vec3 initialPoint = _staticVertices[0];
+    glm::vec3 constructingPoint1 = _farthestPoint(initialPoint).first;
     auto searchResult = _farthestPoint(constructingPoint1);
-    glm::dvec3 constructionPoint2 = searchResult.first;
-    double constructingDistance = searchResult.second;
+    glm::vec3 constructionPoint2 = searchResult.first;
+    float constructingDistance = searchResult.second;
 
-    _staticSphereCenter = (constructingPoint1 + constructionPoint2) / 2.0;
-    _staticSphereRadius = constructingDistance / 2.0;
+    _staticSphereCenter = (constructingPoint1 + constructionPoint2) / 2.0f;
+    _staticSphereRadius = constructingDistance / 2.0f;
 
     for (auto point : _staticVertices)
     {
-        double distance = glm::distance(point, _staticSphereCenter);
+        float distance = glm::distance(point, _staticSphereCenter);
         if (distance > _staticSphereRadius)
         {
-            _staticSphereRadius = (_staticSphereRadius + distance) / 2.0;
-            double factor = _staticSphereRadius / distance;
-            _staticSphereCenter = glm::mix(_staticSphereCenter, point, 1.0 - factor);
+            _staticSphereRadius = (_staticSphereRadius + distance) / 2.0f;
+            float factor = _staticSphereRadius / distance;
+            _staticSphereCenter = glm::mix(_staticSphereCenter, point, 1.0f - factor);
         }
     }
 }
 
 
-ConvexPart::ConvexPart(const std::vector<glm::dvec3>& vertices) : _staticVertices(vertices) {
+ConvexPart::ConvexPart(const std::vector<glm::vec3>& vertices) : _staticVertices(vertices) {
     _findSphere();
     _dynamicVertices = _staticVertices;
 }
@@ -53,18 +53,18 @@ ConvexPart::ConvexPart(const std::vector<glm::dvec3>& vertices) : _staticVertice
 
 bool ConvexPart::_isSphereColliding(const ConvexPart& part1, const ConvexPart& part2)
 {
-    const double distance = glm::distance(part1._dynamicSphereCenter, part2._dynamicSphereCenter);
+    const float distance = glm::distance(part1._dynamicSphereCenter, part2._dynamicSphereCenter);
     return distance < part1._dynamicSphereRadius + part2._dynamicSphereRadius;
 }
 
-void ConvexPart::setDynamicVertices(const glm::dmat4& modelMatrix, glm::dvec3 scale)
+void ConvexPart::setDynamicVertices(const glm::mat4& modelMatrix, glm::vec3 scale)
 {
 
     for (int i = 0; i < _staticVertices.size(); i++)
     {
-        _dynamicVertices[i] = glm::dvec3(modelMatrix * glm::dvec4(_staticVertices[i], 1.0));
+        _dynamicVertices[i] = glm::vec3(modelMatrix * glm::dvec4(_staticVertices[i], 1.0f));
     }
-    _dynamicSphereCenter = glm::dvec3(modelMatrix * glm::dvec4(_staticSphereCenter, 1.0));
+    _dynamicSphereCenter = glm::vec3(modelMatrix * glm::dvec4(_staticSphereCenter, 1.0f));
     _dynamicSphereRadius = _staticSphereRadius * glm::length(scale);
 }
 
