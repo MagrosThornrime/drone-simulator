@@ -15,11 +15,12 @@ protected:
     float _pitch = 0.0f;
     Collider _collider;
 
-
     virtual void _fillCollider(AssetManager& assetManager);
-    glm::mat4 _getModelMatrix();
+    void _calculateModelMatrix();
 
 public:
+    glm::mat4 modelMatrix;
+
     virtual ~GameObject() = default;
     GameObject() = default;
     GameObject(const GameObject& other) = default;

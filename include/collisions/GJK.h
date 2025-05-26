@@ -2,8 +2,6 @@
 #include <glm/glm.hpp>
 #include <vector>
 
-const float EPSILON = 0.0;
-
 glm::vec3 supportFunction(const std::vector<glm::vec3>& shape, glm::vec3 direction);
 
 glm::vec3 minkowskiPoint(const std::vector<glm::vec3>& shape1, const std::vector<glm::vec3>& shape2,

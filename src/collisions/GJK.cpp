@@ -1,9 +1,5 @@
-#include <iostream>
 #include <collisions/GJK.h>
 #include <limits>
-#include <string>
-
-#include "Logger.h"
 
 
 glm::vec3 supportFunction(const std::vector<glm::vec3>& shape, glm::vec3 direction) {
@@ -57,10 +53,10 @@ bool createTetrahedron(std::vector<glm::vec3>& simplex, const std::vector<glm::v
 	glm::vec3 A = simplex[0];
 	glm::vec3 B = simplex[1];
 	glm::vec3 C = simplex[2];
-	glm::vec3 BA = B - A;
-	glm::vec3 CA = C - A;
+	glm::vec3 AB = B - A;
+	glm::vec3 AC = C - A;
 	glm::vec3 A0 = -A;
-	glm::vec3 direction = normalize(cross(BA, CA));
+	glm::vec3 direction = normalize(cross(AB, AC));
 	if (dot(direction, A0) < 0.0f)
 	{
 		direction *= -1.0f;
@@ -84,7 +80,7 @@ bool containsOriginTetrahedron(std::vector<glm::vec3>& simplex){
 	{
 		normalABD *= -1.0f;
 	}
-	if (dot(normalABD, DO) > -EPSILON){
+	if (dot(normalABD, DO) > 0.0f){
 		simplex.erase(simplex.begin() + 2);
 		return false;
 	}
@@ -93,7 +89,7 @@ bool containsOriginTetrahedron(std::vector<glm::vec3>& simplex){
 	{
 		normalBCD *= -1.0f;
 	}
-	if (dot(normalBCD, DO) > -EPSILON){
+	if (dot(normalBCD, DO) > 0.0f){
 		simplex.erase(simplex.begin());
 		return false;
 	}
@@ -102,7 +98,7 @@ bool containsOriginTetrahedron(std::vector<glm::vec3>& simplex){
 	{
 		normalACD *= -1.0f;
 	}
-	if (dot(normalACD, DO) > -EPSILON){
+	if (dot(normalACD, DO) > 0.0f){
 		simplex.erase(simplex.begin() + 1);
 		return false;
 	}

@@ -1,8 +1,6 @@
 #include <stdexcept>
 #include <rendering/Mesh.h>
-
-#include "resources/AssetManager.h"
-#include "resources/AssetManager.h"
+#include <resources/AssetManager.h>
 
 Mesh::Mesh(const std::vector<VertexData>& vertices, const std::vector<unsigned int>& indices,
            const std::vector<std::string>& texturePaths, const std::vector<std::string>& textureTypes)
