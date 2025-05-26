@@ -3,7 +3,7 @@
 
 TEST(CollisionTests, CubeAndTetrahedron)
 {
-    std::vector<glm::dvec3> cube1 = {
+    std::vector<glm::vec3> cube1 = {
         {-0.5f, -0.5f, -0.5f},
         { 0.5f, -0.5f, -0.5f},
         { 0.5f,  0.5f, -0.5f},
@@ -14,7 +14,7 @@ TEST(CollisionTests, CubeAndTetrahedron)
         {-0.5f,  0.5f,  0.5f}
     };
 
-    std::vector<glm::dvec3> tetra1 = {
+    std::vector<glm::vec3> tetra1 = {
         { 0.0f,  0.0f,  0.0f},
         { 1.0f,  0.0f,  0.0f},
         { 0.0f,  1.0f,  0.0f},
@@ -26,7 +26,7 @@ TEST(CollisionTests, CubeAndTetrahedron)
 
 TEST(CollisionTests, TwoOverlappingCubes)
 {
-    std::vector<glm::dvec3> cube2 = {
+    std::vector<glm::vec3> cube2 = {
         {-0.5f, -0.5f, -0.5f},
         { 0.5f, -0.5f, -0.5f},
         { 0.5f,  0.5f, -0.5f},
@@ -37,7 +37,7 @@ TEST(CollisionTests, TwoOverlappingCubes)
         {-0.5f,  0.5f,  0.5f}
     };
 
-    std::vector<glm::dvec3> cube3 = {
+    std::vector<glm::vec3> cube3 = {
         { 0.3f, -0.5f, -0.5f},
         { 1.3f, -0.5f, -0.5f},
         { 1.3f,  0.5f, -0.5f},
@@ -53,7 +53,7 @@ TEST(CollisionTests, TwoOverlappingCubes)
 
 TEST(CollisionTests, TetrahedronCubeCorner)
 {
-    std::vector<glm::dvec3> cube4 = {
+    std::vector<glm::vec3> cube4 = {
         {-0.5f, -0.5f, -0.5f},
         { 0.5f, -0.5f, -0.5f},
         { 0.5f,  0.5f, -0.5f},
@@ -64,7 +64,7 @@ TEST(CollisionTests, TetrahedronCubeCorner)
         {-0.5f,  0.5f,  0.5f}
     };
 
-    std::vector<glm::dvec3> tetra2 = {
+    std::vector<glm::vec3> tetra2 = {
         { 0.4f, 0.4f, 0.4f},
         { 1.0f, 0.4f, 0.4f},
         { 0.4f, 1.0f, 0.4f},
@@ -76,7 +76,7 @@ TEST(CollisionTests, TetrahedronCubeCorner)
 
 TEST(CollisionTests, TetrahedronOutsideCube)
 {
-    std::vector<glm::dvec3> cube5 = {
+    std::vector<glm::vec3> cube5 = {
         {-0.5f, -0.5f, -0.5f},
         { 0.5f, -0.5f, -0.5f},
         { 0.5f,  0.5f, -0.5f},
@@ -87,7 +87,7 @@ TEST(CollisionTests, TetrahedronOutsideCube)
         {-0.5f,  0.5f,  0.5f}
     };
 
-    std::vector<glm::dvec3> tetra3 = {
+    std::vector<glm::vec3> tetra3 = {
         { 2.0f, 2.0f, 2.0f},
         { 3.0f, 2.0f, 2.0f},
         { 2.0f, 3.0f, 2.0f},
@@ -99,7 +99,7 @@ TEST(CollisionTests, TetrahedronOutsideCube)
 
 TEST(CollisionTests, TwoSeparatedCubes)
 {
-    std::vector<glm::dvec3> cube6 = {
+    std::vector<glm::vec3> cube6 = {
         {-0.5f, -0.5f, -0.5f},
         { 0.5f, -0.5f, -0.5f},
         { 0.5f,  0.5f, -0.5f},
@@ -110,7 +110,7 @@ TEST(CollisionTests, TwoSeparatedCubes)
         {-0.5f,  0.5f,  0.5f}
     };
 
-    std::vector<glm::dvec3> cube7 = {
+    std::vector<glm::vec3> cube7 = {
         { 2.0f, 2.0f, 2.0f},
         { 3.0f, 2.0f, 2.0f},
         { 3.0f, 3.0f, 2.0f},
@@ -126,7 +126,7 @@ TEST(CollisionTests, TwoSeparatedCubes)
 
 TEST(CollisionTests, TetrahedronCloseToCube)
 {
-    std::vector<glm::dvec3> cube8 = {
+    std::vector<glm::vec3> cube8 = {
         {-0.5f, -0.5f, -0.5f},
         { 0.5f, -0.5f, -0.5f},
         { 0.5f,  0.5f, -0.5f},
@@ -137,7 +137,7 @@ TEST(CollisionTests, TetrahedronCloseToCube)
         {-0.5f,  0.5f,  0.5f}
     };
 
-    std::vector<glm::dvec3> tetra4 = {
+    std::vector<glm::vec3> tetra4 = {
         { 1.1f, 1.1f, 1.1f},
         { 2.0f, 1.1f, 1.1f},
         { 1.1f, 2.0f, 1.1f},
@@ -148,7 +148,7 @@ TEST(CollisionTests, TetrahedronCloseToCube)
 
 TEST(CollisionTests, Prisms)
 {
-    std::vector<glm::dvec3> hexPrism = {
+    std::vector<glm::vec3> hexPrism = {
         // Bottom hexagon (z = -0.5)
         { 1.0f,  0.0f, -0.5f},
         { 0.5f,  0.866f, -0.5f},
@@ -166,7 +166,7 @@ TEST(CollisionTests, Prisms)
         { 0.5f, -0.866f, 0.5f}
     };
 
-    std::vector<glm::dvec3> triPrism = {
+    std::vector<glm::vec3> triPrism = {
         // Base triangle (z = -0.3)
         { 0.2f,  0.0f, -0.3f},
         { 1.2f,  0.0f, -0.3f},
