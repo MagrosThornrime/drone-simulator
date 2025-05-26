@@ -1,4 +1,7 @@
 # Drone simulator
+
+![Drone simulator](simulator.png)
+
 ## Introduction
 This is a simple "game" where you can fly a drone above a 3D terrain.
 The collision system blocks you from flying through other objects, especially the terrain.
