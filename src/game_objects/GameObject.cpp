@@ -11,10 +11,18 @@ void GameObject::_fillCollider(AssetManager& assetManager)
     }
 }
 
+glm::dmat4 GameObject::_getModelMatrix()
+{
+    glm::mat4 modelMatrix = glm::dmat4(1.0);
+    modelMatrix = glm::translate(modelMatrix, _position);
+    modelMatrix = glm::scale(modelMatrix, _scale);
+    return modelMatrix;
+}
+
 void GameObject::draw(Renderer& renderer, AssetManager& assetManager)
 {
     Model* model = assetManager.getModel(_modelName);
-    renderer.drawModel(model, _position, _scale);
+    renderer.drawModel(model, glm::mat4(_getModelMatrix()));
 }
 
 bool GameObject::collidesWith(const GameObject& other) const
@@ -26,5 +34,5 @@ GameObject::GameObject(const std::string& modelName, glm::vec3 position, glm::ve
 : _modelName(modelName), _position(position), _scale(scale)
 {
     GameObject::_fillCollider(assetManager);
-    _collider.setDynamicVertices(_position, _scale);
+    _collider.setDynamicVertices(_getModelMatrix(), _scale);
 }

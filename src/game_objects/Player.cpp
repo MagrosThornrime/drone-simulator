@@ -47,13 +47,13 @@ void Player::move(MovementDirection direction, float deltaTime, const std::vecto
     case DOWN:
         _position -= _worldUp * velocity;
     }
-    _collider.setDynamicVertices(_position, _scale);
+    _collider.setDynamicVertices(_getModelMatrix(), _scale);
     for (auto& collidable : collidables)
     {
         if (collidesWith(*collidable))
         {
             _position = lastPosition;
-            _collider.setDynamicVertices(_position, _scale);
+            _collider.setDynamicVertices(_getModelMatrix(), _scale);
             return;
         }
     }

@@ -9,25 +9,16 @@ void Renderer::drawBackground(){
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void Renderer::drawModel(Model* model, glm::vec3 position, glm::vec3 scale)
+void Renderer::drawModel(Model* model, glm::mat4 modelMatrix)
 {
     _shader->use();
     _shader->setVector3f("lightDirection", _lightDirection);
     _shader->setVector3f("lightColor", _lightColor);
-    glm::mat4 modelMatrix = _getModelMatrix(position, scale);
     glm::mat4 projectionMatrix = _getProjectionMatrix();
     _shader->setMatrix4("model", modelMatrix);
     _shader->setMatrix4("view", _viewMatrix);
     _shader->setMatrix4("projection", projectionMatrix);
     model->draw(*_shader);
-}
-
-glm::mat4 Renderer::_getModelMatrix(glm::vec3 position, glm::vec3 scale)
-{
-    glm::mat4 model = glm::mat4(1.0f);
-    model = glm::translate(model, position);
-    model = glm::scale(model, scale);
-    return model;
 }
 
 glm::mat4 Renderer::_getProjectionMatrix()

@@ -68,6 +68,6 @@ void Generator::generateTerrain(AssetManager& assetManager, const std::string& n
             _generateChunk(x, y, size, texturePath, textureType, texture, model);
         }
     }
-    model->normalize();
+    // model->normalize();
     Logger::log("Terrain generated", info);
 }

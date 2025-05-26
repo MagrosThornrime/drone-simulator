@@ -2,14 +2,37 @@
 
 void Collider::addPart(const std::vector<glm::dvec3>& vertices)
 {
-    _parts.emplace_back(vertices);
+    std::vector<glm::dvec3> newVertices;
+    _removeAdjacent(vertices, newVertices);
+    _parts.emplace_back(newVertices);
 }
 
-void Collider::setDynamicVertices(glm::dvec3 position, glm::dvec3 scale)
+void Collider::setDynamicVertices(const glm::dmat4& modelMatrix, glm::dvec3 scale)
 {
     for (auto& part : _parts)
     {
-        part.setDynamicVertices(position, scale);
+        part.setDynamicVertices(modelMatrix, scale);
+    }
+}
+
+void Collider::_removeAdjacent(const std::vector<glm::dvec3>& vertices, std::vector<glm::dvec3>& result)
+{
+    result.reserve(vertices.size());
+    for (auto& vertex : vertices)
+    {
+        bool alreadyAdded = false;
+        for (auto& addedVertex : result)
+        {
+            if (distance(addedVertex, vertex) < _epsilon)
+            {
+                alreadyAdded = true;
+                break;
+            }
+        }
+        if (!alreadyAdded)
+        {
+            result.emplace_back(vertex);
+        }
     }
 }
 
@@ -27,4 +50,3 @@ bool Collider::areColliding(const Collider& collider1, const Collider& collider2
     }
     return false;
 }
-

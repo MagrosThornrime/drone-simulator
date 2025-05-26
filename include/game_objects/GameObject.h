@@ -17,6 +17,7 @@ protected:
 
 
     virtual void _fillCollider(AssetManager& assetManager);
+    glm::dmat4 _getModelMatrix();
 
 public:
     virtual ~GameObject() = default;

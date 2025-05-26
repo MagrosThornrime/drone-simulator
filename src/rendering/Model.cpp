@@ -20,8 +20,6 @@ void Model::generate(const std::string& directory, const std::string& objFile)
 
     // process ASSIMP's root node recursively
     _processNode(*scene->mRootNode, *scene);
-
-    normalize();
 }
 
 void Model::draw(const Shader& shader)

@@ -36,27 +36,6 @@ set(SOURCES
         src/terrain/ChunkPart.cpp
 )
 
-set(HEADERS
-        include/Application.h
-        include/Logger.h
-        include/game_objects/Player.h
-        include/game_objects/GameObject.h
-        include/collisions/Collider.h
-        include/collisions/ConvexPart.h
-        include/collisions/GJK.h
-        include/rendering/Texture.h
-        include/rendering/Renderer.h
-        include/rendering/Shader.h
-        include/rendering/Mesh.h
-        include/rendering/Model.h
-        include/resources/FileIO.h
-        include/resources/AssetManager.h
-        include/resources/Image.h
-        include/terrain/Generator.h
-        include/terrain/Noise.h
-        include/terrain/ChunkPart.h
-)
-
 add_executable(game main.cpp ${SOURCES} ${HEADERS})
 target_include_directories(game PRIVATE include)
 target_link_libraries(game ${LIBRARIES})

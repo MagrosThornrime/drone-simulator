@@ -22,8 +22,8 @@
     "fragment": "assets/shaders/fragment.glsl"
   },
   "window": {
-    "width": 800.0,
-    "height": 600.0,
+    "width": 1920.0,
+    "height": 1680.0,
     "title": "Drone simulator"
   },
   "renderer": {

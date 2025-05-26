@@ -63,11 +63,14 @@ int main()
         assetManager.renderRangeMin, assetManager.renderRangeMax);
     Generator generator(500, 0.0f, 0.1f);
     generator.chunkHeight = 0.03f;
-    generator.generateTerrain(assetManager, "terrain", 100);
-    GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(1000.0f), assetManager);
-    // Player drone("drone", {0.0f, 500.0f, 0.0f}, glm::vec3(0.003f), assetManager, 0.5f);
-    Player drone("cube", {0.0f,500.0f, 0.0f}, glm::vec3(5.0f), assetManager, 50.0f);
+    generator.octaves = 5;
+    generator.amplitude = 2.0f;
+    generator.maxY = 4.0f;
+    generator.minY = -4.0f;
 
+    generator.generateTerrain(assetManager, "terrain", 100);
+    GameObject terrain("terrain", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1000.0f), assetManager);
+    Player drone("drone", {0.0f, 500.0f, 0.0f}, glm::vec3(0.01f), assetManager, 5.0f);
     GameObject crate("bred", {100.0f, 500.0f, 0.0f}, glm::vec3(10.0f), assetManager);
 
     std::vector<GameObject*> collidables = {&crate, &terrain};

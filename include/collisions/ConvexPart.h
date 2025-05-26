@@ -18,7 +18,7 @@ class ConvexPart
 
 public:
 
-    void setDynamicVertices(glm::dvec3 position, glm::dvec3 scale);
+    void setDynamicVertices(const glm::dmat4& modelMatrix, glm::dvec3 scale);
 
     explicit ConvexPart(const std::vector<glm::dvec3>& vertices);
     static bool isColliding(const ConvexPart& part1, const ConvexPart& part2);

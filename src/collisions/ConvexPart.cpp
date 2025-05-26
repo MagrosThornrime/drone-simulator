@@ -57,17 +57,14 @@ bool ConvexPart::_isSphereColliding(const ConvexPart& part1, const ConvexPart& p
     return distance < part1._dynamicSphereRadius + part2._dynamicSphereRadius;
 }
 
-void ConvexPart::setDynamicVertices(glm::dvec3 position, glm::dvec3 scale)
+void ConvexPart::setDynamicVertices(const glm::dmat4& modelMatrix, glm::dvec3 scale)
 {
-    auto model = glm::dmat4(1.0);
-    model = glm::translate(model, position);
-    model = glm::scale(model, scale);
 
     for (int i = 0; i < _staticVertices.size(); i++)
     {
-        _dynamicVertices[i] = glm::dvec3(model * glm::dvec4(_staticVertices[i], 1.0));
+        _dynamicVertices[i] = glm::dvec3(modelMatrix * glm::dvec4(_staticVertices[i], 1.0));
     }
-    _dynamicSphereCenter = glm::dvec3(model * glm::dvec4(_staticSphereCenter, 1.0));
+    _dynamicSphereCenter = glm::dvec3(modelMatrix * glm::dvec4(_staticSphereCenter, 1.0));
     _dynamicSphereRadius = _staticSphereRadius * glm::length(scale);
 }
 

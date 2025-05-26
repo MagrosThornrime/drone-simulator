@@ -138,6 +138,5 @@ bool isCollidingGJK(const std::vector<glm::dvec3>& shape1, const std::vector<glm
 		}
 		iterations++;
 	}
-
 	return true;
 }
