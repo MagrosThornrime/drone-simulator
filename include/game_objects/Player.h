@@ -18,16 +18,15 @@ class Player : public GameObject
     glm::vec3 _right;
     glm::vec3 _worldUp = glm::vec3(0.0f, 1.0f, 0.0f);
     // camera options
-    float _movementSpeed = 100.0f;
-    float _mouseSensitivity = 0.1f;
-    float _zoom = 90.0f;
-    float _cameraDistance;
+    float _movementSpeed;
+    float _mouseSensitivity;
+    float _zoom;
+    float _cameraDistance = 5.0f;
 
     glm::vec3 _getCameraPosition();
 
 public:
-    Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager,
-        float cameraDistance);
+    Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager);
 
     Player();
 

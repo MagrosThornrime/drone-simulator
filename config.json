@@ -1,26 +1,4 @@
 {
-  "models": [
-    {
-      "name": "drone",
-      "directory": "assets/models/drone",
-      "obj": "drone_low_poly.obj"
-    },
-    {
-      "name": "bred",
-      "directory": "assets/models/bred",
-      "obj": "Tetrahedron.obj"
-    },
-    {
-      "name": "cube",
-      "directory": "assets/models/cube",
-      "obj": "untitled.obj"
-    }
-  ],
-
-  "shader": {
-    "vertex": "assets/shaders/vertex.glsl",
-    "fragment": "assets/shaders/fragment.glsl"
-  },
   "window": {
     "width": 1920.0,
     "height": 1680.0,
@@ -29,5 +7,24 @@
   "renderer": {
     "range-min": 0.001,
     "range-max": 5000.0
+  },
+  "generator": {
+    "amplitude": 2.0,
+    "octaves": 5,
+    "frequency": 0.005,
+    "amplitude-factor": 0.5,
+    "frequency-factor": 2.0,
+    "min-y": -3.0,
+    "max-y": 3.0,
+    "chunk-height": 0.03
+  },
+  "terrain": {
+    "scale": 1000.0,
+    "size": 100
+  },
+  "player": {
+    "velocity": 100.0,
+    "mouse-sensitivity": 0.1,
+    "zoom": 90.0
   }
 }

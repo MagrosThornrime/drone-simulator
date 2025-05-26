@@ -1,4 +1,5 @@
 #include <Application.h>
+#include <iostream>
 #include <rendering/Renderer.h>
 #include <resources/AssetManager.h>
 #include <terrain/Generator.h>
@@ -52,26 +53,34 @@ float getDeltaTime(float& lastTime)
     return deltaTime;
 }
 
+void setGeneratorConfig(Generator& generator, const AssetManager& assetManager)
+{
+    generator.amplitude = assetManager.generatorAmplitude;
+    generator.octaves = assetManager.generatorOctaves;
+    generator.frequency = assetManager.generatorFrequency;
+    generator.amplitudeFactor = assetManager.generatorAmplitudeFactor;
+    generator.frequencyFactor = assetManager.generatorFrequencyFactor;
+    generator.minY = assetManager.generatorMinY;
+    generator.maxY = assetManager.generatorMaxY;
+    generator.chunkHeight = assetManager.generatorChunkHeight;
+}
+
 int main()
 {
-    AssetManager assetManager("config.json");
+    AssetManager assetManager("config.json", "resources.json");
     assetManager.loadConfiguration();
     Application application(assetManager.windowWidth, assetManager.windowHeight,
         assetManager.windowTitle);
     assetManager.loadGameAssets();
     Renderer renderer(assetManager.getShader("shader"), application.windowWidth, application.windowHeight,
-        assetManager.renderRangeMin, assetManager.renderRangeMax);
+        assetManager.rendererRangeMin, assetManager.rendererRangeMax);
     Generator generator(500, 0.0f, 0.1f);
-    generator.chunkHeight = 0.03f;
-    generator.octaves = 5;
-    generator.amplitude = 2.0f;
-    generator.maxY = 4.0f;
-    generator.minY = -4.0f;
+    setGeneratorConfig(generator, assetManager);
 
-    generator.generateTerrain(assetManager, "terrain", 100);
-    GameObject terrain("terrain", glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(1000.0f), assetManager);
-    Player drone("drone", {0.0f, 500.0f, 0.0f}, glm::vec3(0.01f), assetManager, 5.0f);
-    GameObject crate("bred", {100.0f, 500.0f, 0.0f}, glm::vec3(10.0f), assetManager);
+    generator.generateTerrain(assetManager, "terrain", assetManager.terrainSize);
+    GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(assetManager.terrainScale), assetManager);
+    Player drone("drone", {0.0f, 500.0f, 0.0f}, glm::vec3(0.01f), assetManager);
+    GameObject crate("tetrahedron", {100.0f, 500.0f, 0.0f}, glm::vec3(10.0f), assetManager);
 
     std::vector<GameObject*> collidables = {&crate, &terrain};
     std::vector<GameObject*> drawables = {&terrain, &drone, &crate};

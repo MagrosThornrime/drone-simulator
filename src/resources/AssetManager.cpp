@@ -1,3 +1,4 @@
+#include <iostream>
 #include <ranges>
 #include <resources/AssetManager.h>
 #include <resources/FileIO.h>
@@ -127,7 +128,8 @@ void AssetManager::close()
     Logger::log("Asset manager closed", info);
 }
 
-AssetManager::AssetManager(const std::string& configFile) : _configFile(configFile){
+AssetManager::AssetManager(const std::string& configFile, const std::string& resourcesFile)
+    : _configFile(configFile), _resourcesFile(resourcesFile) {
     Logger::log("Asset manager created", info);
 }
 
@@ -138,15 +140,15 @@ bool AssetManager::hasModel(const std::string& name) const
 
 void AssetManager::loadGameAssets()
 {
-    Json::Value config;
-    loadJsonFile(_configFile, config);
+    Json::Value resources;
+    loadJsonFile(_resourcesFile, resources);
 
-    Json::Value shaders = config["shader"];
+    Json::Value shaders = resources["shader"];
     std::string vertexFile = shaders["vertex"].asString();
     std::string fragmentFile = shaders["fragment"].asString();
     loadShader(vertexFile, fragmentFile, "shader");
 
-    Json::Value models = config["models"];
+    Json::Value models = resources["models"];
     for (auto& model : models)
     {
         std::string name = model["name"].asString();
@@ -169,6 +171,25 @@ void AssetManager::loadConfiguration()
     windowTitle = window["title"].asString();
 
     Json::Value renderer = config["renderer"];
-    renderRangeMin = renderer["range-min"].asFloat();
-    renderRangeMax = renderer["range-max"].asFloat();
+    rendererRangeMin = renderer["range-min"].asFloat();
+    rendererRangeMax = renderer["range-max"].asFloat();
+
+    Json::Value generator = config["generator"];
+    generatorAmplitude = generator["amplitude"].asFloat();
+    generatorFrequency = generator["frequency"].asFloat();
+    generatorOctaves = generator["octaves"].asInt();
+    generatorAmplitudeFactor = generator["amplitude-factor"].asFloat();
+    generatorFrequencyFactor = generator["frequency-factor"].asFloat();
+    generatorMinY = generator["min-y"].asFloat();
+    generatorMaxY = generator["max-y"].asFloat();
+    generatorChunkHeight = generator["chunk-height"].asFloat();
+
+    Json::Value terrain = config["terrain"];
+    terrainScale = terrain["scale"].asFloat();
+    terrainSize = terrain["size"].asInt();
+
+    Json::Value player = config["player"];
+    playerMouseSensitivity = player["mouse-sensitivity"].asFloat();
+    playerVelocity = player["velocity"].asFloat();
+    playerZoom = player["zoom"].asFloat();
 }

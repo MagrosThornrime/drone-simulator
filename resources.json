@@ -1,0 +1,23 @@
+{
+  "models": [
+    {
+      "name": "drone",
+      "directory": "assets/models/drone",
+      "obj": "drone_low_poly.obj"
+    },
+    {
+      "name": "tetrahedron",
+      "directory": "assets/models/tetrahedron",
+      "obj": "Tetrahedron.obj"
+    },
+    {
+      "name": "cube",
+      "directory": "assets/models/cube",
+      "obj": "untitled.obj"
+    }
+  ],
+  "shader": {
+    "vertex": "assets/shaders/vertex.glsl",
+    "fragment": "assets/shaders/fragment.glsl"
+  }
+}

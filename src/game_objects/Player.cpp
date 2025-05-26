@@ -1,8 +1,11 @@
 #include <game_objects/Player.h>
 
-Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager,
-    float cameraDistance) : GameObject(modelName, position, scale, assetManager), _cameraDistance(cameraDistance)
+Player::Player(const std::string& modelName, glm::vec3 position, glm::vec3 scale, AssetManager& assetManager)
+    : GameObject(modelName, position, scale, assetManager)
 {
+    _movementSpeed = assetManager.playerVelocity;
+    _mouseSensitivity = assetManager.playerMouseSensitivity;
+    _zoom = assetManager.playerZoom;
     _updateVectors();
 }
 
