@@ -79,11 +79,11 @@ int main()
 
     generator.generateTerrain(assetManager, "terrain", assetManager.terrainSize);
     GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(assetManager.terrainScale), assetManager);
-    Player drone("drone", {0.0f, 500.0f, 0.0f}, glm::vec3(0.01f), assetManager);
-    GameObject crate("tetrahedron", {100.0f, 500.0f, 0.0f}, glm::vec3(10.0f), assetManager);
+    float playerHeight = assetManager.generatorMaxY * assetManager.terrainScale;
+    Player drone("drone", {0.0f, playerHeight, 0.0f}, glm::vec3(0.01f), assetManager);
 
-    std::vector<GameObject*> collidables = {&crate, &terrain};
-    std::vector<GameObject*> drawables = {&terrain, &drone, &crate};
+    std::vector collidables = {&terrain};
+    std::vector<GameObject*> drawables = {&terrain, &drone};
 
     renderer.zoom = drone.getZoom();
 
