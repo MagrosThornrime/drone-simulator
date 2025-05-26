@@ -24,8 +24,6 @@ class Model
 public:
     std::vector<Mesh> meshes;
 
-    void normalize();
-
     void generate(const std::string& directory, const std::string& objFile);
 
     void draw(const Shader& shader);

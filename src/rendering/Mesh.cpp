@@ -71,28 +71,6 @@ void Mesh::draw(const Shader& shader)
     glActiveTexture(GL_TEXTURE0);
 }
 
-void Mesh::findBoundaries(Boundaries& boundaries) const
-{
-    for (auto vertex : _vertices)
-    {
-        boundaries.min.x = std::min(boundaries.min.x, vertex.position.x);
-        boundaries.max.x = std::max(boundaries.max.x, vertex.position.x);
-        boundaries.min.y = std::min(boundaries.min.y, vertex.position.y);
-        boundaries.max.y = std::max(boundaries.max.y, vertex.position.y);
-        boundaries.min.z = std::min(boundaries.min.z, vertex.position.z);
-        boundaries.max.z = std::max(boundaries.max.z, vertex.position.z);
-    }
-}
-
-void Mesh::normalize(const Boundaries& boundaries)
-{
-    const glm::vec3 distances = boundaries.max - boundaries.min;
-    for (auto& vertex : _vertices)
-    {
-        vertex.position = 2.0f * (vertex.position - boundaries.min) / distances - 1.0f;
-    }
-}
-
 void Mesh::getVertices(std::vector<glm::dvec3>& vertices) const
 {
     vertices.reserve(_vertices.size());

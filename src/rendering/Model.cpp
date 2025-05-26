@@ -134,16 +134,3 @@ Mesh Model::_processMesh(aiMesh& mesh, const aiScene& scene)
             textureTypes.push_back(typeName);
         }
 }
-
-void Model::normalize()
-{
-    Boundaries bounds;
-    for (auto& mesh : meshes)
-    {
-        mesh.findBoundaries(bounds);
-    }
-    for (auto& mesh : meshes)
-    {
-        mesh.normalize(bounds);
-    }
-}

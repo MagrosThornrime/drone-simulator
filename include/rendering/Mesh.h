@@ -32,10 +32,6 @@ public:
 
     void draw(const Shader& shader);
 
-    void findBoundaries(Boundaries& boundaries) const;
-
-    void normalize(const Boundaries& boundaries);
-
     void getVertices(std::vector<glm::dvec3>& vertices) const;
 
     void getIndices(std::vector<unsigned int>& indices) const;
