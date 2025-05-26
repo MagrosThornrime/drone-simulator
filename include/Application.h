@@ -9,10 +9,11 @@
 
 class Application{
     GLFWwindow* _window;
-    const std::array<int, 13> _listenedKeys = {
+    const std::array<int, 16> _listenedKeys = {
         GLFW_KEY_ESCAPE, GLFW_KEY_W, GLFW_KEY_A, GLFW_KEY_S, GLFW_KEY_D,
         GLFW_KEY_UP, GLFW_KEY_DOWN, GLFW_KEY_RIGHT, GLFW_KEY_LEFT,
-        GLFW_KEY_Q, GLFW_KEY_E, GLFW_KEY_SPACE, GLFW_KEY_LEFT_SHIFT};
+        GLFW_KEY_Q, GLFW_KEY_E, GLFW_KEY_SPACE, GLFW_KEY_LEFT_SHIFT,
+        GLFW_KEY_1, GLFW_KEY_2, GLFW_KEY_3};
 
 public:
     std::mutex mutex;

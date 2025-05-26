@@ -1,12 +1,12 @@
 {
   "window": {
     "width": 1920.0,
-    "height": 1680.0,
+    "height": 1080.0,
     "title": "Drone simulator"
   },
   "renderer": {
-    "range-min": 0.001,
-    "range-max": 5000.0
+    "range-min": 0.0001,
+    "range-max": 8000.0
   },
   "generator": {
     "amplitude": 2.0,
@@ -14,8 +14,8 @@
     "frequency": 0.005,
     "amplitude-factor": 0.5,
     "frequency-factor": 2.0,
-    "min-y": -3.0,
-    "max-y": 3.0,
+    "min-y": -2.0,
+    "max-y": 2.0,
     "chunk-height": 0.03
   },
   "terrain": {

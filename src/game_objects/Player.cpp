@@ -16,7 +16,19 @@ Player::Player() : GameObject()
 
 glm::vec3 Player::_getCameraPosition()
 {
-    return _position - _front * _cameraDistance;
+    glm::vec3 cameraOffset;
+    switch (_cameraMode)
+    {
+        case THIRD_PERSON:
+            cameraOffset = _front * 10.0f;
+            break;
+        case FIRST_PERSON:
+            cameraOffset = glm::vec3(0.0f);
+            break;
+        case TOP_DOWN:
+            cameraOffset = -_worldUp * 10.0f;
+    }
+    return _position - cameraOffset;
 }
 
 void Player::updateViewZone(Renderer& renderer)
@@ -33,10 +45,10 @@ void Player::move(MovementDirection direction, float deltaTime, const std::vecto
     switch (direction)
     {
     case FORWARD:
-        _position += _front * velocity;
+        _position += _moveFront * velocity;
         break;
     case BACKWARD:
-        _position -= _front * velocity;
+        _position -= _moveFront * velocity;
         break;
     case LEFT:
         _position -= _right * velocity;
@@ -66,6 +78,10 @@ void Player::move(MovementDirection direction, float deltaTime, const std::vecto
 
 void Player::processMouseMovement(float xoffset, float yoffset, bool constrainPitch)
 {
+    if (_cameraMode == TOP_DOWN)
+    {
+        return;
+    }
     xoffset *= _mouseSensitivity;
     yoffset *= _mouseSensitivity;
 
@@ -92,13 +108,37 @@ float Player::getZoom() const
 
 void Player::_updateVectors()
 {
+    if (_cameraMode == TOP_DOWN)
+    {
+        _front = glm::vec3(0.0f, -1.0f, 0.0f);
+        _up = glm::vec3(0.0f, 0.0f, -1.0f);
+        _right = glm::vec3(1.0f, 0.0f, 0.0f);
+        return;
+    }
     // calculate the new Front vector
     _front.x = cos(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     _front.y = sin(glm::radians(_pitch));
     _front.z = sin(glm::radians(_yaw)) * cos(glm::radians(_pitch));
     _front = glm::normalize(_front);
+    _moveFront = _front;
     // also re-calculate the Right and Up vector
     // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     _right = glm::normalize(glm::cross(_front, _worldUp));
+    _moveRight = _right;
     _up = glm::normalize(glm::cross(_right, _front));
+}
+
+void Player::setCameraMode(CameraMode mode)
+{
+    _cameraMode = mode;
+    _updateVectors();
+}
+
+void Player::draw(Renderer& renderer, AssetManager& assetManager)
+{
+    if (_cameraMode == FIRST_PERSON)
+    {
+        return;
+    }
+    GameObject::draw(renderer, assetManager);
 }

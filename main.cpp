@@ -43,6 +43,18 @@ void processInput(Application& application, Player& player, float deltaTime, con
         player.processMouseMovement(application.xMoveOffset, application.yMoveOffset);
         application.isMouseMoved = false;
     }
+    if (application.isKeyPressed(GLFW_KEY_1))
+    {
+        player.setCameraMode(THIRD_PERSON);
+    }
+    if (application.isKeyPressed(GLFW_KEY_2))
+    {
+        player.setCameraMode(FIRST_PERSON);
+    }
+    if (application.isKeyPressed(GLFW_KEY_3))
+    {
+        player.setCameraMode(TOP_DOWN);
+    }
 }
 
 float getDeltaTime(float& lastTime)
@@ -79,7 +91,7 @@ int main()
 
     generator.generateTerrain(assetManager, "terrain", assetManager.terrainSize);
     GameObject terrain("terrain", glm::vec3(0.0f), glm::vec3(assetManager.terrainScale), assetManager);
-    float playerHeight = assetManager.generatorMaxY * assetManager.terrainScale;
+    float playerHeight = assetManager.generatorMaxY * assetManager.terrainScale / 2.5f;
     Player drone("drone", {0.0f, playerHeight, 0.0f}, glm::vec3(0.01f), assetManager);
 
     std::vector collidables = {&terrain};
