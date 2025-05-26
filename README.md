@@ -27,10 +27,24 @@ After building, go back to the main directory. Then run:
 ./build/game
 ```
 
+## Controls
+- Move forward: "w" or "arrow up"
+- Move backward: "s" or "arrow down"
+- Move right: "d" or "arrow right"
+- Move left: "a" or "arrow left"
+- Move up: "q" or "space"
+- Move down: "e" or "shift"
+- Close: "escape"
+- Third person camera: "key 1"
+- First person camera: "key 2"
+- Top down camera: "key 3"
+
+## Configuration
+Some of the simulation's parameters can be modified in config.json.
+
 ## How to run tests
 I've done some unit tests (currently only for the collision system)
 If you want to run them, run in the main directory.
 ```bash
 ./build/tests
 ```
-(I think it would be better to integrate them into some GitHub CI/CD, maybe in the future)

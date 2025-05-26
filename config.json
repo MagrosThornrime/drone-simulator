@@ -6,7 +6,7 @@
   },
   "renderer": {
     "range-min": 0.0001,
-    "range-max": 8000.0
+    "range-max": 20000.0
   },
   "generator": {
     "amplitude": 2.0,
