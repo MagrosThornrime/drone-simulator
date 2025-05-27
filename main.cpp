@@ -79,7 +79,7 @@ void setGeneratorConfig(Generator& generator, const AssetManager& assetManager)
 
 int main()
 {
-    AssetManager assetManager("config.json", "resources.json");
+    AssetManager assetManager("config/config.json", "config/resources.json");
     assetManager.loadConfiguration();
     Application application(assetManager.windowWidth, assetManager.windowHeight,
         assetManager.windowTitle);

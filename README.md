@@ -43,7 +43,7 @@ After building, go back to the main directory. Then run:
 - Top down camera: "key 3"
 
 ## Configuration
-Some of the simulation's parameters can be modified in config.json.
+Some of the simulation's parameters can be modified in config/config.json.
 
 ## How to run tests
 I've done some unit tests (currently only for the collision system)
