@@ -111,10 +111,10 @@ void Player::_updateVectors()
     if (_cameraMode == TOP_DOWN)
     {
         _front = glm::vec3(0.0f, -1.0f, 0.0f);
-        _up = glm::vec3(_moveFront.x, 0.0f, _moveFront.z);
-        _right = glm::vec3(_moveFront.z, 0.0f, -_moveFront.x);
-        _moveFront = glm::vec3(_moveFront.x, 0.0f, _moveFront.z);
-        _moveRight = glm::vec3(_moveRight.x, 0.0f, _moveRight.z);
+        _up = glm::normalize(glm::vec3(_moveFront.x, 0.0f, _moveFront.z));
+        _right = glm::normalize(glm::vec3(_moveFront.z, 0.0f, -_moveFront.x));
+        _moveFront = glm::normalize(glm::vec3(_moveFront.x, 0.0f, _moveFront.z));
+        _moveRight = glm::normalize(glm::vec3(_moveRight.x, 0.0f, _moveRight.z));
         return;
     }
     // calculate the new Front vector
