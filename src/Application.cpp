@@ -16,7 +16,7 @@ void mouseMoveCallback(GLFWwindow* window, double xpos, double ypos)
     {
         throw std::runtime_error("GLFW callback can't see Application");
     }
-    auto lock = std::lock_guard(application->mutex);
+    auto lock = std::lock_guard(application->mouseMutex);
     if (application->firstMouseMove)
     {
         application->lastMouseX = xpos;
@@ -100,7 +100,7 @@ void Application::close()
 
 void Application::getKeys()
 {
-    auto lock = std::lock_guard(mutex);
+    auto lock = std::lock_guard(keyboardMutex);
     currentKeys.clear();
     for (auto key : _listenedKeys)
     {
@@ -125,5 +125,7 @@ Application::~Application(){
 
 bool Application::isKeyPressed(int key)
 {
-    return currentKeys.contains(key);
+    auto lock = std::lock_guard(keyboardMutex);
+    bool containsKey = currentKeys.contains(key);
+    return containsKey;
 }

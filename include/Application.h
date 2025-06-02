@@ -16,7 +16,7 @@ class Application{
         GLFW_KEY_1, GLFW_KEY_2, GLFW_KEY_3};
 
 public:
-    std::mutex mutex;
+    std::mutex keyboardMutex, mouseMutex;
     std::unordered_set<int> currentKeys;
     float windowWidth, windowHeight;
     bool firstMouseMove;

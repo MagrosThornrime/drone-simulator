@@ -38,10 +38,13 @@ void processInput(Application& application, Player& player, float deltaTime, con
     {
         player.move(DOWN, deltaTime, collidables);
     }
-    if (application.isMouseMoved)
     {
-        player.processMouseMovement(application.xMoveOffset, application.yMoveOffset);
-        application.isMouseMoved = false;
+        auto lock = std::lock_guard(application.mouseMutex);
+        if (application.isMouseMoved)
+        {
+            player.processMouseMovement(application.xMoveOffset, application.yMoveOffset);
+            application.isMouseMoved = false;
+        }
     }
     if (application.isKeyPressed(GLFW_KEY_1))
     {
