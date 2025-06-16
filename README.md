@@ -6,7 +6,7 @@ https://github.com/user-attachments/assets/342b2661-bae2-4509-a889-2175832816f3
 
 ## Introduction
 This is a simple "game" where you can fly a drone above a 3D terrain.
-The collision system blocks you from flying through other objects, especially the terrain.
+The collision system blocks you from flying through other objects, currently it's only the terrain.
 
 ## Algorithms/libraries used
 - rendering: OpenGL
